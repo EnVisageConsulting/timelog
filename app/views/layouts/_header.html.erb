@@ -1,0 +1,26 @@
+<div class="top-bar">
+  <div class="row">
+    <div class="columns">
+      <div class="top-bar-title">
+        <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+          <button class="menu-icon dark" type="button" data-toggle></button>
+        </span>
+        <ul class="menu">
+          <li><%= link_to content_tag(:strong, "EnVisage TimeLog"), root_path %></li>
+        </ul>
+      </div>
+      <div id="responsive-menu">
+        <div class="top-bar-left"></div>
+        <div class="top-bar-right">
+          <ul class="menu">
+            <% if current_user %>
+              <li><%= link_to icon("sign-out", "Log Out"), logout_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to icon("sign-in", "Log In"), login_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <% if can?(:edit, @log) %>
+      <p class="float-right"><%= link_to icon("pencil", "Edit Log"), edit_log_path(@log) %></p>
+    <% end %>
+    <h1><%= log_title(@log) %></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <table>
+      <tbody>
+        <% @log.project_logs.includes(:project).each do |project_log| %>
+          <tr>
+            <td>
+              <h5><%= project_log.project.name %></h5>
+              <%= simple_format project_log.description %>
+            </td>
+            <td class="text-right"><%= project_log.total_allocation * 100 %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

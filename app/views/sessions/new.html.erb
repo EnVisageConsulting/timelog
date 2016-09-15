@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="columns">
+    <h1>Employee Log In</h1>
+  </div>
+</div>
+
+<%= form_tag sessions_path, method: :post do %>
+  <div class="row">
+    <div class="columns">
+      <%= label_tag :employee_id %>
+      <%= select_tag :employee_id, options_from_collection_for_select(User.activated, :id, :first, params[:employee_id]), prompt: "Please select one", style: 'height: auto;' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <p class="float-right"><%= link_to "Forgot Password" %></p>
+      <%= submit_tag "Log In", class: 'button' %>
+    </div>
+  </div>
+<% end %>

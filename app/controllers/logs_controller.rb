@@ -1,0 +1,49 @@
+class LogsController < ApplicationController
+  before_action :load_new_log, only: :create
+  load_and_authorize_resource param_method: :log_params
+
+  def create
+    if current_user.active_log
+      flash[:alert] = "You have an active log that needs to be completed first."
+      return redirect_to edit_log_path(current_user.active_log)
+    end
+
+    respond_to do |format|
+      if @log.save
+        format.html { redirect_to edit_log_path(@log) }
+      else
+        format.html { render :new }
+      end
+    end
+  end
+
+  def edit
+    @log.project_logs.build if @log.project_logs.blank?
+  end
+
+  def update
+    respond_to do |format|
+      if @log.update_attributes(log_params)
+        format.html { redirect_to @log, notice: "Successfully updated log" }
+      else
+        @log.project_logs.build if @log.project_logs.blank?
+
+        format.html { render :edit }
+      end
+    end
+  end
+
+  def show
+    redirect_to edit_log_path(@log) unless @log.end_at?
+  end
+
+  private
+
+    def load_new_log
+      @log = Log.new(user: current_user, start_at: DateTime.now)
+    end
+
+    def log_params
+      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :description, :_destroy])
+    end
+end

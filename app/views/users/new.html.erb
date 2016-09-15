@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <h1>New User</h1>
+  </div>
+</div>
+
+<%= form_for @user do |f| %>
+  <%= form_errors @user %>
+
+  <% if current_user.admin? %>
+    <div class="row">
+      <div class="columns">
+        <%= f.label :role, "User Type" %>
+        <%= f.select :role, options_for_select(User.roles.except(:client).keys, @user.role), prompt: "Please select one" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :first %>
+      <%= f.text_field :first %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :last %>
+      <%= f.text_field :last %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit class: 'button' %>
+    </div>
+  </div>
+<% end %>

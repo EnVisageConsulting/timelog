@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <% if can?(:create, User) %>
+      <%= link_to icon("plus-circle", "Add User"), new_user_path, class: 'button expanded' %>
+    <% end %>
+
+    <% if log = current_user.active_log %>
+      <%= link_to icon("clock-o", "Finish Log"), edit_log_path(log), class: 'button expanded warning' %>
+    <% else %>
+      <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button expanded success' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <hr/>
+    <h3>Recent Logs</h3>
+    <table>
+      <tbody>
+        <% user_logs = user_logs(current_user).includes(:project_logs) %>
+        <% if user_logs.present? %>
+          <% user_logs.each do |log| %>
+            <tr>
+              <td class="text-right secondary-text"><small>#</small><%= log_index(log) + 1 %></td>
+              <td><%= link_to log_title(log), log %></td>
+              <td><%= link_to icon("pencil"), edit_log_path(log) %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td class="empty">You have no logs yet</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

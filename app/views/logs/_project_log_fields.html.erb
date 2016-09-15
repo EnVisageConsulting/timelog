@@ -1,0 +1,15 @@
+<div class="project-log-fields" id="log_project_logs_attributes_<%= fields_for.options[:child_index] %>">
+  <div class="row">
+    <div class="columns medium-3 small-4">
+      <%= fields_for.label :project_id %>
+      <%= fields_for.select :project_id, options_from_collection_for_select(Project.all, :id, :name), prompt: "Please select one" %>
+
+      <small><%= link_to_remove_project(fields_for) %></small>
+    </div>
+
+    <div class="columns medium-9 small-8">
+      <%= fields_for.label :desciption %>
+      <%= fields_for.text_area :description, rows: 2 %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+users
+  first
+  last
+  email
+  password
+  role
+  deactivated_at
+
+projects
+  name
+  archived_at
+
+logs
+  user_id
+  start_at
+  end_at
+
+project_logs
+  project_id
+  log_id
+  total_allocation
+  billable_allocation
+  description
+
+clients
+  name
+
+client_users
+  client_id
+  user_id
+
+client_projects
+  client_id
+  project_id
+

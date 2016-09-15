@@ -1,0 +1,48 @@
+<%= form_for @log do |f| %>
+  <%= form_errors @log %>
+  <div class="row">
+    <div class="columns medium-6">
+      <%= f.label :start_at, "Start Date" %>
+      <div class="input-group">
+        <%= f.text_field :start_at, value: input_datetime(@log.start_at), data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field' %>
+        <div class="input-group-button">
+          <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns medium-6">
+      <%= f.label :end_at, "End Date" %>
+      <div class="input-group">
+        <%= f.text_field :end_at, value: input_datetime(@log.end_at), data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field' %>
+        <div class="input-group-button">
+          <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <fieldset class="fieldset">
+        <legend><%= f.label :project_logs, "Log's Projects" %></legend>
+        <%= f.fields_for :project_logs do |ff| %>
+          <%= render 'project_log_fields', fields_for: ff %>
+        <% end %>
+
+        <div class="row">
+          <div class="columns medium-3 small-4"></div>
+          <div class="columns medium-9 small-8">
+            <%= link_to_add_project(f, :project_logs) %>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit "Save Log", class: 'button success expanded' %>
+    </div>
+  </div>
+<% end %>

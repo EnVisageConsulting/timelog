@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+
+
+    <%= stylesheet_link_tag    'application-all', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application-print', media: 'print', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/flash' if flash.present? %>
+    <%= yield %>
+
+  </body>
+</html>

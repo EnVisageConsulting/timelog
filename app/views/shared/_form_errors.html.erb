@@ -1,0 +1,12 @@
+<div class="callout alert form-errors">
+  <div class="row">
+    <div class="columns">
+      <strong>Please fix the following and try again:</strong>
+      <ul>
+        <% errors.each do |msg| %>
+          <li class="alert-text"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

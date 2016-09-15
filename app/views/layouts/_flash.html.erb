@@ -1,0 +1,10 @@
+<% flash.each do |f| %>
+  <div class="flash <%= f.first %>" data-closable>
+    <div class="row">
+      <div class="columns">
+        <%= button_tag '&times;'.html_safe, class: 'close-button', data: { close: '' } %>
+        <p class="message"><%= f.last %></p>
+      </div>
+    </div>
+  </div>
+<% end %>

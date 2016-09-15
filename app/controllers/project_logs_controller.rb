@@ -1,0 +1,2 @@
+class ProjectLogsController < ApplicationController
+end
