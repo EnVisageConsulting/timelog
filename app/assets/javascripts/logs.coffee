@@ -1,9 +1,20 @@
 class Log
   logForm: ->
+    $form = $("form")
+
+    $form.find '.date'
+         .datetimepicker
+          format: 'm/d/Y g:i A',
+          formatTime: 'g:i A',
+          maxDate: 0,
+          scrollMonth: false,
+          yearStart: 2016
+          yearEnd: new Date().getFullYear()
+
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
 
-      value  = moment().format 'MM/DD/YYYY h:mm a'
+      value  = moment().format 'MM/DD/YYYY h:mm A'
       $input = $(this).closest '.input-group'
                       .find    '.input-group-field'
 
@@ -37,6 +48,8 @@ class Log
         $fields.hide()
       else
         $fields.remove()
+
+
 
 
 

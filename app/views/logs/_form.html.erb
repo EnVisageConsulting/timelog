@@ -4,7 +4,7 @@
     <div class="columns medium-6">
       <%= f.label :start_at, "Start Date" %>
       <div class="input-group">
-        <%= f.text_field :start_at, value: input_datetime(@log.start_at), data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field' %>
+        <%= f.text_field :start_at, value: input_datetime(@log.start_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field date' %>
         <div class="input-group-button">
           <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
         </div>
@@ -14,7 +14,7 @@
     <div class="columns medium-6">
       <%= f.label :end_at, "End Date" %>
       <div class="input-group">
-        <%= f.text_field :end_at, value: input_datetime(@log.end_at), data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field' %>
+        <%= f.text_field :end_at, value: input_datetime(@log.end_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field date' %>
         <div class="input-group-button">
           <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
         </div>

@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.datetimepicker
+//= require jquery.datetimepicker.full
 //= require turbolinks
 //= require foundation
 //= require moment
@@ -34,7 +34,7 @@ var initializePage = function(){
     return false;
 
   $(document).foundation();
-  $(":input").inputmask();
+  // $(":input").inputmask();
   $("form").find(".field_with_errors :input").addClass('is-invalid-input');
   $("form").find(".field_with_errors label").addClass('alert-text');
   loadJavascript(controller, action);
