@@ -8,6 +8,10 @@ class ProjectLog < ApplicationRecord
   validates :description,         presence: true
   validates :total_allocation,    presence: true
   validates :billable_allocation, presence: true
+  validates :percent,             presence: true
+
+  validates_numericality_of :percent, less_than_or_equal_to: 100, message: "cannot be greater than 100%"
+  validates_numericality_of :percent, greater_than_or_equal_to: 0, message: "cannot be less than 0%"
 
   # --- Setters & Getters --- #
   def percent=value

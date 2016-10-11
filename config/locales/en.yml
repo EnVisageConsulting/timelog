@@ -29,3 +29,4 @@ en:
       log/project_logs:
         description: "Log Projects' descriptions"
         project_id: "Log Projects' projects"
+        percent: "Log Projects' percent"
