@@ -26,9 +26,12 @@
     <div class="columns">
       <fieldset class="fieldset">
         <legend><%= f.label :project_logs, "Log's Projects" %></legend>
-        <%= f.fields_for :project_logs do |ff| %>
-          <%= render 'project_log_fields', fields_for: ff %>
-        <% end %>
+
+        <div id="document_project_logs">
+          <%= f.fields_for :project_logs do |ff| %>
+            <%= render 'project_log_fields', fields_for: ff %>
+          <% end %>
+        </div>
 
         <div class="row">
           <div class="columns large-3 medium-3 small-4"></div>

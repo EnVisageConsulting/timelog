@@ -25,13 +25,15 @@ class Log
     $projectLogFields.on "click", ".add-project-link", (e) ->
       e.preventDefault()
 
-      $link      = $(this)
-      field_hash = $link.data 'field-hash'
-      new_id     = new Date().getTime()
-      regexp     = new RegExp "new_" + field_hash.association, "g"
+      $link        = $(this)
+      $projectLogs = $projectLogFields.find '#document_project_logs'
+      fieldHash    = $link.data 'field-hash'
+      newId        = new Date().getTime()
+      regexp       = new RegExp "new_" + fieldHash.association, "g"
 
-      $link.closest('.row').before field_hash.content.replace(regexp, new_id)
-      $newFields = $link.closest('.row').prev('.project-log-fields')
+
+      $projectLogs.append fieldHash.content.replace(regexp, newId)
+      $newFields = $projectLogs.find('.project-log-fields').last()
       $newFields.find('input[name$="[percent]"]').val ''
       $newFields.find('select[name$="[project_id]"]').focus()
 
