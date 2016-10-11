@@ -31,7 +31,9 @@ class Log
       regexp     = new RegExp "new_" + field_hash.association, "g"
 
       $link.closest('.row').before field_hash.content.replace(regexp, new_id)
-      $link.closest('.row').prev('.project-log-fields').find('select').focus()
+      $newFields = $link.closest('.row').prev('.project-log-fields')
+      $newFields.find('input[name$="[percent]"]').val ''
+      $newFields.find('select[name$="[project_id]"]').focus()
 
 
     $projectLogFields.on "click", ".remove-project-link", (e) ->
