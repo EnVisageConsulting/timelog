@@ -1,8 +1,9 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <% if can?(:create, User) %>
+    <% if current_user.admin? %>
       <%= link_to icon("plus-circle", "Add User"), new_user_path, class: 'button expanded' %>
+      <%= link_to icon("book", "View Projects"), projects_path, class: 'button expanded' %>
     <% end %>
 
     <% if log = current_user.current_log %>
