@@ -44,7 +44,7 @@ module LogsHelper
   end
 
   def user_logs user
-    @user_logs ||= user.logs.completed.latest
+    @user_logs ||= user.logs.active.latest
   end
 
   def user_log_ids user

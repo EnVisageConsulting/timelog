@@ -5,7 +5,7 @@
       <%= link_to icon("plus-circle", "Add User"), new_user_path, class: 'button expanded' %>
     <% end %>
 
-    <% if log = current_user.active_log %>
+    <% if log = current_user.current_log %>
       <%= link_to icon("clock-o", "Finish Log"), edit_log_path(log), class: 'button expanded warning' %>
     <% else %>
       <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button expanded success' %>

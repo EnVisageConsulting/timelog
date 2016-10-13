@@ -44,7 +44,7 @@ class User < ApplicationRecord
   end
 
   # --- Instance Methods --- #
-  def active_log
-    logs.active.first
+  def current_log
+    logs.inactive.first
   end
 end

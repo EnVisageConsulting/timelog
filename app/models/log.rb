@@ -27,9 +27,18 @@ class Log < ApplicationRecord
   end
 
   # --- Scopes --- #
-  scope :active,    -> { where(end_at: nil) }
-  scope :completed, -> { where.not(end_at: nil) }
-  scope :latest,    -> { order('start_at DESC') }
+  scope :inactive, -> { where(activated: false) }
+  scope :active,   -> { where(activated: true) }
+  scope :latest,   -> { order('start_at DESC') }
+
+  # --- Callbacks --- #
+  before_save :set_activation
+
+  def set_activation
+    return if self.activated?
+
+    self.activated = self.end_at.present?
+  end
 
   # --- Class Methods --- #
   def self.convert_to_datetime string
