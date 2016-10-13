@@ -7,7 +7,7 @@ class Project < ApplicationRecord
   validates :name, presence: true
 
   # --- Scopes --- #
-  scope :unarchived, -> { where(archived_at: nil) }
-  scope :archived,   -> { where.not(archived_at: nil) }
+  scope :active, -> { where(deactivated_at: nil) }
+  scope :inactive,   -> { where.not(deactivated_at: nil) }
   scope :alphabetized, -> { order('name ASC') }
 end

@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <% projects = Project.unarchived.alphabetized %>
+        <% projects = Project.active.alphabetized %>
         <% if projects.present? %>
           <% projects.each do |project| %>
             <tr>
