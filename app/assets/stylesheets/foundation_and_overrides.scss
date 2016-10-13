@@ -52,4 +52,6 @@
 // @include motion-ui-animations;
 
 
+.row { max-width: 60rem; }
 table td :last-child { margin-bottom: 0; }
+textarea { resize: vertical; }
