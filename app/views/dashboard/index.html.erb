@@ -18,6 +18,13 @@
     <hr/>
     <h3>Recent Logs</h3>
     <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Log Date</th>
+          <th class="text-center">Edit</th>
+        </tr>
+      </thead>
       <tbody>
         <% user_logs = user_logs(current_user).includes(:project_logs) %>
         <% if user_logs.present? %>
@@ -25,12 +32,12 @@
             <tr>
               <td class="text-right secondary-text"><small>#</small><%= log_index(log) + 1 %></td>
               <td><%= link_to log_title(log), log %></td>
-              <td><%= link_to icon("pencil"), edit_log_path(log) %></td>
+              <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>
         <% else %>
           <tr>
-            <td class="empty">You have no logs yet</td>
+            <td class="empty" colspan="3">You have no logs yet</td>
           </tr>
         <% end %>
       </tbody>
