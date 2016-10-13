@@ -1,0 +1,16 @@
+<%= form_for @project do |f| %>
+  <%= form_errors @project %>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit class: 'button' %>
+    </div>
+  </div>
+<% end %>
