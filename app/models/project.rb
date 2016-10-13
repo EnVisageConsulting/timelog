@@ -5,4 +5,9 @@ class Project < ApplicationRecord
 
   # --- Validations --- #
   validates :name, presence: true
+
+  # --- Scopes --- #
+  scope :unarchived, -> { where(archived_at: nil) }
+  scope :archived,   -> { where.not(archived_at: nil) }
+  scope :alphabetized, -> { order('name ASC') }
 end
