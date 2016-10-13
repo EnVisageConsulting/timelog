@@ -8,6 +8,15 @@
     </div>
   </div>
 
+  <% if @project.persisted? %>
+    <div class="row">
+      <div class="columns">
+        <%= f.check_box :deactivated %>
+        <%= f.label :deactivated, "Deactivate?" %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row">
     <div class="columns">
       <%= f.submit class: 'button' %>
