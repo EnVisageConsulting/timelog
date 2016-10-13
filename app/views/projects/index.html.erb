@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <%= link_to icon("plus-circle", "Add Project"), new_project_path, class: 'button expanded' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <hr/>
+    <h3>Projects</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="text-center">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% projects = Project.unarchived.alphabetized %>
+        <% if projects.present? %>
+          <% projects.each do |project| %>
+            <tr>
+              <!-- <td class="text-right secondary-text"><small>#</small><%#= log_index(project) + 1 %></td>
+              <td><%#= link_to log_title(project), project %></td> -->
+              <td><%= link_to project.name, edit_project_path(project) %></td>
+              <td class="text-center"><%= link_to icon("pencil"), edit_project_path(project) %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td class="empty" colspan="2">No projects have been added yet</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
