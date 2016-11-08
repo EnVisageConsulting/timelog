@@ -18,7 +18,8 @@ class Log
       $input = $(this).closest '.input-group'
                       .find    '.input-group-field'
 
-      $input.val value
+      $input.val     value
+            .trigger 'change'
 
 
     $projectLogFields = $("label[for='log_project_logs']").closest 'fieldset'
@@ -55,6 +56,30 @@ class Log
 
 
 
+    $startAt    = $("#log_start_at")
+    $endAt      = $("#log_end_at")
+    $totalHours = $(".stat")
+
+    updateTotalHours = ->
+      startAt = $startAt.val()
+      endAt   = $endAt.val()
+      value   = '...'
+
+      if startAt != "" && endAt != ""
+        mStartAt = moment startAt, "MM/DD/YYYY hh:mm a"
+        mEndAt   = moment endAt,   "MM/DD/YYYY hh:mm a"
+        diff     = moment.duration(mEndAt.diff(mStartAt)).asMinutes()
+
+        if diff >= 0
+         value = (diff / 60).toFixed 2
+
+      $totalHours.text value
+
+
+    $endAt.on   "change", updateTotalHours
+    $startAt.on "change", updateTotalHours
+
+    updateTotalHours()
 
 
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>

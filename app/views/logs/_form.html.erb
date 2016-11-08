@@ -1,7 +1,7 @@
 <%= form_for @log do |f| %>
   <%= form_errors @log %>
   <div class="row">
-    <div class="columns medium-6">
+    <div class="columns medium-5">
       <%= f.label :start_at, "Start Date" %>
       <div class="input-group">
         <%= f.text_field :start_at, value: input_datetime(@log.start_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field date' %>
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="columns medium-6">
+    <div class="columns medium-5">
       <%= f.label :end_at, "End Date" %>
       <div class="input-group">
         <%= f.text_field :end_at, value: input_datetime(@log.end_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field date' %>
@@ -20,6 +20,8 @@
         </div>
       </div>
     </div>
+
+    <div class="columns medium-2 show-for-medium"><label>Total Hours</label><span class="stat">...</span></div>
   </div>
 
   <div class="row">
