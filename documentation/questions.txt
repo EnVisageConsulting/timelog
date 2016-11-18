@@ -1,6 +1,8 @@
 Questions
 - Do we want to allow deleting logs?
 - Should we allow overlapping logs?
+- How do we filter logs when daterange overlaps filtered daterange (go off start date or end date) ?
 - Elapsed timer?
+  - Flipclock - display widget - http://flipclockjs.com/
   - Show on dashboard?
   - Should timer on log form update when no end date?
