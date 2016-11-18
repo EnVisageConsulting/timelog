@@ -29,17 +29,23 @@
         </tr>
       </thead>
       <tbody>
-        <% @users.each do |user| %>
+        <% if user_list.present? %>
+          <% user_list.each do |user| %>
+            <tr>
+              <td><%= user.last %>, <%= user.first %></td>
+              <td><%= mail_to user.email, user.email %></td>
+              <td><%= user.role.titleize %></td>
+              <% if viewing_deactivated? %>
+                <td class="text-center"><%= link_to icon("battery-empty") %></td>
+              <% else %>
+                <td class="text-center"><%= link_to icon("pencil") %></td>
+                <td class="text-center"><%= link_to icon("battery-full") %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        <% else %>
           <tr>
-            <td><%= user.last %>, <%= user.first %></td>
-            <td><%= mail_to user.email, user.email %></td>
-            <td><%= user.role.titleize %></td>
-            <% if viewing_deactivated? %>
-              <td class="text-center"><%= link_to icon("battery-empty") %></td>
-            <% else %>
-              <td class="text-center"><%= link_to icon("pencil") %></td>
-              <td class="text-center"><%= link_to icon("battery-full") %></td>
-            <% end %>
+            <td class="empty" colspan="5">No <%= viewing_deactivated? ? 'deactivated' : 'active' %> users</td>
           </tr>
         <% end %>
       </tbody>
