@@ -46,11 +46,23 @@ class Log < ApplicationRecord
 
   # --- Callbacks --- #
   before_save :set_activation
+  before_validation :set_project_log_hours
 
   def set_activation
     return if self.activated?
 
     self.activated = self.end_at.present?
+  end
+
+  def set_project_log_hours
+    return unless hours
+
+    self.project_logs.each do |project_log|
+      allocation = project_log.total_allocation
+      next if allocation.nil? || allocation <= 0
+
+      project_log.hours = hours * allocation
+    end
   end
 
   # --- Class Methods --- #
@@ -76,5 +88,14 @@ class Log < ApplicationRecord
     end
 
     write_attribute :end_at, value
+  end
+
+  # --- Instance Methods --- #
+  def hours
+    return unless start_at? && end_at? && start_at <= end_at
+    return 0.0 if end_at == start_at
+
+    diff = end_at - start_at
+    (diff / 60.0 ) / 60.0
   end
 end
