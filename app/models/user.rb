@@ -49,4 +49,8 @@ class User < ApplicationRecord
   def current_log
     logs.inactive.first
   end
+
+  def name
+    "#{self.first} #{self.last}"
+  end
 end
