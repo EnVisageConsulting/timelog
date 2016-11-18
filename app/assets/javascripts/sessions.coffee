@@ -1,3 +1,8 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+class Session
+  sessionForm: ->
+    $employeeField = $("#employee_id")
+    $employeeField.garlic()
+
+$(document).on 'sessions_new.load sessions_create.load', (e, obj) =>
+  session = new Session
+  session.sessionForm()
