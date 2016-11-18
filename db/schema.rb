@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160915040226) do
     t.text     "description",                                 default: "",    null: false
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
+    t.index ["log_id", "project_id"], name: "index_project_logs_on_log_id_and_project_id", unique: true, using: :btree
     t.index ["log_id"], name: "index_project_logs_on_log_id", using: :btree
     t.index ["project_id"], name: "index_project_logs_on_project_id", using: :btree
   end

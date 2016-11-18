@@ -10,5 +10,7 @@ class CreateProjectLogs < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false
     end
+
+    add_index :project_logs, [:log_id, :project_id], unique: true
   end
 end
