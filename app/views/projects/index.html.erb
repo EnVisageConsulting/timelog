@@ -1,10 +1,12 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <%= link_to icon("toggle-#{viewing_deactivated? ? 'on' : 'off'}",
-                            "#{viewing_deactivated? ? 'A'  : 'Dea'}ctivated Projects"),
-                projects_path(deactivated: !viewing_deactivated?), class: 'button expanded' %>
-    <%= link_to icon("plus-circle", "Add Project"), new_project_path, class: 'button expanded' %>
+    <ul class="menu float-left">
+      <li><%= link_to icon("toggle-#{viewing_deactivated? ? 'on' : 'off'}",
+                             "View #{viewing_deactivated? ? 'A'  : 'Dea'}ctivated Projects"),
+                projects_path(deactivated: !viewing_deactivated?) %></li>
+      <li><%= link_to icon("plus-circle", "Add Project"), new_project_path %></li>
+    </ul>
   </div>
 </div>
 
