@@ -35,6 +35,8 @@ class User < ApplicationRecord
 
   # --- Scopes --- #
   scope :activated, -> { where('activated_at IS NOT NULL') }
+  scope :deactivated, -> { where('deactivated_at IS NOT NULL') }
+  scope :undeactivated, -> { where('deactivated_at IS NULL') }
 
 
   # --- Setters & Getters --- #
