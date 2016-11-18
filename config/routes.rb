@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # resources :project_logs
   resources :logs, only: [:create, :edit, :update, :show]
   resources :projects, only: [:index, :new, :create, :edit, :update]
-  resources :users, only: [:new, :create, :index] do
+  resources :users, only: [:new, :create, :index, :edit, :update] do
     resource :deactivate, only: [:update]
   end
   root 'dashboard#index'
