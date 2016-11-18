@@ -1,3 +1,6 @@
 Questions
 - Do we want to allow deleting logs?
 - Should we allow overlapping logs?
+- Elapsed timer?
+  - Show on dashboard?
+  - Should timer on log form update when no end date?
