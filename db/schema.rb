@@ -40,11 +40,13 @@ ActiveRecord::Schema.define(version: 20160915040226) do
   end
 
   create_table "logs", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.datetime "start_at",   null: false
+    t.integer  "user_id",                    null: false
+    t.datetime "start_at",                   null: false
     t.datetime "end_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "activated",  default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["activated"], name: "index_logs_on_activated", using: :btree
     t.index ["user_id"], name: "index_logs_on_user_id", using: :btree
   end
 
@@ -63,10 +65,10 @@ ActiveRecord::Schema.define(version: 20160915040226) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.datetime "archived_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name",           null: false
+    t.datetime "deactivated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "users", force: :cascade do |t|
