@@ -18,4 +18,8 @@ module ApplicationHelper
 
     render 'shared/form_errors', errors:  errors
   end
+
+  def viewing_deactivated?
+    params[:deactivated] == 'true'
+  end
 end
