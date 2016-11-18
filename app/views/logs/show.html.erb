@@ -11,6 +11,14 @@
 <div class="row">
   <div class="columns">
     <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th class="text-center">Allocation</th>
+          <th class="text-center">Hours</th>
+        </tr>
+      </thead>
+
       <tbody>
         <% @log.project_logs.includes(:project).each do |project_log| %>
           <tr>
@@ -19,9 +27,18 @@
               <%= simple_format project_log.description %>
             </td>
             <td class="text-right"><%= project_log.total_allocation * 100 %>%</td>
+            <td class="text-right"><%= project_log.hours %></td>
           </tr>
         <% end %>
       </tbody>
+
+      <tfoot>
+        <tr>
+          <td>Totals:</td>
+          <td></td>
+          <td class="text-right"><%= @log.hours %></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>
