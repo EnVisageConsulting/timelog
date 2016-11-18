@@ -1,7 +1,10 @@
 Questions
-- Do we want to allow deleting logs?
-- Should we allow overlapping logs?
-- How do we filter logs when daterange overlaps filtered daterange (go off start date or end date) ?
+- Do we want to allow deleting or archiving logs?
+  Sure. If from the last two weeks.
+- Should we allow a user's logged daterange to overlap another logged daterange (i.e. can a user have two logs for the same dateranges)?
+  No. Validate against it.
+- How do we filter logs on reports by daterange if the log's daterange overlaps the filtered daterange? Should we include logs whose date range overlaps the filtered daterange? Or only include logs whose start or end date is inside the daterange?
+  Include logs if the daterange overlaps the filtered daterange.
 - Elapsed timer?
   - Flipclock - display widget - http://flipclockjs.com/
   - Show on dashboard?
