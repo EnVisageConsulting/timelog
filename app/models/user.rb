@@ -53,4 +53,14 @@ class User < ApplicationRecord
   def name
     "#{self.first} #{self.last}"
   end
+
+  def deactivate! deactivate=true
+    if deactivate
+      self.deactivated_at ||= Time.now
+    else
+      self.deactivated_at = nil
+    end
+
+    save
+  end
 end
