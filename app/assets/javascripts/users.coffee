@@ -1,7 +1,7 @@
 class User
   userList: ->
     $links = $(".deactivate-link")
-    emptyClass = 'fa-battery-empty'
+    emptyClass = 'fa-battery-1'
     fullClass = 'fa-battery-full'
 
     # toggle battery full and empty classes

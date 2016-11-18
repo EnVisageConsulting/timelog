@@ -25,7 +25,7 @@ module ApplicationHelper
 
   def deactivated_view_toggle_link resource=nil
     resource ||= params[:controller].to_sym
-    icon_name  = "battery-#{viewing_deactivated? ? 'full' : 'empty'}"
+    icon_name  = "battery-#{viewing_deactivated? ? 'full' : '1'}"
     text_value = "View #{viewing_deactivated? ? 'A'  : 'Dea'}ctivate#{'d' unless viewing_deactivated?} #{resource.to_s.titleize}"
 
     link_to icon(icon_name, text_value), polymorphic_url(resource, deactivated: !viewing_deactivated?)
