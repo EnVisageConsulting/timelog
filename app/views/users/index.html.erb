@@ -36,10 +36,10 @@
               <td><%= mail_to user.email, user.email %></td>
               <td><%= user.role.titleize %></td>
               <% if viewing_deactivated? %>
-                <td class="text-center"><%= link_to icon("battery-empty") %></td>
+                <td class="text-center"><%= link_to icon("battery-empty"), user_deactivate_path(user, deactivate: false), method: :patch, class: 'deactivate-link', remote: true %></td>
               <% else %>
                 <td class="text-center"><%= link_to icon("pencil") %></td>
-                <td class="text-center"><%= link_to icon("battery-full") %></td>
+                <td class="text-center"><%= link_to icon("battery-full"), user_deactivate_path(user, deactivate: true), method: :patch, class: 'deactivate-link' %></td>
               <% end %>
             </tr>
           <% end %>
