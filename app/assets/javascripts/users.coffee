@@ -1,3 +1,17 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+class User
+  userList: ->
+    $links = $(".deactivate-link")
+    emptyClass = 'fa-battery-empty'
+    fullClass = 'fa-battery-full'
+
+    # toggle battery full and empty classes
+    $links.hover ->
+      $link = $(this)
+      $link.find '.fa'
+           .toggleClass emptyClass
+           .toggleClass fullClass
+
+
+$(document).on 'users_index.load', (e, obj) =>
+  user = new User
+  user.userList()
