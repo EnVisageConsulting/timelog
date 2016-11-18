@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20160915040226) do
   create_table "project_logs", force: :cascade do |t|
     t.integer  "log_id",                                                      null: false
     t.integer  "project_id",                                                  null: false
+    t.decimal  "hours",               precision: 4, scale: 2, default: "0.0", null: false
     t.decimal  "total_allocation",    precision: 3, scale: 2, default: "1.0", null: false
     t.decimal  "billable_allocation", precision: 3, scale: 2, default: "1.0", null: false
     t.text     "description",                                 default: "",    null: false
