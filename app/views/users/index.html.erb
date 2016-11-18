@@ -3,9 +3,7 @@
     <div class="spacer"></div>
     <ul class="menu float-left">
       <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
-      <li><%= link_to icon("battery-#{viewing_deactivated? ? 'full' : 'empty'}",
-                             "View #{viewing_deactivated? ? 'A'  : 'Dea'}ctivated Users"),
-                users_path(deactivated: !viewing_deactivated?) %></li>
+      <li><%= deactivated_view_toggle_link %></li>
     </ul>
   </div>
 </div>
