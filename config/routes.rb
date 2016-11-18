@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # resources :project_logs
   resources :logs, only: [:create, :edit, :update, :show]
   resources :projects, only: [:index, :new, :create, :edit, :update]
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :index]
   root 'dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

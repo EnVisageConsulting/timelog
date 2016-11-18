@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
   def require_user
     raise NOT_FOUND if current_user.blank?
   end
+
+  def require_admin
+    raise NOT_FOUND if !current_user.try(:admin?)
+  end
 end

@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <ul class="menu float-left">
+      <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
+      <li><%= link_to icon("battery-#{viewing_deactivated? ? 'full' : 'empty'}",
+                             "View #{viewing_deactivated? ? 'A'  : 'Dea'}ctivated Users"),
+                users_path(deactivated: !viewing_deactivated?) %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <hr/>
+    <h3>Manage Users</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Email</th>
+          <th>Role</th>
+          <% if viewing_deactivated? %>
+            <th class="text-center">Activate</th>
+          <% else %>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Deactivate</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.last %>, <%= user.first %></td>
+            <td><%= mail_to user.email, user.email %></td>
+            <td><%= user.role.titleize %></td>
+            <% if viewing_deactivated? %>
+              <td class="text-center"><%= link_to icon("battery-empty") %></td>
+            <% else %>
+              <td class="text-center"><%= link_to icon("pencil") %></td>
+              <td class="text-center"><%= link_to icon("battery-full") %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

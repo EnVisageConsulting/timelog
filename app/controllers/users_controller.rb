@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   load_and_authorize_resource param_method: :user_params
 
+  before_action :require_admin, only: :index
+
   def new
   end
 
@@ -12,6 +14,9 @@ class UsersController < ApplicationController
         format.html { render :new }
       end
     end
+  end
+
+  def index
   end
 
   private
