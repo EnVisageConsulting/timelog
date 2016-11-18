@@ -1,0 +1,3 @@
+Questions
+- Do we want to allow deleting logs?
+- Should we allow overlapping logs?
