@@ -21,4 +21,9 @@ class PasswordRecovery < ApplicationRecord
   def email=(value)
     self.user = value.present? ? User.with_email(value) : nil
   end
+
+  # --- Instance Methods --- #
+  def expired?
+    expires_at && expires_at <= Time.now
+  end
 end
