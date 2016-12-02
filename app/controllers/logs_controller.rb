@@ -40,7 +40,14 @@ class LogsController < ApplicationController
   private
 
     def load_new_log
-      @log = Log.new(user: current_user, start_at: DateTime.now)
+      start_at = DateTime.now
+
+      if params[:continue] && ToBoolean(params[:continue])
+        last_log = current_user.logs.order('end_at DESC').first
+        start_at = last_log.end_at + 1.second if last_log
+      end
+
+      @log = Log.new(user: current_user, start_at: start_at)
     end
 
     def log_params
