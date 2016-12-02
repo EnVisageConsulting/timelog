@@ -23,7 +23,7 @@
     <h1>
       <%= log_title(@log) %>
       <small style="font-size: 60%;">
-        <%= @log.start_at.strftime("%-I:%M %p") %> - <%= @log.end_at.strftime("%-I:%M %p") %>
+        <%= @log.start_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %> - <%= @log.end_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %>
       </small>
     </h1>
   </div>
