@@ -1,5 +1,6 @@
 class PasswordRecoveriesController < ApplicationController
   load_resource find_by: :token, param_method: :password_recovery_params
+  before_action :check_recovery_expiration, only: [:edit, :update]
 
   def new
   end
@@ -44,5 +45,11 @@ class PasswordRecoveriesController < ApplicationController
 
     def user_params
       params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def check_recovery_expiration
+      if @password_recovery && @password_recovery.expired?
+        return redirect_to new_password_recovery_path, alert: "That link has expired. Please request a new one."
+      end
     end
 end
