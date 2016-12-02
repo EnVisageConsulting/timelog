@@ -19,3 +19,4 @@
 
 # Added after here...
 .env
+config/database.yml
