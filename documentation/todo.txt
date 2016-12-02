@@ -1,0 +1,7 @@
+- Emails
+  - Password Recovery
+  - Account Confirmation
+- Reports
+  - ...
+- Logging
+  - Allow setting end date by number of hours
