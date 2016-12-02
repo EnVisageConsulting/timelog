@@ -37,6 +37,7 @@ group :development, :test do
   # Added to this group after here
   gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
