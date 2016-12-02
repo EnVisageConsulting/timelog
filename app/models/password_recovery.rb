@@ -26,6 +26,11 @@ class PasswordRecovery < ApplicationRecord
   def to_param; token; end
 
   def expired?
-    expires_at && expires_at <= Time.now
+    expires_at && expires_at <= Time.current
+  end
+
+  def expire!
+    self.expires_at = Time.current
+    save!
   end
 end

@@ -27,6 +27,8 @@ class PasswordRecoveriesController < ApplicationController
 
         format.html { render :edit }
       elsif @user.update_attributes(user_params)
+        @password_recovery.expire!
+
         format.html { redirect_to login_path, notice: "Successfully updated password!" }
       else
         format.html { render :edit }
