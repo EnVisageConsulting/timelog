@@ -17,6 +17,7 @@ class Log < ApplicationRecord
   validate  :start_at_comes_before_end_at
   validate  :end_at_in_the_past
   validate  :project_log_allocation
+  validate  :max_date_range
 
   def start_at_comes_before_end_at
     return unless start_at && end_at
@@ -37,6 +38,11 @@ class Log < ApplicationRecord
     elsif allocation > 1.0
       errors.add(:project_logs, "%s cannot add up to more than 100%")
     end
+  end
+
+  def max_date_range
+    return unless start_at && end_at
+    errors.add(:end_at, "cannot be more than 8 hours from the start date") if (end_at - start_at) > (60 * 60 * 8)
   end
 
   # --- Scopes --- #
