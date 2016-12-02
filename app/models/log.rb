@@ -18,6 +18,7 @@ class Log < ApplicationRecord
   validate  :end_at_in_the_past
   validate  :project_log_allocation
   validate  :max_date_range
+  validate  :overlapping_user_logs
 
   def start_at_comes_before_end_at
     return unless start_at && end_at
@@ -45,10 +46,27 @@ class Log < ApplicationRecord
     errors.add(:end_at, "cannot be more than 8 hours from the start date") if (end_at - start_at) > (60 * 60 * 8)
   end
 
+  def overlapping_user_logs
+    return unless start_at && end_at && user
+    overlapping_log = user.logs.where.not(id: self.id).within(start_at, end_at).first
+
+    if overlapping_log.present?
+      sdate = overlapping_log.start_at.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
+      edate = overlapping_log.end_at.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
+      attr_name = start_at <= overlapping_log.end_at ? :start_at : :end_at
+
+      errors.add attr_name, "overlaps another log from #{sdate} - #{edate}"
+    end
+  end
+
   # --- Scopes --- #
   scope :inactive, -> { where(activated: false) }
   scope :active,   -> { where(activated: true) }
   scope :latest,   -> { order('start_at DESC') }
+
+  # find logs that overlap a daterange
+  # http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+  scope :within,   -> (sdate, edate) { where("(start_at <= ?) AND (end_at >= ?)", edate, sdate) }
 
   # --- Callbacks --- #
   before_save :set_activation
