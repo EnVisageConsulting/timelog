@@ -10,7 +10,7 @@
 
       <div class="float-right text-right">
         <% if !current_user.current_log && current_user.logs.order('end_at DESC').first == @log %>
-          <%= link_to icon("clock-o", "Continue With New Log"), logs_path, method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %><br/>
+          <%= link_to icon("clock-o", "Continue With New Log"), logs_path, method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %>
         <% end %>
       </div>
     </div>
@@ -35,8 +35,8 @@
       <thead>
         <tr>
           <th>Project</th>
-          <th class="text-center">Allocation</th>
-          <th class="text-center">Hours</th>
+          <th class="text-right">Allocation</th>
+          <th class="text-right">Hours</th>
         </tr>
       </thead>
 
