@@ -1,4 +1,6 @@
 class PasswordRecovery < ApplicationRecord
+  has_secure_token
+
   # --- Associations --- #
   belongs_to :user
 
