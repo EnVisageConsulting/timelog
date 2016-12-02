@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20161202011050) do
   create_table "password_recoveries", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.string   "token",      null: false
-    t.datetime "expired_at", null: false
+    t.datetime "expires_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_password_recoveries_on_token", unique: true, using: :btree
