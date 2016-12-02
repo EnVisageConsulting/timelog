@@ -4,6 +4,9 @@ class PasswordRecovery < ApplicationRecord
   # --- Associations --- #
   belongs_to :user
 
+  # --- Validations --- #
+  validates :user, presence: { message: "with that email doesn't exist" }
+
   # --- Callbacks --- #
   before_validation :set_expiration
 
