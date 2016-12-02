@@ -4,6 +4,15 @@ class PasswordRecovery < ApplicationRecord
   # --- Associations --- #
   belongs_to :user
 
+  # --- Callbacks --- #
+  before_validation :set_expiration
+
+  def set_expiration
+    return if expires_at.present?
+
+    self.expires_at = 1.day.from_now
+  end
+
   # --- Setters & Getters --- #
   def email; user.try(:email); end
   def email=(value)
