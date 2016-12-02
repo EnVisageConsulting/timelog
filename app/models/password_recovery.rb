@@ -1,0 +1,2 @@
+class PasswordRecovery < ApplicationRecord
+end
