@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :logs
   has_many :client_users
   has_many :clients, through: :client_users
+  has_many :password_recoveries, dependent: :destroy
 
 
   # --- Validations --- #
