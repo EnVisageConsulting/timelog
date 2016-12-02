@@ -1,10 +1,31 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <% if can?(:edit, @log) %>
-      <p class="float-right"><%= link_to icon("pencil", "Edit Log"), edit_log_path(@log) %></p>
-    <% end %>
-    <h1><%= log_title(@log) %></h1>
+    <div class="clearfix">
+      <% if can?(:edit, @log) %>
+        <ul class="menu float-left">
+          <li><%= link_to icon("pencil", "Edit Log"), edit_log_path(@log) %></li>
+        </ul>
+      <% end %>
+
+      <div class="float-right text-right">
+        <% if !current_user.current_log && current_user.logs.order('end_at DESC').first == @log %>
+          <%= link_to icon("clock-o", "Continue With New Log"), logs_path, method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %><br/>
+        <% end %>
+      </div>
+    </div>
+    <hr/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <h1>
+      <%= log_title(@log) %>
+      <small style="font-size: 60%;">
+        <%= @log.start_at.strftime("%-I:%M %p") %> - <%= @log.end_at.strftime("%-I:%M %p") %>
+      </small>
+    </h1>
   </div>
 </div>
 
