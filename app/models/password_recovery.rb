@@ -23,6 +23,8 @@ class PasswordRecovery < ApplicationRecord
   end
 
   # --- Instance Methods --- #
+  def to_param; token; end
+
   def expired?
     expires_at && expires_at <= Time.now
   end
