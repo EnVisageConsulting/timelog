@@ -22,7 +22,11 @@ class PasswordRecoveriesController < ApplicationController
     @user = @password_recovery.user
 
     respond_to do |format|
-      if @user.update_attributes(user_params)
+      if user_params[:password].blank?
+        @user.errors.add(:password, "is required")
+
+        format.html { render :edit }
+      elsif @user.update_attributes(user_params)
         format.html { redirect_to login_path, notice: "Successfully updated password!" }
       else
         format.html { render :edit }
