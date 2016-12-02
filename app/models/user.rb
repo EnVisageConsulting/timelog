@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :logs
   has_many :client_users
   has_many :clients, through: :client_users
+  has_many :password_recoveries, dependent: :destroy
 
 
   # --- Validations --- #
@@ -39,9 +40,14 @@ class User < ApplicationRecord
   scope :undeactivated, -> { where('deactivated_at IS NULL') }
 
 
+  # --- Class Methods --- #
+  def self.with_email email
+    where(email: email.downcase).first
+  end
+
   # --- Setters & Getters --- #
   def email=(value)
-    value = value.downcase if value.is_a? String
+    value = value.downcase.strip if value.is_a? String
     write_attribute(:email, value)
   end
 

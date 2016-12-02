@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post   'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
   resources :sessions, only: [:new, :create]
+  resources :password_recoveries, only: [:new, :create, :edit, :update]
   # resources :client_projects
   # resources :client_users
   # resources :clients

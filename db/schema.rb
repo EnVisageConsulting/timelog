@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915040226) do
+ActiveRecord::Schema.define(version: 20161202011050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 20160915040226) do
     t.datetime "updated_at",                 null: false
     t.index ["activated"], name: "index_logs_on_activated", using: :btree
     t.index ["user_id"], name: "index_logs_on_user_id", using: :btree
+  end
+
+  create_table "password_recoveries", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.string   "token",      null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_password_recoveries_on_token", unique: true, using: :btree
+    t.index ["user_id"], name: "index_password_recoveries_on_user_id", using: :btree
   end
 
   create_table "project_logs", force: :cascade do |t|

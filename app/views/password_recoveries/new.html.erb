@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <h1>Password Recovery</h1>
+  </div>
+</div>
+
+<%= form_for @password_recovery do |f| %>
+  <%= form_errors @password_recovery %>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit class: 'button' %>
+    </div>
+  </div>
+<% end %>
