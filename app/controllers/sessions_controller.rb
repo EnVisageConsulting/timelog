@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    employee = User.where(id: params[:employee_id]).where.not(role: :client).undeactivated.activated.first
+    employee = User.where(id: params[:employee_id]).undeactivated.activated.first
 
     respond_to do |format|
       if employee && employee.authenticate(params[:password])

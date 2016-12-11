@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:employee, :client, :admin]
+  enum role: [:employee, :admin]
 
   has_secure_password validations: false
 
@@ -10,8 +10,6 @@ class User < ApplicationRecord
 
   # --- Associations --- #
   has_many :logs
-  has_many :client_users
-  has_many :clients, through: :client_users
   has_many :password_recoveries, dependent: :destroy
 
 

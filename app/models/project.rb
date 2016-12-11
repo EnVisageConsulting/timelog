@@ -2,7 +2,6 @@ require 'to_boolean'
 
 class Project < ApplicationRecord
   # --- Associations --- #
-  has_many :client_projects
   has_many :project_logs
 
   # --- Validations --- #
