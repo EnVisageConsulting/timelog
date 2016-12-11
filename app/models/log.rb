@@ -89,18 +89,10 @@ class Log < ApplicationRecord
     end
   end
 
-  # --- Class Methods --- #
-  def self.convert_to_datetime string
-    # reorganize datestring from mm/dd/yyyy to dd/mm/yyyy format for parse method
-    string = string.split '/'
-    string = [string.second, string.first, string.third].join '/'
-    string.in_time_zone TIMEZONE
-  end
-
   # --- Setters & Getters --- #
   def start_at= value
     if value.is_a?(String) && value.match(DATETIME_PATTERN)
-      value = self.class.convert_to_datetime value
+      value = DateTimeParser.string_to_datetime value
     end
 
     write_attribute :start_at, value
@@ -108,7 +100,7 @@ class Log < ApplicationRecord
 
   def end_at= value
     if value.is_a?(String) && value.match(DATETIME_PATTERN)
-      value = self.class.convert_to_datetime value
+      value = DateTimeParser.string_to_datetime value
     end
 
     write_attribute :end_at, value
