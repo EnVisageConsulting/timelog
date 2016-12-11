@@ -25,13 +25,13 @@ default: &default
 development:
   <<: *default
   host: localhost
-  database: timelog_draft_development
+  database: timelog_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: timelog_draft
+  #username: timelog
 
   # The password associated with the postgres role (username).
   #password:
@@ -60,7 +60,7 @@ development:
 test:
   <<: *default
   host: localhost
-  database: timelog_draft_test
+  database: timelog_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: timelog_draft_production
-  username: timelog_draft
-  password: <%= ENV['TIMELOG_DRAFT_DATABASE_PASSWORD'] %>
+  database: timelog_production
+  username: timelog
+  password: <%= ENV['TIMELOG_DATABASE_PASSWORD'] %>
