@@ -110,4 +110,9 @@ class Log < ApplicationRecord
     diff = end_at - start_at
     (diff / 60.0 ) / 60.0
   end
+
+  def date
+    return unless start_at
+    DateTimeParser.datetime_to_string start_at, true
+  end
 end
