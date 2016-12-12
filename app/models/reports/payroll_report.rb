@@ -1,4 +1,8 @@
 class Reports::PayrollReport < TablelessModel
+  validates :user, presence: true
+  validates :start_at, presence: true
+  validates :end_at, presence: true
+
   attr_accessor :user, :start_at, :end_at
 
   def user_id
