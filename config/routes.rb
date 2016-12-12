@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :reports, only: :index
   namespace :reports do
-    resources :payroll_reports, only: [:new, :create]
+    resources :payroll_reports, only: [:new, :create, :index]
   end
 
   get    'login' => 'sessions#new'

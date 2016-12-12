@@ -61,12 +61,5 @@
         </tr>
       </tfoot>
     </table>
-
-
-    <%= link_to "reload report",
-      reports_payroll_reports_path(reports_payroll_report: {
-                                    user_id: params[:reports_payroll_report][:user_id],
-                                    start_date: params[:reports_payroll_report][:start_date],
-                                    end_date: params[:reports_payroll_report][:end_date]}), method: :post %>
   </div>
 </div>

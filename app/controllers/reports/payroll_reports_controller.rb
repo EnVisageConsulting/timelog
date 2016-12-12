@@ -8,11 +8,15 @@ class Reports::PayrollReportsController < ApplicationController
 
     respond_to do |format|
       if @payroll_report.valid?
-        format.html { render :report }
+        format.html { redirect_to reports_payroll_reports_path(reports_payroll_report: payroll_report_params.to_h) }
       else
         format.html { render :new }
       end
     end
+  end
+
+  def index
+    @payroll_report = Reports::PayrollReport.new(payroll_report_params)
   end
 
   private
