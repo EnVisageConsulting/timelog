@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="columns">
+    <h3>Personal Summary Report for: <%= @payroll_report.user.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <table>
+      <thead>
+        <tr>
+          <th class="text-right">Date</th>
+          <th class="text-right">Start</th>
+          <th class="text-right">Stop</th>
+          <th class="text-right">Time</th>
+          <th>Project</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <% total = 0 %>
+      <% @payroll_report.grouped_logs.each do |date, logs| %>
+        <% date_total = 0 %>
+        <tbody>
+          <% logs.each_with_index do |log, index| %>
+            <% log.project_logs.each do |project_log| %>
+              <%
+                total      += project_log.hours
+                date_total += project_log.hours
+              %>
+              <tr>
+                <% if index == 0 %>
+                  <td class="text-right" rowspan="<%= logs.size %>"><%= log.date %></td>
+                <% end %>
+                <td class="text-right"><%= log.start_time %></td>
+                <td class="text-right"><%= log.end_time %></td>
+                <td class="text-right"><%= project_log.hours %></td>
+                <td><%= project_log.project.name %></td>
+                <td><%= simple_format project_log.description %></td>
+              </tr>
+            <% end %>
+          <% end %>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-right"><b><%= date_total %></b></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-right"><b><%= total %></b></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+
+    <%= link_to "reload report",
+      reports_payroll_reports_path(reports_payroll_report: {
+                                    user_id: params[:reports_payroll_report][:user_id],
+                                    start_date: params[:reports_payroll_report][:start_date],
+                                    end_date: params[:reports_payroll_report][:end_date]}), method: :post %>
+  </div>
+</div>
