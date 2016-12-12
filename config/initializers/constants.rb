@@ -13,3 +13,4 @@ DATETIME_PATTERN  = /[0-1]?\d\/[0-3]?\d\/\d{4}\s\d?\d:[0-5][0-9]\s(p|a)m/i.freez
 DATETIME_STRFTIME = "%m/%d/%Y %I:%M %p".freeze
 DATE_PATTERN      = /[0-1]?\d\/[0-3]?\d\/\d{4}/.freeze
 DATE_STRFTIME     = "%m/%d/%Y".freeze
+UTC_DATE_STRFTIME = "%Y%m%d".freeze
