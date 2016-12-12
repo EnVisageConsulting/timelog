@@ -1,3 +1,13 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+class PayrollReport
+  reportForm: ->
+    $(".date").datetimepicker
+      format: 'm/d/Y',
+      maxDate: 0,
+      timepicker: false,
+      scrollMonth: false,
+      yearStart: 2016,
+      yearEnd: new Date().getFullYear()
+
+$(document).on 'reports/payroll_reports_new.load', (e, obj) =>
+  report = new PayrollReport
+  report.reportForm()
