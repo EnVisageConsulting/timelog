@@ -18,6 +18,6 @@ class Reports::PayrollReportsController < ApplicationController
   private
 
     def payroll_report_params
-      params.require(:reports_payroll_report).permit(:start_at, :end_at, :user_id)
+      params.require(:reports_payroll_report).permit(:start_date, :end_date, :user_id)
     end
 end
