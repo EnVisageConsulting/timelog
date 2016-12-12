@@ -1,1 +1,11 @@
 // = require all/reports/payroll_reports
+
+table.report {
+  font-size: 0.8rem;
+  td { vertical-align: top; }
+  tbody {
+    tr { background: none; }
+  }
+  tbody { border-color: #ccc; border-left: 0; border-right: 0; }
+  thead, tfoot { background: none; border: 0; }
+}
