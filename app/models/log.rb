@@ -112,7 +112,20 @@ class Log < ApplicationRecord
   end
 
   def date
+    return unless start_at && end_at
+    sdate = DateTimeParser.datetime_to_string start_at, strftime: DATE_STRFTIME
+    edate = DateTimeParser.datetime_to_string end_at, strftime: DATE_STRFTIME
+
+    [sdate, edate].uniq.join(" - ")
+  end
+
+  def start_time
     return unless start_at
-    DateTimeParser.datetime_to_string start_at, true
+    DateTimeParser.datetime_to_string start_at, strftime: TIME_STRFTIME
+  end
+
+  def end_time
+    return unless end_at
+    DateTimeParser.datetime_to_string end_at, strftime: TIME_STRFTIME
   end
 end

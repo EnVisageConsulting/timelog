@@ -7,9 +7,7 @@ module DateTimeParser
     string.in_time_zone TIMEZONE
   end
 
-  def self.datetime_to_string datetime, date_format=false
-    dformat = date_format ? DATE_STRFTIME : DATETIME_STRFTIME
-
-    datetime.in_time_zone(TIMEZONE).strftime(dformat)
+  def self.datetime_to_string datetime, strftime: DATETIME_STRFTIME
+    datetime.in_time_zone(TIMEZONE).strftime(strftime)
   end
 end
