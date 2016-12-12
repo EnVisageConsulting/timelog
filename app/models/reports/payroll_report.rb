@@ -38,4 +38,14 @@ class Reports::PayrollReport < TablelessModel
 
     self.end_at = value
   end
+
+  def logs
+    return Log.none if [user, start_at, end_at].any?(&:blank?)
+    user.logs.within(start_at, end_at).includes(:project_logs => :project)
+  end
+
+  def grouped_logs
+    return logs unless logs.present?
+    logs.group_by(&:date)
+  end
 end
