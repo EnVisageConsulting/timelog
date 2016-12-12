@@ -2,7 +2,7 @@ class Log
   logForm: ->
     $form = $("form")
 
-    $form.find '.date'
+    $form.find '.datetime'
          .datetimepicker
           format: 'm/d/Y g:i A',
           formatTime: 'g:i A',
