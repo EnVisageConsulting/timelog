@@ -6,4 +6,10 @@ module DateTimeParser
     string = [string.second, string.first, string.third].join '/'
     string.in_time_zone TIMEZONE
   end
+
+  def self.datetime_to_string datetime, date_format=false
+    dformat = date_format ? DATE_STRFTIME : DATETIME_STRFTIME
+
+    datetime.in_time_zone(TIMEZONE).strftime(dformat)
+  end
 end
