@@ -15,10 +15,16 @@ FactoryGirl.define do
   factory :active_user, parent: :user do
     password              "password10"
     password_confirmation "password10"
-    activated_at          2.minutes.ago
+    activated_at          1.second.ago
   end
 
   factory :deactivated_user, parent: :active_user do
-    deactivated_at 1.minute.ago
+    deactivated_at 1.second.ago
+  end
+
+  factory :invalid_user, parent: :user do
+    first nil
+    last nil
+    email nil
   end
 end
