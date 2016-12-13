@@ -1,7 +1,10 @@
 FactoryGirl.define do
   # sequences
-  sequence :email do |n|
-    "email#{n}@example.com"
+  sequence :email do |x|
+    start = User.maximum(:id) || 1
+    index = start + x
+
+    "email#{index}@example.com"
   end
 
 
