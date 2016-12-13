@@ -31,17 +31,15 @@
               <td><%= simple_format project_log.description %></td>
             </tr>
           <% end %>
-          <tr>
-            <td></td>
-            <td class="text-right">Subtotal:</td>
+          <tr class="subtotal">
+            <td class="text-right" colspan="2">Subtotal:</td>
             <td class="text-right"><%= project_total %></td>
             <td></td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td></td>
-            <td class="text-right stat">Total:</td>
+            <td class="text-right stat" colspan="2">Total:</td>
             <td class="text-right stat"><%= total %></td>
             <td></td>
           </tr>

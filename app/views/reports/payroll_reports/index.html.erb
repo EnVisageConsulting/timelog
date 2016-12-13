@@ -41,24 +41,18 @@
               </tr>
             <% end %>
           <% end %>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="text-right" style="border-top: 1px blue solid"><b><%= date_total %></b></td>
-            <td></td>
-            <td></td>
+          <tr class="subtotal">
+            <td class="text-right" colspan="3">Subtotal:</td>
+            <td class="text-right"><b><%= date_total %></b></td>
+            <td colspan="2"></td>
           </tr>
         </tbody>
       <% end %>
       <tfoot>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="text-right stat" colspan="3">Total:</td>
           <td class="text-right stat"><b><%= total %></b></td>
-          <td></td>
-          <td></td>
+          <td colspan="2"></td>
         </tr>
       </tfoot>
     </table>
