@@ -1,27 +1,30 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <ul class="menu float-left">
-      <% if current_user.admin? %>
-        <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
-        <li><%= link_to icon("group", "Manage Users"), users_path %></li>
-        <li><%= link_to icon("book", "View Projects"), projects_path %></li>
-      <% end %>
-    </ul>
+    <div class="clearfix">
+      <ul class="menu float-left">
+        <% if current_user.admin? %>
+          <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
+          <li><%= link_to icon("group", "Manage Users"), users_path %></li>
+          <li><%= link_to icon("book", "View Projects"), projects_path %></li>
+          <li><%= link_to icon("line-chart", "Reports"), reports_path %></li>
+        <% end %>
+      </ul>
 
-    <div class="float-right">
-      <% if log = current_user.current_log %>
-        <%= link_to icon("clock-o", "Finish Log"), edit_log_path(log), class: 'button no-margin hollow warning' %>
-      <% else %>
-        <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
-      <% end %>
+      <div class="float-right">
+        <% if log = current_user.current_log %>
+          <%= link_to icon("clock-o", "Finish Log"), edit_log_path(log), class: 'button no-margin hollow warning' %>
+        <% else %>
+          <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
+        <% end %>
+      </div>
     </div>
+    <hr/>
   </div>
 </div>
 
 <div class="row">
   <div class="columns">
-    <hr/>
     <h3>Recent Logs</h3>
     <table>
       <thead>

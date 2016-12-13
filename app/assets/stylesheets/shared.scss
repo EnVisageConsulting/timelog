@@ -1,0 +1,29 @@
+.alert-text { color: $alert-color; }
+.success-text { color: $success-color; }
+.secondary-text { color: $secondary-color; }
+
+.spacer { padding: 1rem; }
+
+.no-margin { margin: 0 !important; }
+.no-padding { padding: 0 !important; }
+
+table {
+  td.empty {
+    background: $light-gray;
+    padding: 4rem 1rem;
+    text-align: center;
+    color: #777;
+  }
+
+  &.report {
+    font-size: 0.8rem;
+    td { vertical-align: top; }
+    tbody {
+      tr { background: none; }
+    }
+    tbody { border: $primary-color double; border-left: 0; border-right: 0; }
+    thead, tfoot { background: none; border: 0; }
+
+    .subtotal { border-top: 1px solid $medium-gray; font-weight: $global-weight-bold; }
+  }
+}

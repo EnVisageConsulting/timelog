@@ -8,9 +8,10 @@ module ApplicationHelper
   def form_errors(object, options={})
     return unless object.present?
     errors = case object
-             when ActiveRecord::Base then object.errors.full_messages
-             when String             then Array(object)
-             when Array              then object
+             when ActiveRecord::Base,
+                  TablelessModel      then object.errors.full_messages
+             when String              then Array(object)
+             when Array               then object
              else
                return
              end

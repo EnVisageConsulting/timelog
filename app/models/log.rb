@@ -1,8 +1,4 @@
 class Log < ApplicationRecord
-  # --- Constants --- #
-  DATETIME_PATTERN  = /[0-1]?\d\/[0-3]?\d\/\d{4}\s\d?\d:[0-5][0-9]\s(p|a)m/i.freeze
-  DATETIME_STRFTIME = "%m/%d/%Y %I:%M %p".freeze
-
   # --- Associations --- #
   belongs_to :user
 
@@ -17,6 +13,8 @@ class Log < ApplicationRecord
   validate  :start_at_comes_before_end_at
   validate  :end_at_in_the_past
   validate  :project_log_allocation
+  validate  :max_date_range
+  validate  :overlapping_user_logs
 
   def start_at_comes_before_end_at
     return unless start_at && end_at
@@ -39,10 +37,32 @@ class Log < ApplicationRecord
     end
   end
 
+  def max_date_range
+    return unless start_at && end_at
+    errors.add(:end_at, "cannot be more than 8 hours from the start date") if (end_at - start_at) > (60 * 60 * 8)
+  end
+
+  def overlapping_user_logs
+    return unless start_at && end_at && user
+    overlapping_log = user.logs.where.not(id: self.id).within(start_at, end_at).first
+
+    if overlapping_log.present?
+      sdate = overlapping_log.start_at.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
+      edate = overlapping_log.end_at.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
+      attr_name = start_at <= overlapping_log.end_at ? :start_at : :end_at
+
+      errors.add attr_name, "overlaps another log from #{sdate} - #{edate}"
+    end
+  end
+
   # --- Scopes --- #
   scope :inactive, -> { where(activated: false) }
   scope :active,   -> { where(activated: true) }
   scope :latest,   -> { order('start_at DESC') }
+
+  # find logs that overlap a daterange
+  # http://stackoverflow.com/questions/325933/determine-whether-two-date-ranges-overlap
+  scope :within,   -> (sdate, edate) { where("(start_at <= ?) AND (end_at >= ?)", edate, sdate) }
 
   # --- Callbacks --- #
   before_save :set_activation
@@ -65,18 +85,10 @@ class Log < ApplicationRecord
     end
   end
 
-  # --- Class Methods --- #
-  def self.convert_to_datetime string
-    # reorganize datestring from mm/dd/yyyy to dd/mm/yyyy format for parse method
-    string = string.split '/'
-    string = [string.second, string.first, string.third].join '/'
-    string.in_time_zone TIMEZONE
-  end
-
   # --- Setters & Getters --- #
   def start_at= value
     if value.is_a?(String) && value.match(DATETIME_PATTERN)
-      value = self.class.convert_to_datetime value
+      value = DateTimeParser.string_to_datetime value
     end
 
     write_attribute :start_at, value
@@ -84,7 +96,7 @@ class Log < ApplicationRecord
 
   def end_at= value
     if value.is_a?(String) && value.match(DATETIME_PATTERN)
-      value = self.class.convert_to_datetime value
+      value = DateTimeParser.string_to_datetime value
     end
 
     write_attribute :end_at, value
@@ -97,5 +109,23 @@ class Log < ApplicationRecord
 
     diff = end_at - start_at
     (diff / 60.0 ) / 60.0
+  end
+
+  def date
+    return unless start_at && end_at
+    sdate = DateTimeParser.datetime_to_string start_at, strftime: DATE_STRFTIME
+    edate = DateTimeParser.datetime_to_string end_at, strftime: DATE_STRFTIME
+
+    [sdate, edate].uniq.join(" - ")
+  end
+
+  def start_time
+    return unless start_at
+    DateTimeParser.datetime_to_string start_at, strftime: TIME_STRFTIME
+  end
+
+  def end_time
+    return unless end_at
+    DateTimeParser.datetime_to_string end_at, strftime: TIME_STRFTIME
   end
 end

@@ -12,3 +12,16 @@
  *
  *= require_self
  */
+
+.no-print { display: none !important; }
+.top-bar { display: none; }
+
+table.report {
+  tbody, tbody > tr, tbody > tr > td {
+    page-break-inside: avoid !important;
+  }
+  .subtotal {
+    page-break-before: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

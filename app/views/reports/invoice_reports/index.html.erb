@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <h3>Invoice Report for: <%= @invoice_report.project.name %></h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <table class="report invoice-report">
+      <thead>
+        <tr>
+          <th class="text-right">Employee</th>
+          <th class="text-right">Date</th>
+          <th class="text-right">Hours</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <% total = 0 %>
+      <% @invoice_report.grouped_project_logs.each do |user, project_logs| %>
+        <% project_total = project_logs.map(&:hours).inject(:+); total += project_total %>
+        <tbody>
+          <% project_logs.each_with_index do |project_log, index| %>
+            <tr>
+              <% if index == 0 %>
+                <td rowspan="<%= project_logs.size %>" class="text-right"><%= project_log.log.user.name %></td>
+              <% end %>
+              <td class="text-right"><%= project_log.log.date %></td>
+              <td class="text-right"><%= project_log.hours %></td>
+              <td><%= simple_format project_log.description %></td>
+            </tr>
+          <% end %>
+          <tr class="subtotal">
+            <td class="text-right" colspan="2">Subtotal:</td>
+            <td class="text-right"><%= project_total %></td>
+            <td></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="text-right stat" colspan="2">Total:</td>
+            <td class="text-right stat"><%= total %></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      <% end %>
+    </table>
+  </div>
+</div>

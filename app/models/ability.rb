@@ -8,7 +8,6 @@ class Ability
     if user
       if user.admin?
         can :manage, :all
-      elsif user.client?
       elsif user.employee?
         can [:read, :update], User, id: user.id
         can :manage, Log, user_id: user.id

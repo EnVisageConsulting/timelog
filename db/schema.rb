@@ -10,34 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202011050) do
+ActiveRecord::Schema.define(version: 20161211225152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "client_projects", force: :cascade do |t|
-    t.integer  "client_id",   null: false
-    t.integer  "projects_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["client_id"], name: "index_client_projects_on_client_id", using: :btree
-    t.index ["projects_id"], name: "index_client_projects_on_projects_id", using: :btree
-  end
-
-  create_table "client_users", force: :cascade do |t|
-    t.integer  "client_id",  null: false
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_client_users_on_client_id", using: :btree
-    t.index ["user_id"], name: "index_client_users_on_user_id", using: :btree
-  end
-
-  create_table "clients", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "logs", force: :cascade do |t|
     t.integer  "user_id",                    null: false

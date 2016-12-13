@@ -1,16 +1,18 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <ul class="menu float-left">
-      <li><%= link_to icon("plus-circle", "Add Project"), new_project_path %></li>
-      <li><%= deactivated_view_toggle_link %></li>
-    </ul>
+    <div class="clearfix">
+      <ul class="menu float-left">
+        <li><%= link_to icon("plus-circle", "Add Project"), new_project_path %></li>
+        <li><%= deactivated_view_toggle_link %></li>
+      </ul>
+    </div>
+    <hr/>
   </div>
 </div>
 
 <div class="row">
   <div class="columns">
-    <hr/>
     <h3><%= 'Deactivated ' if viewing_deactivated? %>Projects</h3>
     <table>
       <thead>

@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
+  resources :reports, only: :index
+  namespace :reports do
+    resources :invoice_reports, only: [:new, :create, :index]
+    resources :payroll_reports, only: [:new, :create, :index]
+  end
+
   get    'login' => 'sessions#new'
   post   'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
   resources :sessions, only: [:new, :create]
   resources :password_recoveries, only: [:new, :create, :edit, :update]
-  # resources :client_projects
-  # resources :client_users
-  # resources :clients
-  # resources :project_logs
   resources :logs, only: [:create, :edit, :update, :show]
   resources :projects, only: [:index, :new, :create, :edit, :update]
   resources :users, only: [:new, :create, :index, :edit, :update] do

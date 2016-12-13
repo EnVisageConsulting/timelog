@@ -23,5 +23,6 @@ module Timelog
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths << "#{Rails.root}/lib/modules"
+    config.beginning_of_week = :sunday
   end
 end
