@@ -1,6 +1,6 @@
-.alert-text { color: #ec5840; }
-.success-text { color: #3adb76; }
-.secondary-text { color: #777; }
+.alert-text { color: $alert-color; }
+.success-text { color: $success-color; }
+.secondary-text { color: $secondary-color; }
 
 .spacer { padding: 1rem; }
 
@@ -8,7 +8,7 @@
 .no-padding { padding: 0 !important; }
 
 table td.empty {
-  background: #eee;
+  background: $light-gray;
   padding: 4rem 1rem;
   text-align: center;
   color: #777;
