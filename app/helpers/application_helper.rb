@@ -6,17 +6,17 @@ module ApplicationHelper
   end
 
   def readable_date_range(start_at, end_at)
-    value = start_at.strftime("%b %e, %Y")
+    value = start_at.strftime("%b %-e, %Y")
 
     if start_at.year != end_at.year
-      value += " - #{end_at.strftime("%b %e, %Y")}"
+      value += " - #{end_at.strftime("%b %-e, %Y")}"
     elsif start_at.month != end_at.month
       value = value.gsub /\A\w{3} \d+/ do |match|
-        match + " - #{end_at.strftime("%b %e")}"
+        match + " - #{end_at.strftime("%b %-e")}"
       end
     elsif start_at.day != end_at.day
       value = value.gsub /\A\w{3} \d+/ do |match|
-        match + " - #{end_at.strftime("%e")}"
+        match + " - #{end_at.strftime("%-e")}"
       end
     end
 
