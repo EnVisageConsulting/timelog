@@ -26,21 +26,8 @@ module LogsHelper
   def log_title log
     start_at = log.start_at.in_time_zone(TIMEZONE)
     end_at   = log.end_at.in_time_zone(TIMEZONE)
-    value    = start_at.strftime("%b %e, %Y")
 
-    if start_at.year != end_at.year
-      value += " - #{end_at.strftime("%b %e, %Y")}"
-    elsif start_at.month != end_at.month
-      value = value.gsub /\A\w{3} \d+/ do |match|
-        match + " - #{end_at.strftime("%b %e")}"
-      end
-    elsif start_at.day != end_at.day
-      value = value.gsub /\A\w{3} \d+/ do |match|
-        match + " - #{end_at.strftime("%e")}"
-      end
-    end
-
-    value
+    readable_date_range(start_at, end_at)
   end
 
   def user_logs user
