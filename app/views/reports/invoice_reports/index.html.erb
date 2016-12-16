@@ -3,9 +3,36 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Invoice Report for: <%= @invoice_report.project.name %></h3>
+    <h3>Invoice Report for: <%= @invoice_report.project.try :name %></h3>
+    <h5 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
   </div>
 </div>
+
+<%= form_for @invoice_report, url: reports_invoice_reports_path(@invoice_report), html: { class: 'filters-form' } do |f| %>
+  <%= form_errors @invoice_report %>
+
+  <div class="row">
+    <div class="columns medium-4">
+      <%= f.label :project_id %>
+      <%= f.collection_select :project_id, Project.active, :id, :name %>
+    </div>
+
+    <div class="columns medium-3 small-6">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date, class: 'date' %>
+    </div>
+
+    <div class="columns medium-3 small-6">
+      <%= f.label :end_date %>
+      <%= f.text_field :end_date, class: 'date' %>
+    </div>
+
+    <div class="columns medium-2">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
+  </div>
+<% end %>
 
 <div class="row">
   <div class="columns">
