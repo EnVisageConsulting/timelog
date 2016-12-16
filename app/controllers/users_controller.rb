@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_admin, only: [:index, :edit, :update]
+  before_action :require_admin, only: [:index, :edit, :update, :show]
   load_and_authorize_resource param_method: :user_params
-
 
   def new
   end
@@ -30,6 +29,9 @@ class UsersController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def show
   end
 
   private
