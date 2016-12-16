@@ -19,7 +19,7 @@ class HoursChart
   end
 
   def logs
-    @logs ||= user.logs.within(start_date, end_date)
+    @logs ||= user.logs.active.within(start_date, end_date)
   end
 
   private
