@@ -31,7 +31,7 @@ class Dashboard
     stat     = $("#week_hours_count").find(".stat")[ 0 ]
     endVal   = parseFloat stat.dataset.hours
     startVal = 0
-    decimals = 1
+    decimals = if endVal > 0 then 1 else 0
 
     numAnim = new CountUp stat, startVal, endVal, decimals
     numAnim.start()
