@@ -31,4 +31,14 @@ module ApplicationHelper
 
     link_to icon(icon_name, text_value), polymorphic_url(resource, deactivated: !viewing_deactivated?)
   end
+
+  def back_link value, path, options={}
+    content_for :back_link do
+      content_tag :div, class: 'row back-link' do
+        content_tag :div, class: 'column' do
+          link_to icon('arrow-circle-left', value), path, options
+        end
+      end
+    end
+  end
 end
