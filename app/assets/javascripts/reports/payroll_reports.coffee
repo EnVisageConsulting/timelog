@@ -8,6 +8,6 @@ class PayrollReport
       yearStart: 2016,
       yearEnd: new Date().getFullYear()
 
-$(document).on 'reports/payroll_reports_new.load', (e, obj) =>
+$(document).on 'reports/payroll_reports.load', (e, obj) =>
   report = new PayrollReport
   report.reportForm()
