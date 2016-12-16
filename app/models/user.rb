@@ -58,6 +58,10 @@ class User < ApplicationRecord
     "#{self.first} #{self.last}"
   end
 
+  def reverse_name
+    "#{self.last}, #{self.first}"
+  end
+
   def deactivate! deactivate=true
     if deactivate
       self.deactivated_at ||= Time.now
