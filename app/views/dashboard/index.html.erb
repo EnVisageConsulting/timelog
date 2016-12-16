@@ -23,6 +23,16 @@
   </div>
 </div>
 
+<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" %>
+
+<div class="row">
+  <div class="columns small-6"></div>
+  <div class="columns small-6">
+    <canvas id="hours_chart" data-chart-labels="<%= hours_chart_labels %>"
+                             data-chart-values="<%= hours_chart_values %>"></canvas>
+  </div>
+</div>
+
 <div class="row">
   <div class="columns">
     <h3>Recent Logs</h3>
