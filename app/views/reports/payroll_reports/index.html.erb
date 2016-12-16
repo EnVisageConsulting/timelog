@@ -8,32 +8,28 @@
   </div>
 </div>
 
-<div class="row no-print">
-  <div class="columns">
-    <%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report) do |f| %>
-      <div class="row">
-        <div class="columns medium-4">
-          <%= f.label :user_id, "Employee" %>
-          <%= f.collection_select :user_id, User.activated, :id, :name %>
-        </div>
+<%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report), html: { class: 'filters-form' } do |f| %>
+  <div class="row">
+    <div class="columns medium-4">
+      <%= f.label :user_id, "Employee" %>
+      <%= f.collection_select :user_id, User.activated, :id, :name %>
+    </div>
 
-        <div class="columns medium-3 small-6">
-          <%= f.label :start_date %>
-          <%= f.text_field :start_date, class: 'date' %>
-        </div>
-        <div class="columns medium-3 small-6">
-          <%= f.label :end_date %>
-          <%= f.text_field :end_date, class: 'date' %>
-        </div>
+    <div class="columns medium-3 small-6">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date, class: 'date' %>
+    </div>
+    <div class="columns medium-3 small-6">
+      <%= f.label :end_date %>
+      <%= f.text_field :end_date, class: 'date' %>
+    </div>
 
-        <div class="columns medium-2">
-          <%= label_tag "", "&nbsp;".html_safe %>
-          <%= f.submit "Filter", class: 'button expanded' %>
-        </div>
-      </div>
-    <% end %>
+    <div class="columns medium-2">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="row">
   <div class="columns">
