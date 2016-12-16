@@ -19,7 +19,7 @@ class Reports::InvoiceReport < TablelessModel
   end
 
   def start_date
-    return unless start_at
+    return unless start_at.present?
     DateTimeParser.datetime_to_string start_at, strftime: DATE_STRFTIME
   end
 
@@ -32,7 +32,7 @@ class Reports::InvoiceReport < TablelessModel
   end
 
   def end_date
-    return unless end_at
+    return unless end_at.present?
     DateTimeParser.datetime_to_string end_at, strftime: DATE_STRFTIME
   end
 
