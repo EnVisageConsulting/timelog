@@ -33,10 +33,13 @@ module ApplicationHelper
   end
 
   def back_link value, path, options={}
+    icon_name = options.delete(:icon)
+    value     = icon(icon_name || 'arrow-circle-left', value) unless icon_name == false
+
     content_for :back_link do
       content_tag :div, class: 'row back-link' do
         content_tag :div, class: 'column' do
-          link_to icon('arrow-circle-left', value), path, options
+          link_to value, path, options
         end
       end
     end
