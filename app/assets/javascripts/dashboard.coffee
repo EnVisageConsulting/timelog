@@ -27,6 +27,16 @@ class Dashboard
               beginAtZero: true
           }]
 
+  weekHoursCount: ->
+    stat     = $("#week_hours_count").find(".stat")[ 0 ]
+    endVal   = parseFloat stat.dataset.hours
+    startVal = 0
+    decimals = 1
+
+    numAnim = new CountUp stat, startVal, endVal, decimals
+    numAnim.start()
+
 $(document).on 'dashboard_index.load', (e, obj) =>
   dashboard = new Dashboard
   dashboard.hoursChart()
+  dashboard.weekHoursCount()
