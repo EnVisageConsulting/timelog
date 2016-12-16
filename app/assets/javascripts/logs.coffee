@@ -1,16 +1,5 @@
 class Log
   logForm: ->
-    $form = $("form")
-
-    $form.find '.datetime'
-         .datetimepicker
-          format: 'm/d/Y g:i A',
-          formatTime: 'g:i A',
-          maxDate: 0,
-          scrollMonth: false,
-          yearStart: 2016
-          yearEnd: new Date().getFullYear()
-
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
 

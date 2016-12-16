@@ -21,11 +21,13 @@
 //= require_tree .
 
 var loadJavascript = function(controller, action){
+  loadShared();
   if (controller.split("/")[0] == "reports")
     loadReport();
 
   $.event.trigger( controller + ".load");
   $.event.trigger( controller + "_" + action + ".load" );
+
   return true;
 }
 
