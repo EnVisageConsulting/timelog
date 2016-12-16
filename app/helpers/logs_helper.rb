@@ -33,14 +33,4 @@ module LogsHelper
   def user_logs user
     @user_logs ||= user.logs.active.latest
   end
-
-  def user_log_ids user
-    @user_log_ids ||= user_logs(user).pluck(:id)
-  end
-
-  def log_index log
-    user = log.user
-
-    user_log_ids(user).reverse.find_index(log.id)
-  end
 end
