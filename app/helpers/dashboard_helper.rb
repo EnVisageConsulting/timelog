@@ -14,4 +14,12 @@ module DashboardHelper
   def hours_chart_values
     hours_chart.values.join("|")
   end
+
+  def current_week_hours
+    sdate = Time.now.in_time_zone(TIMEZONE).beginning_of_week
+    edate = sdate.end_of_week
+    hours = current_user.logs.active.within(sdate, edate).map(&:hours).inject(:+) || 0
+
+    number_with_precision hours, strip_insignificant_zeros: true, precision: 1
+  end
 end

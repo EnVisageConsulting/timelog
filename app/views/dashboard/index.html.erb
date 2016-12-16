@@ -25,11 +25,23 @@
 
 <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" %>
 
-<div class="row">
-  <div class="columns small-6"></div>
+<div class="row show-for-medium">
+  <div class="columns small-6 text-center">
+    <div class="callout primary">
+      <div class="spacer show-for-large"></div>
+      <div class="spacer"></div>
+      <h5>Hours Completed This Week</h5>
+      <span class="stat"><strong><%= current_week_hours %></strong></span>
+      <div class="spacer"></div>
+      <div class="spacer show-for-large"></div>
+    </div>
+  </div>
+
   <div class="columns small-6">
-    <canvas id="hours_chart" data-chart-labels="<%= hours_chart_labels %>"
-                             data-chart-values="<%= hours_chart_values %>"></canvas>
+    <canvas id="hours_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="<%= hours_chart_labels %>"
+            data-chart-values="<%= hours_chart_values %>"></canvas>
   </div>
 </div>
 
