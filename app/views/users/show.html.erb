@@ -1,0 +1,43 @@
+<%= back_link "Return to User List", users_path %>
+
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <div class="float-right">
+      <%= form_tag @user, method: :get do %>
+        <div class="input-group no-margin">
+          <%= text_field_tag :date, params[:date] || Date.today.strftime(DATE_STRFTIME), class: "input-group-field date" %>
+          <div class="input-group-button">
+            <%= submit_tag "Jump to Date", class: 'button' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <h3><%= @user.name %>'s Logs</h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Log Date</th>
+          <th class="text-center">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user_logs = user_logs(@user).includes(:project_logs) %>
+        <% if user_logs.present? %>
+          <% user_logs.each do |log| %>
+            <tr>
+              <td class="text-right secondary-text"><small>#</small><%= log_index(log) + 1 %></td>
+              <td><%= link_to log_title(log), log %></td>
+              <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td class="empty" colspan="3">You have no logs yet</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
