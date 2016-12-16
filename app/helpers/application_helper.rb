@@ -23,6 +23,10 @@ module ApplicationHelper
     value
   end
 
+  def strip_insignificant_zeros value, decimals=1
+    number_with_precision value, strip_insignificant_zeros: true, precision: decimals
+  end
+
   def form_errors(object, options={})
     return unless object.present?
     errors = case object
@@ -60,6 +64,18 @@ module ApplicationHelper
           link_to value, path, options
         end
       end
+    end
+  end
+
+  def duration start_at, end_at
+    diff = end_at - start_at
+
+    if diff < 1.minute
+      return "#{strip_insignificant_zeros(diff)} seconds"
+    elsif diff < 1.hour
+      return "#{strip_insignificant_zeros(diff / 60.0)} minutes"
+    else
+      return "#{strip_insignificant_zeros(diff / 60.0 / 60.0)} hours"
     end
   end
 end

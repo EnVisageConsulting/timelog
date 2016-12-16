@@ -51,6 +51,7 @@
         <tr>
           <th></th>
           <th>Log Date</th>
+          <th></th>
           <th class="text-center">Edit</th>
         </tr>
       </thead>
@@ -61,6 +62,7 @@
             <tr>
               <td class="text-right secondary-text"><small>#</small><%= log_index(log) + 1 %></td>
               <td><%= link_to log_title(log), log %></td>
+              <td><%= duration log.start_at, log.end_at %></td>
               <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>

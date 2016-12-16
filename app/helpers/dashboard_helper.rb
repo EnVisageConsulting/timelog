@@ -20,6 +20,6 @@ module DashboardHelper
     edate = sdate.end_of_week
     hours = current_user.logs.active.within(sdate, edate).map(&:hours).inject(:+) || 0
 
-    number_with_precision hours, strip_insignificant_zeros: true, precision: 1
+    strip_insignificant_zeros hours
   end
 end
