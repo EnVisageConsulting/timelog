@@ -55,3 +55,7 @@
 .row { max-width: 60rem; }
 table td :last-child { margin-bottom: 0; }
 textarea { resize: vertical; }
+.top-bar-title {
+  padding: $menu-item-padding;
+  line-height: 1;
+}
