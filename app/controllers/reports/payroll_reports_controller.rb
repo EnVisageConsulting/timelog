@@ -22,6 +22,7 @@ class Reports::PayrollReportsController < ApplicationController
   private
 
     def payroll_report_params
+      return redirect_to(new_reports_payroll_report_path, alert: "Incomplete report parameters") if params[:reports_payroll_report].nil?
       params.require(:reports_payroll_report).permit(:start_date, :end_date, :user_id)
     end
 end
