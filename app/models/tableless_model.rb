@@ -7,7 +7,7 @@ class TablelessModel
   # attr_accessor :whatever
 
   def initialize(attributes = {})
-    attributes.each do |name, value|
+    attributes.is_a?(Hash) && attributes.each do |name, value|
       send("#{name}=", value)
     end
   end
