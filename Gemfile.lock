@@ -90,6 +90,7 @@ GEM
       sprockets-es6 (>= 0.9.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    googlecharts (1.6.12)
     guard (2.14.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -274,6 +275,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   font-awesome-sass
   foundation-rails
+  googlecharts
   guard
   guard-bundler
   guard-rspec
