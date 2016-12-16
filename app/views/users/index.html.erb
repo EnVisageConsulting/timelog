@@ -32,7 +32,7 @@
         <% if user_list.present? %>
           <% user_list.each do |user| %>
             <tr>
-              <td><%= user.last %>, <%= user.first %></td>
+              <td><%= link_to user.reverse_name, user_path(user) %></td>
               <td><%= mail_to user.email, user.email %></td>
               <td><%= user.role.titleize %></td>
               <% if viewing_deactivated? %>
