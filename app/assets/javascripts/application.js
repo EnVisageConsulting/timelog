@@ -17,6 +17,7 @@
 //= require foundation
 //= require moment
 //= require garlic
+//= require countup
 //= require inputmask/manifest
 //= require_tree .
 

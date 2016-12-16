@@ -58,7 +58,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'foundation-rails'
 gem 'font-awesome-sass'
 gem 'cancancan'
-
+gem 'googlecharts'
 
 group :test do
   # command line tool to easily handle events on file system modifications

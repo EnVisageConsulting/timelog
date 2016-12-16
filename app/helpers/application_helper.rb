@@ -5,6 +5,28 @@ module ApplicationHelper
     datetime.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
   end
 
+  def readable_date_range(start_at, end_at)
+    value = start_at.strftime("%b %-e, %Y")
+
+    if start_at.year != end_at.year
+      value += " - #{end_at.strftime("%b %-e, %Y")}"
+    elsif start_at.month != end_at.month
+      value = value.gsub /\A\w{3} \d+/ do |match|
+        match + " - #{end_at.strftime("%b %-e")}"
+      end
+    elsif start_at.day != end_at.day
+      value = value.gsub /\A\w{3} \d+/ do |match|
+        match + " - #{end_at.strftime("%-e")}"
+      end
+    end
+
+    value
+  end
+
+  def strip_insignificant_zeros value, decimals=1
+    number_with_precision value, strip_insignificant_zeros: true, precision: decimals
+  end
+
   def form_errors(object, options={})
     return unless object.present?
     errors = case object
@@ -42,6 +64,18 @@ module ApplicationHelper
           link_to value, path, options
         end
       end
+    end
+  end
+
+  def duration start_at, end_at
+    diff = end_at - start_at
+
+    if diff < 1.minute
+      return "#{strip_insignificant_zeros(diff)} seconds"
+    elsif diff < 1.hour
+      return "#{strip_insignificant_zeros(diff / 60.0)} minutes"
+    else
+      return "#{strip_insignificant_zeros(diff / 60.0 / 60.0)} hours"
     end
   end
 end

@@ -23,6 +23,26 @@
   </div>
 </div>
 
+<div class="row show-for-medium">
+  <div class="columns small-6 text-center">
+    <div class="callout primary" id="week_hours_count">
+      <div class="spacer show-for-large"></div>
+      <div class="spacer"></div>
+      <h5>Hours Completed This Week</h5>
+      <strong class="stat" data-hours="<%= current_week_hours %>"></strong>
+      <div class="spacer"></div>
+      <div class="spacer show-for-large"></div>
+    </div>
+  </div>
+
+  <div class="columns small-6">
+    <canvas id="hours_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="<%= hours_chart_labels %>"
+            data-chart-values="<%= hours_chart_values %>"></canvas>
+  </div>
+</div>
+
 <div class="row">
   <div class="columns">
     <h3>Recent Logs</h3>
@@ -31,6 +51,7 @@
         <tr>
           <th></th>
           <th>Log Date</th>
+          <th></th>
           <th class="text-center">Edit</th>
         </tr>
       </thead>
@@ -41,12 +62,13 @@
             <tr>
               <td class="text-right secondary-text"><small>#</small><%= log_index(log) + 1 %></td>
               <td><%= link_to log_title(log), log %></td>
+              <td><%= duration log.start_at, log.end_at %></td>
               <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>
         <% else %>
           <tr>
-            <td class="empty" colspan="3">You have no logs yet</td>
+            <td class="empty" colspan="4">You have no logs yet</td>
           </tr>
         <% end %>
       </tbody>
