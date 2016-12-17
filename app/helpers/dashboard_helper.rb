@@ -22,4 +22,8 @@ module DashboardHelper
 
     strip_insignificant_zeros hours
   end
+
+  def recent_logs
+    @recent_logs ||= current_user.logs.active.latest.limit(Kaminari.config.default_per_page)
+  end
 end

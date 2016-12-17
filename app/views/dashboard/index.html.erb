@@ -56,9 +56,8 @@
         </tr>
       </thead>
       <tbody>
-        <% user_logs = user_logs(current_user).includes(:project_logs) %>
-        <% if user_logs.present? %>
-          <% user_logs.each do |log| %>
+        <% if recent_logs.present? %>
+          <% recent_logs.each do |log| %>
             <tr>
               <td class="text-right"><%= link_to log_title(log), log %></td>
               <td><%= duration log.start_at, log.end_at %></td>
