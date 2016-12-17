@@ -9,6 +9,8 @@ a.alert-link:hover { color: scale-color($alert-color, $lightness: -14%); }
 
 .spacer { padding: 1rem; }
 
+.monospaced { font-family: $font-family-monospace; }
+
 .no-margin { margin: 0 !important; }
 .no-padding { padding: 0 !important; }
 
