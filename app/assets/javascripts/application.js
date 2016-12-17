@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.datetimepicker.full
+//= require jquery.plugin
+//= require jquery.countdown
 //= require turbolinks
 //= require foundation
 //= require moment
