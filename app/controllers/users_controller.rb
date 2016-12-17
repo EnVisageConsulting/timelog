@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_admin, only: [:index, :edit, :update]
+  before_action :set_per_page
   load_and_authorize_resource param_method: :user_params
 
   def new
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @logs = user_logs.page(pagination_page).per(per_page)
+    @logs = user_logs.page(pagination_page).per(@per_page)
   end
 
   private
@@ -49,15 +50,15 @@ class UsersController < ApplicationController
       @user_logs ||= @user.logs.active.latest
     end
 
-    def per_page
-      # return 5 # uncomment for testing with smaller groups
-      Kaminari.config.default_per_page
+    def set_per_page
+      # return @per_page = 5 # uncomment for testing with smaller groups
+      @per_page = Kaminari.config.default_per_page
     end
 
     def page_from_date(date)
       records_from_date = user_logs.where('start_at >= ?', date).count.to_f
 
-      ( records_from_date / per_page ).ceil
+      ( records_from_date / @per_page ).ceil
     end
 
     def pagination_page

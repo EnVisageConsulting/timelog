@@ -5,16 +5,18 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <div class="float-right">
-      <%= form_tag @user, method: :get do %>
-        <div class="input-group no-margin">
-          <%= text_field_tag :date, params[:date] || Date.today.strftime(DATE_STRFTIME), class: "input-group-field date" %>
-          <div class="input-group-button">
-            <%= submit_tag "Jump to Date", class: 'button' %>
+    <% if @logs.total_count > @per_page %>
+      <div class="float-right">
+        <%= form_tag @user, method: :get do %>
+          <div class="input-group no-margin">
+            <%= text_field_tag :date, params[:date] || Date.today.strftime(DATE_STRFTIME), class: "input-group-field date" %>
+            <div class="input-group-button">
+              <%= submit_tag "Jump to Date", class: 'button' %>
+            </div>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
     <h3><%= @user.name %>'s Logs</h3>
     <table>
       <thead>
