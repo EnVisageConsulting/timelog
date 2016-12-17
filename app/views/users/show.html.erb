@@ -40,6 +40,6 @@
         <% end %>
       </tbody>
     </table>
-    <%= paginate(@logs) if @logs.present? %>
+    <%= paginate(@logs, {params: {date: nil}}) if @logs.present? %>
   </div>
 </div>
