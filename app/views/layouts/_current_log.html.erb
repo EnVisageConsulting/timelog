@@ -1,0 +1,21 @@
+<div class="current-log">
+  <div class="row">
+    <div class="columns">
+      <%= link_to icon("clock-o", "Finish Current Log"), edit_log_path(current_log) %>
+      <%= content_tag :div, nil, id: 'elapsed-time',
+                                 style: 'display: inline-block;',
+                                 title: 'Elapsed Time',
+                                 data: {
+                                   start_date: current_log.start_at.in_time_zone(TIMEZONE).to_s,
+                                   tooltip: ''
+                                 } %>
+    </div>
+  </div>
+</div>
+
+<script>
+var $el   = $('#elapsed-time'),
+    start = moment($el.data('start-date')).toDate();
+
+$el.countdown({since: start, layout: '<b>{hnn}h {mnn}m {snn}s</b>'});
+</script>

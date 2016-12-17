@@ -15,6 +15,7 @@
 
   <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
     <%= render 'layouts/header' %>
+    <%= render 'layouts/current_log' if current_log %>
     <%= render 'layouts/flash' if flash.present? %>
     <%= yield(:back_link) %>
     <%= yield %>
