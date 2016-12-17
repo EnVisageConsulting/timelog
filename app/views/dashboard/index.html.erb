@@ -50,8 +50,9 @@
     <table>
       <thead>
         <tr>
-          <th class="text-right">Log Date</th>
-          <th>Duration</th>
+          <th></th>
+          <th class="text-left">Log Date</th>
+          <th class="text-right">Duration</th>
           <th class="text-center">Edit</th>
         </tr>
       </thead>
@@ -59,8 +60,11 @@
         <% if recent_logs.present? %>
           <% recent_logs.each do |log| %>
             <tr>
-              <td class="text-right"><%= link_to log_title(log), log %></td>
-              <td><%= duration log.start_at, log.end_at %></td>
+              <td class="text-right">
+                <small><%= log_days_of_week(log) %></small>
+              </td>
+              <td class="text-left"><%= link_to log_title(log), log %></td>
+              <td class="text-right"><%= duration log.start_at, log.end_at %></td>
               <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>
