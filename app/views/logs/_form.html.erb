@@ -52,3 +52,13 @@
     </div>
   </div>
 <% end %>
+
+<% unless @log.activated? %>
+  <div class="row">
+    <div class="columns">
+      <%= link_to icon("ban", "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
+    </div>
+  </div>
+<% end %>
+
+<div class="spacer"></div>
