@@ -29,8 +29,4 @@ module LogsHelper
 
     readable_date_range(start_at, end_at)
   end
-
-  def user_logs user
-    @user_logs ||= user.logs.active.latest
-  end
 end

@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @logs = @user.logs.active.latest.page(params[:page])
   end
 
   private
