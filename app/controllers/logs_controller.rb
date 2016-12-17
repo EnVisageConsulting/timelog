@@ -37,6 +37,14 @@ class LogsController < ApplicationController
     redirect_to edit_log_path(@log) unless @log.activated?
   end
 
+  def destroy
+    @log.destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Log cancelled." }
+    end
+  end
+
   private
 
     def load_new_log
