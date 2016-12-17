@@ -9,7 +9,7 @@
       <% end %>
 
       <div class="float-right text-right">
-        <% if !current_user.current_log && current_user.logs.order('end_at DESC').first == @log %>
+        <% if !current_log && current_user.logs.order('end_at DESC').first == @log %>
           <%= link_to icon("clock-o", "Continue With New Log"), logs_path(continue: true), method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %>
         <% end %>
       </div>

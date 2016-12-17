@@ -3,9 +3,9 @@ class LogsController < ApplicationController
   load_and_authorize_resource param_method: :log_params
 
   def create
-    if current_user.current_log
+    if current_log
       flash[:alert] = "You have an active log that needs to be completed first."
-      return redirect_to edit_log_path(current_user.current_log)
+      return redirect_to edit_log_path(current_log)
     end
 
     respond_to do |format|

@@ -12,8 +12,8 @@
       </ul>
 
       <div class="float-right">
-        <% if log = current_user.current_log %>
-          <%= link_to icon("clock-o", "Finish Log"), edit_log_path(log), class: 'button no-margin hollow warning' %>
+        <% if current_log %>
+          <%= link_to icon("clock-o", "Finish Log"), edit_log_path(current_log), class: 'button no-margin hollow warning' %>
         <% else %>
           <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
         <% end %>
