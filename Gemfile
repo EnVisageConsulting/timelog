@@ -59,6 +59,7 @@ gem 'foundation-rails'
 gem 'font-awesome-sass'
 gem 'cancancan'
 gem 'googlecharts'
+gem 'kaminari'
 
 group :test do
   # command line tool to easily handle events on file system modifications
