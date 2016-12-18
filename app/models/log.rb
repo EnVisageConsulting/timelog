@@ -9,7 +9,7 @@ class Log < ApplicationRecord
   # --- Validations --- #
   validates :start_at, presence: true
   validates :end_at, presence: { if: :activated? }
-  validates :project_logs, presence: { if: :end_at? }
+  validates :project_logs, presence: { if: :activated? }
   validate  :start_at_comes_before_end_at
   validate  :end_at_in_the_past
   validate  :project_log_allocation
@@ -30,7 +30,7 @@ class Log < ApplicationRecord
     return unless project_logs.present?
     allocation = project_logs.map(&:total_allocation).inject(:+)
 
-    if end_at? && allocation != 1.0
+    if activated? && allocation != 1.0
       errors.add(:project_logs, "%s must add up to 100%")
     elsif allocation > 1.0
       errors.add(:project_logs, "%s cannot add up to more than 100%")
