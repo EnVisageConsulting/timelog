@@ -1,3 +1,5 @@
+require 'date_time_parser'
+
 class Reports::InvoiceReport < TablelessModel
   validates :project, presence: true
   validates :start_at, presence: true

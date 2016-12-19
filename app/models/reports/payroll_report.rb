@@ -1,3 +1,5 @@
+require 'date_time_parser'
+
 class Reports::PayrollReport < TablelessModel
   validates :user, presence: true
   validates :start_at, presence: true
