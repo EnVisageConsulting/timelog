@@ -50,7 +50,7 @@ $ rake db:setup
 Start a rails server:
 
 ```
-rails s
+$ rails s
 ```
 
 Now you can navigate to `localhost:3000` to view your changes/files served locally.
