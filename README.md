@@ -10,6 +10,12 @@
 
 ## Setup
 
+#### Download Project
+```
+$ git clone git@github.com:EnVisageConsulting/timelog.git
+```
+<small><b>Note:</b> Run the following set up commands inside the newly created project directory (`cd timelog`).</small>
+
 #### Ruby
 This project uses ruby `2.3.1`. Make sure you are on the right ruby version:
 
