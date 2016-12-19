@@ -275,7 +275,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   dotenv-rails
-  factory_girl_rails (~> 4.0)
+  factory_girl_rails
   font-awesome-sass
   foundation-rails
   googlecharts

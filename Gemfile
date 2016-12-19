@@ -35,7 +35,6 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   # Added to this group after here
-  gem 'factory_girl_rails', '~> 4.0'
   gem 'rspec-rails'
   gem 'dotenv-rails'
 end
@@ -60,6 +59,7 @@ gem 'font-awesome-sass'
 gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'
+gem 'factory_girl_rails'
 
 group :test do
   # command line tool to easily handle events on file system modifications
