@@ -40,7 +40,7 @@ class User < ApplicationRecord
 
   # --- Class Methods --- #
   def self.with_email email
-    where(email: email.downcase).first
+    where(email: email.downcase.strip).first
   end
 
   # --- Setters & Getters --- #
