@@ -14,10 +14,11 @@ class ProjectLog < ApplicationRecord
   validates_numericality_of :percent, greater_than_or_equal_to: 0, message: "cannot be less than 0%"
 
   # --- Setters & Getters --- #
-  def percent=value
-    value = value.chomp('%').to_i if value.is_a?(String)
+  def percent=(value)
+    value = value.chomp('%').to_i    if value.is_a?(String)
+    value = (value / 100.0).round(2) if value.present?
 
-    self.total_allocation = value.nil? ? value : (value / 100.0).round(2)
+    self.total_allocation = value
   end
 
   def percent
