@@ -10,13 +10,13 @@
 
 ## Setup
 
-#### Download Project
+### Download Project
 ```
 $ git clone git@github.com:EnVisageConsulting/timelog.git
 ```
 <small><b>Note:</b> Run the following set up commands inside the newly created project directory (`cd timelog`).</small>
 
-#### Ruby
+### Ruby
 This project uses ruby `2.3.1`. Make sure you are on the right ruby version:
 
 ```
@@ -24,13 +24,13 @@ $ ruby -v
 > ruby 2.3.1p112
 ```
 
-#### Install Gems
+### Install Gems
 
 ```
 $ bundle install
 ```
 
-#### Database
+### Database
 We use PostgreSQL for the database. Ensure that you have it installed:
 
 ```
@@ -51,7 +51,7 @@ $ rake db:setup
 ```
 <small>**Note:** The `db:setup` task will include seed data. Run `rake db:create` and `rake db:migrate` if you want to create the database without seed data.</small>
 
-#### Rails
+### Rails
 
 Start a rails server:
 
