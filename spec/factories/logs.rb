@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :log, aliases: [:inactive_log] do
     user
     start_at Time.now
+
+    trait :with_project_log do
+      project_logs { [ FactoryGirl.build(:project_log) ] }
+    end
   end
 
   factory :active_log, parent: :log do
