@@ -73,9 +73,9 @@ module ApplicationHelper
     if diff < 1.minute
       return "#{strip_insignificant_zeros(diff)} seconds"
     elsif diff < 1.hour
-      return "#{strip_insignificant_zeros(diff / 60.0)} minutes"
+      return "#{strip_insignificant_zeros(Seconds.to_mins(diff))} minutes"
     else
-      return "#{strip_insignificant_zeros(diff / 60.0 / 60.0)} hours"
+      return "#{strip_insignificant_zeros(Seconds.to_hrs(diff))} hours"
     end
   end
 end

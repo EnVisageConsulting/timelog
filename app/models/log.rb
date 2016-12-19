@@ -1,3 +1,5 @@
+require 'seconds'
+
 class Log < ApplicationRecord
   # --- Associations --- #
   belongs_to :user
@@ -75,7 +77,7 @@ class Log < ApplicationRecord
   end
 
   def set_project_log_hours
-    return unless hours
+    return if hours.nil?
 
     self.project_logs.each do |project_log|
       allocation = project_log.total_allocation
@@ -106,9 +108,7 @@ class Log < ApplicationRecord
   def hours
     return unless start_at? && end_at? && start_at <= end_at
     return 0.0 if end_at == start_at
-
-    diff = end_at - start_at
-    (diff / 60.0 ) / 60.0
+    Seconds.to_hours(end_at - start_at)
   end
 
   def date
