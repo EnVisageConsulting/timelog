@@ -1,6 +1,7 @@
 class DeactivatesController < ApplicationController
   before_action :require_admin
   load_and_authorize_resource :user
+  require 'to_boolean'
 
   def update
     raise NOT_FOUND unless params[:deactivate]
