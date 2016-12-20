@@ -24,14 +24,14 @@
     </div>
   </div>
 
-  <% unless @user.persisted? %>
-    <div class="row">
-      <div class="columns">
-        <%= f.label :email %>
-        <%= f.text_field :email %>
-      </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
     </div>
-  <% end %>
+  </div>
+  
 
   <div class="row">
     <div class="columns">

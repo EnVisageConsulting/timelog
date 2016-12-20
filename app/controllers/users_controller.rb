@@ -39,8 +39,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      permitted = [:first, :last]
-      permitted.push(:email) if params[:action] == 'create'
+      permitted = [:first, :last, :email]
       permitted.push(:role)  if current_user.admin?
 
       params.require(:user).permit(permitted)
