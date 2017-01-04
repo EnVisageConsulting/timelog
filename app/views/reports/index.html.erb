@@ -6,6 +6,12 @@
     <div style="max-width: 480px; margin: auto;">
       <hr/>
       <div class="row">
+        <div class="columns large">
+          <%= link_to "Comprehensive Report", reports_comprehensive_report_path, class: 'button expanded no-margin' %>
+        </div>
+      </div>
+      <br>
+      <div class="row">
         <div class="columns small-5">
           <%= link_to "Payroll Report", new_reports_payroll_report_path, class: 'button expanded no-margin' %>
         </div>
@@ -14,6 +20,7 @@
           <%= link_to "Invoice Report", new_reports_invoice_report_path, class: 'button expanded no-margin' %>
         </div>
       </div>
+      
       <hr/>
         <!-- <p><em>Or</em></p> -->
     </div>
