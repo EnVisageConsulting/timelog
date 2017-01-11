@@ -1,0 +1,31 @@
+<%= back_link "Run Different Report", reports_path, icon: "line-chart" %>
+
+<div class="row">
+  <div class="columns">
+    <div class="spacer"></div>
+    <h3>Comprehensive Report</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <table class="report invoice-report">
+      <thead>
+        <tr>
+          <th class="text-right">Project</th>
+          <th class="text-right">Employee</th>
+          <th class="text-right">Date</th>
+          <th class="text-right">Hours</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+
+      <tfoot>
+        <tr>
+          <td class="text-right stat" colspan="2">Total:</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
