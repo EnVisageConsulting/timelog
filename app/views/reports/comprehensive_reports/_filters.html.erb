@@ -1,4 +1,4 @@
-<%= form_for reports_comprehensive_reports_path html: { class: 'filters-form' } do |f| %>
+<%= form_for @comprehensive_report, url: reports_comprehensive_reports_path(@comprehensive_report), html: { class: 'filters-form' } do |f| %>
   <div class="row">
     <div class="columns medium-4">
       <%= f.label :project_id %>
@@ -8,11 +8,11 @@
       <%= f.label :user_id %>
       <%= f.collection_select :user_id, User.accessible_by(current_ability), :id, :name, include_blank: 'All Employees' %>
     </div>
-    <div class="columns medium-3 small-6">
+    <div class="columns medium-2 small-6">
       <%= f.label :start_date , "Start Date" %>
       <%= f.text_field :start_date %>
     </div>
-    <div class="columns medium-3 small-6">
+    <div class="columns medium-2 small-6">
       <%= f.label :end_date, "End Date" %>
       <%= f.text_field :end_date %>
     </div>

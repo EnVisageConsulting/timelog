@@ -1,12 +1,15 @@
 <%= back_link "Run Different Report", reports_path, icon: "line-chart" %>
-<%= render 'filters'%>
+
 
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
     <h3>Comprehensive Report</h3>
+    <h5 class="subheader">Period of: <%= @comprehensive_report.start_date %> - <%= @comprehensive_report.end_date %></h3>
   </div>
 </div>
+
+<%= render 'filters'%>
 
 <div class="row">
   <div class="columns">
@@ -17,13 +20,27 @@
           <th class="text-right">Employee</th>
           <th class="text-right">Date</th>
           <th class="text-right">Hours</th>
-          <th>Description</th>
         </tr>
       </thead>
 
+      <tbody>
+      <% total = 0 %>
+      <% @comprehensive_report.all_logs.each do |log| %>
+        <% total += log.hours %>
+            <tr>
+              <td class="text-right"><%= log.projects.map(&:name).to_sentence %></td>
+              <td class="text-right"><%= log.user.name %></td>
+              <td class="text-right"><%= log.date %></td>
+              <td class="text-right"><%= log.hours.round(2) %></td>
+            </tr>
+      <% end %>
+    </tbody>
+
+
       <tfoot>
         <tr>
-          <td class="text-right stat" colspan="2">Total:</td>
+          <td class="text-right stat" colspan="3">Total:</td>
+          <td class="text-right stat"><%= total.round(2) %></td>
           <td></td>
         </tr>
       </tfoot>
