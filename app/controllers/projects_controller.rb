@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :require_admin
   load_and_authorize_resource param_method: :project_params
 
   def index

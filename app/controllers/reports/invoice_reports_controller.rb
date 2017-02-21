@@ -1,4 +1,6 @@
 class Reports::InvoiceReportsController < ApplicationController
+  before_action :require_admin
+
   def new
     @invoice_report = Reports::InvoiceReport.new
   end
