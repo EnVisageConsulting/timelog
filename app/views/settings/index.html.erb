@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <%= form_for current_user do |f| %>
+  <%= form_for current_user, url: settings_path, html: {method: :patch} do |f| %>
     <%= form_errors current_user %>
 
     <div class="row">

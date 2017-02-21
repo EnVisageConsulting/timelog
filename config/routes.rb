@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resource :password, only: [:edit, :update]
   end
   get 'settings' => 'settings#index'
+  patch 'settings' => 'settings#update'
   root 'dashboard#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
