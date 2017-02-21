@@ -27,8 +27,10 @@ window.loadShared = ->
     clocks  = ["&#128347;","&#128336;","&#128337;","&#128338;","&#128339;","&#128340;","&#128341;","&#128342;","&#128343;","&#128344;","&#128345;","&#128346;"]
     counter = 0
 
-    setInterval ->
+    updateClock = ->
       title.innerHTML = clocks[counter%clocks.length] + " " + origTxt
       counter++
-    , 1000
+
+    updateClock()
+    setInterval updateClock, 1000
 
