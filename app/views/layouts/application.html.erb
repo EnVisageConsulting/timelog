@@ -13,7 +13,7 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>" data-current-log="<%= current_log.present? %>">
     <%= render 'layouts/header' %>
     <%= render 'layouts/current_log' if current_log %>
     <%= render 'layouts/flash' if flash.present? %>
