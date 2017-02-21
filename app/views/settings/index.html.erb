@@ -19,7 +19,7 @@
     <div class="row">
       <div class="columns">
         <%= label_tag :password %>
-        <p><%= link_to icon("lock", "Change Password") %></p>
+        <p><%= link_to icon("lock", "Change Password"), edit_user_password_path(current_user) %></p>
       </div>
     </div>
 
