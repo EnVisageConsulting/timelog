@@ -14,6 +14,8 @@ a.alert-link:hover { color: scale-color($alert-color, $lightness: -14%); }
 .no-margin { margin: 0 !important; }
 .no-padding { padding: 0 !important; }
 
+.small-container { max-width: 30rem; margin: auto; }
+
 table {
   td.empty {
     background: $light-gray;
