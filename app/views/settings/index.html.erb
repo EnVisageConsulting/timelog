@@ -1,1 +1,32 @@
-Email: <%= current_user.email %>
+<div class="small-container">
+  <div class="row">
+    <div class="columns">
+      <div class="spacer"></div>
+      <h1>User Settings</h1>
+    </div>
+  </div>
+
+  <%= form_for current_user do |f| %>
+    <%= form_errors current_user %>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= label_tag :password %>
+        <p><%= link_to icon("lock", "Change Password") %></p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.submit "Save Settings", class: 'button' %>
+      </div>
+    </div>
+  <% end %>
+</div>
