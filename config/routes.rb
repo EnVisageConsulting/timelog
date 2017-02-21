@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :projects, only: [:index, :new, :create, :edit, :update]
   resources :users, only: [:new, :create, :index, :edit, :update, :show] do
     resource :deactivate, only: [:update]
+    resource :password, only: [:edit, :update]
   end
   get 'settings' => 'settings#index'
   root 'dashboard#index'

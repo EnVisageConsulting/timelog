@@ -1,0 +1,39 @@
+<div class="small-container">
+  <div class="row">
+    <div class="columns">
+      <div class="spacer"></div>
+      <h1>Change Password</h1>
+    </div>
+  </div>
+
+  <%= form_for :password, url: user_password_path(@user), html: {method: :patch} do |f| %>
+    <%= form_errors(@user) %>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.label :current, "Current Password" %>
+        <%= f.password_field :current %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.label :new, "New Password" %>
+        <%= f.password_field :new %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.label :confirmation, "Confirm New Password" %>
+        <%= f.password_field :confirmation %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= f.submit "Update Password", class: "button" %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -71,4 +71,25 @@ class User < ApplicationRecord
 
     save
   end
+
+  def update_password(password_hash)
+    _current      = password_hash[:current]
+    _new          = password_hash[:new]
+    _confirmation = password_hash[:confirmation]
+
+    if _current.blank?
+      errors.add(:current_password, "is required")
+    elsif authenticate(_current) != self
+      errors.add(:current_password, "didn't match supplied password")
+    end
+
+    errors.add(:new_password, "is required") if _new.blank?
+    errors.add(:password_confirmation, "is required") if _confirmation.blank?
+
+    return false if errors.present?
+
+    self.password = _new
+    self.password_confirmation = _confirmation
+    self.save
+  end
 end
