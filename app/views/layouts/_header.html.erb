@@ -12,11 +12,11 @@
         <div class="top-bar-right">
           <ul class="menu">
             <% if current_user %>
-              <li><%= link_to icon("cog", "Settings"), settings_path %></li>
-              <li><%= link_to icon("dashboard", "Dashboard"), root_path %></li>
-              <li><%= link_to icon("sign-out", "Log Out"), logout_path, method: :delete %></li>
+              <li><%= link_to fa_icon("cog", text: "Settings"), settings_path %></li>
+              <li><%= link_to fa_icon("dashboard", text: "Dashboard"), root_path %></li>
+              <li><%= link_to fa_icon("sign-out", text: "Log Out"), logout_path, method: :delete %></li>
             <% else %>
-              <li><%= link_to icon("sign-in", "Log In"), login_path %></li>
+              <li><%= link_to fa_icon("sign-in", text: "Log In"), login_path %></li>
             <% end %>
           </ul>
         </div>

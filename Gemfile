@@ -55,7 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]
 # Added after here
 
 gem 'foundation-rails', "6.2.4.0"
-gem 'font-awesome-sass'
+gem 'font-awesome-rails'
 gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'

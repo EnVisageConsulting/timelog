@@ -4,13 +4,13 @@
     <div class="clearfix">
       <% if can?(:edit, @log) %>
         <ul class="menu float-left">
-          <li><%= link_to icon("pencil", "Edit Log"), edit_log_path(@log) %></li>
+          <li><%= link_to fa_icon("pencil", text: "Edit Log"), edit_log_path(@log) %></li>
         </ul>
       <% end %>
 
       <div class="float-right text-right">
         <% if !current_log && current_user.logs.order('end_at DESC').first == @log %>
-          <%= link_to icon("clock-o", "Continue With New Log"), logs_path(continue: true), method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %>
+          <%= link_to fa_icon("clock-o", text: "Continue With New Log"), logs_path(continue: true), method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %>
         <% end %>
       </div>
     </div>
