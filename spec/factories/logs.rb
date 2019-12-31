@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :log, aliases: [:inactive_log] do
     user
-    start_at Time.now
+    start_at { Time.now }
 
     trait :with_project_log do
       project_logs { [ FactoryBot.build(:project_log) ] }
@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :active_log, parent: :log do
-    end_at Time.now
+    end_at { Time.now }
     project_logs { [ FactoryBot.build(:project_log) ] }
   end
 
