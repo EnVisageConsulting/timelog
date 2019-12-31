@@ -77,10 +77,10 @@ GEM
       railties (>= 3.2, < 6.1)
     erubis (2.7.0)
     execjs (2.7.0)
-    factory_girl (4.9.0)
+    factory_bot (4.11.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
+    factory_bot_rails (4.11.0)
+      factory_bot (~> 4.11.0)
       railties (>= 3.0.0)
     ffi (1.11.3)
     font-awesome-rails (4.7.0.5)
@@ -280,7 +280,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   database_cleaner
   dotenv-rails
-  factory_girl_rails
+  factory_bot_rails
   font-awesome-rails
   foundation-rails (= 6.2.4.0)
   googlecharts

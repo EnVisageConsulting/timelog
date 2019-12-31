@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   # sequences
   sequence :email do |x|
     start = User.maximum(:id) || 1

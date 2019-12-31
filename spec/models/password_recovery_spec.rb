@@ -11,7 +11,7 @@ RSpec.describe PasswordRecovery, type: :model do
 
   describe "Callbacks" do
     describe "#set_expiration" do
-      let(:password_recovery) { FactoryGirl.build :password_recovery }
+      let(:password_recovery) { FactoryBot.build :password_recovery }
 
       it "assigns an :expires_at on validation" do
         expect(password_recovery.expires_at).to be_nil
@@ -32,7 +32,7 @@ RSpec.describe PasswordRecovery, type: :model do
   end
 
   describe "Setters & Getters" do
-    let(:password_recovery) { FactoryGirl.build :password_recovery }
+    let(:password_recovery) { FactoryBot.build :password_recovery }
 
     describe "#email" do
       let(:user) { password_recovery.user }
@@ -47,7 +47,7 @@ RSpec.describe PasswordRecovery, type: :model do
 
     describe "#email=" do
       it "finds user associated with supplied email string" do
-        new_user = FactoryGirl.create :user
+        new_user = FactoryBot.create :user
         expect(password_recovery.user).to_not eql new_user
 
         password_recovery.email = new_user.email
@@ -57,7 +57,7 @@ RSpec.describe PasswordRecovery, type: :model do
   end
 
   describe "Instance Methods" do
-    let(:password_recovery) { FactoryGirl.create :password_recovery }
+    let(:password_recovery) { FactoryBot.create :password_recovery }
 
     describe "#to_param" do
       subject { password_recovery.to_param }
@@ -81,7 +81,7 @@ RSpec.describe PasswordRecovery, type: :model do
     end
 
     describe "#expire!" do
-      let(:password_recovery) { FactoryGirl.create :password_recovery }
+      let(:password_recovery) { FactoryBot.create :password_recovery }
 
       it "sets :expires_at and persists" do
         expect {
