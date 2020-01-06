@@ -13,7 +13,7 @@ RSpec.describe Project, type: :model do
   end
 
   describe "Setter & Getters" do
-    let(:project) { FactoryGirl.create :project }
+    let(:project) { FactoryBot.create :project }
 
     describe "#deactivated" do
       it "returns truthy value if :deactivated_at is blank" do

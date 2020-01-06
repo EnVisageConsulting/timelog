@@ -4,18 +4,18 @@
     <div class="clearfix">
       <ul class="menu float-left">
         <% if current_user.admin? %>
-          <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
-          <li><%= link_to icon("group", "Manage Users"), users_path %></li>
-          <li><%= link_to icon("book", "View Projects"), projects_path %></li>
-          <li><%= link_to icon("line-chart", "Reports"), reports_path %></li>
+          <li><%= link_to fa_icon("plus-circle", text: "Add User"), new_user_path %></li>
+          <li><%= link_to fa_icon("group", text: "Manage Users"), users_path %></li>
+          <li><%= link_to fa_icon("book", text: "View Projects"), projects_path %></li>
+          <li><%= link_to fa_icon("line-chart", text: "Reports"), reports_path %></li>
         <% end %>
       </ul>
 
       <div class="float-right">
         <% if current_log %>
-          <%= link_to icon("clock-o", "Finish Log"), edit_log_path(current_log), class: 'button no-margin hollow warning' %>
+          <%= link_to fa_icon("clock-o", text: "Finish Log"), edit_log_path(current_log), class: 'button no-margin hollow warning' %>
         <% else %>
-          <%= link_to icon("clock-o", "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
+          <%= link_to fa_icon("clock-o", text: "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
         <% end %>
       </div>
     </div>
@@ -65,12 +65,12 @@
               </td>
               <td class="text-left"><%= link_to log_title(log), log %></td>
               <td class="text-right"><%= duration log.start_at, log.end_at %></td>
-              <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
+              <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>
         <% else %>
           <tr>
-            <td class="empty" colspan="3">You have no logs yet</td>
+            <td class="empty" colspan="4">You have no logs yet</td>
           </tr>
         <% end %>
       </tbody>

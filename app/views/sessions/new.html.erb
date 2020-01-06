@@ -1,29 +1,31 @@
-<div class="row">
-  <div class="columns">
-    <div class="spacer"></div>
-    <h1>Employee Log In</h1>
+<div class="small-container">
+  <div class="row">
+    <div class="columns">
+      <div class="spacer"></div>
+      <h1>Employee Log In</h1>
+    </div>
   </div>
+
+  <%= form_tag sessions_path, method: :post do %>
+    <div class="row">
+      <div class="columns">
+        <%= label_tag :employee_id %>
+        <%= select_tag :employee_id, options_from_collection_for_select(User.activated.undeactivated, :id, :first, params[:employee_id]), prompt: "Please select one", data: { destroy: 'false'} %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= label_tag :password %>
+        <%= password_field_tag :password, nil, autocomplete: 'off' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <p class="float-right"><%= link_to "Forgot Password", new_password_recovery_path %></p>
+        <%= submit_tag "Log In", class: 'button' %>
+      </div>
+    </div>
+  <% end %>
 </div>
-
-<%= form_tag sessions_path, method: :post do %>
-  <div class="row">
-    <div class="columns">
-      <%= label_tag :employee_id %>
-      <%= select_tag :employee_id, options_from_collection_for_select(User.activated.undeactivated, :id, :first, params[:employee_id]), prompt: "Please select one", data: { destroy: 'false'} %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns">
-      <%= label_tag :password %>
-      <%= password_field_tag :password, nil, autocomplete: 'off' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns">
-      <p class="float-right"><%= link_to "Forgot Password", new_password_recovery_path %></p>
-      <%= submit_tag "Log In", class: 'button' %>
-    </div>
-  </div>
-<% end %>

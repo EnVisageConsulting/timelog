@@ -1,7 +1,7 @@
 module LogsHelper
   def link_to_remove_project(f)
     parts = []
-    parts.push link_to(icon("minus-circle", "Remove Project", class: 'alert-text'), "javascript:void(0);", tabindex: -1, class: 'remove-project-link')
+    parts.push link_to(fa_icon("minus-circle", text: "Remove Project", class: 'alert-text'), "javascript:void(0);", tabindex: -1, class: 'remove-project-link')
     parts.push f.hidden_field(:_destroy) if f.object.persisted?
     parts.join.html_safe
   end
@@ -13,7 +13,7 @@ module LogsHelper
       render(partial_name, :fields_for => builder)
     end
 
-    link_to icon("plus-circle", "Add Project"), "javascript:void(0);",
+    link_to fa_icon("plus-circle", text: "Add Project"), "javascript:void(0);",
       class:    "add-project-link button expanded no-margin",
       data:     {
         field_hash: {

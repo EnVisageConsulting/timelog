@@ -51,12 +51,12 @@ module ApplicationHelper
     icon_name  = "battery-#{viewing_deactivated? ? 'full' : '1'}"
     text_value = "View #{viewing_deactivated? ? 'A'  : 'Dea'}ctivate#{'d' unless viewing_deactivated?} #{resource.to_s.titleize}"
 
-    link_to icon(icon_name, text_value), polymorphic_url(resource, deactivated: !viewing_deactivated?)
+    link_to fa_icon(icon_name, text: text_value), polymorphic_url(resource, deactivated: !viewing_deactivated?)
   end
 
   def back_link value, path, options={}
     icon_name = options.delete(:icon)
-    value     = icon(icon_name || 'arrow-circle-left', value) unless icon_name == false
+    value     = fa_icon(icon_name || 'arrow-circle-left', text: value) unless icon_name == false
 
     content_for :back_link do
       content_tag :div, class: 'row back-link' do

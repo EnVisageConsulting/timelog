@@ -1,7 +1,7 @@
 <div class="current-log">
   <div class="row">
     <div class="columns">
-      <%= link_to icon("clock-o", "Finish Current Log"), edit_log_path(current_log) %>
+      <%= link_to fa_icon("clock-o", text: "Finish Current Log"), edit_log_path(current_log) %>
       <%= content_tag :div, nil, id: 'elapsed-time',
                                  style: 'display: inline-block;',
                                  title: 'Elapsed Time',

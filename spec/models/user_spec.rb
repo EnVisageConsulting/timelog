@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Validations" do
-    subject { FactoryGirl.create :user }
+    subject { FactoryBot.create :user }
     it { is_expected.to validate_presence_of :first }
     it { is_expected.to validate_presence_of :last }
     it { is_expected.to validate_presence_of :role }
@@ -25,10 +25,10 @@ RSpec.describe User, type: :model do
   end
 
   describe "Class Methods" do
-    let(:user) { FactoryGirl.create :user }
+    let(:user) { FactoryBot.create :user }
 
     describe "#with_email" do
-      let!(:another_user) { FactoryGirl.create :user }
+      let!(:another_user) { FactoryBot.create :user }
       let(:email)         { user.email }
 
       it "strips whitespace from search string" do
@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Setters & Getters" do
-    let(:user) { FactoryGirl.create :user }
+    let(:user) { FactoryBot.create :user }
 
     describe "#email=" do
       it "trims whitespace" do
@@ -66,7 +66,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "Instance Methods" do
-    let(:user) { FactoryGirl.create :user }
+    let(:user) { FactoryBot.create :user }
 
     describe "#current_log" do
       it "returns the user's inactive log" do
@@ -76,14 +76,14 @@ RSpec.describe User, type: :model do
           start_at = (now - num.days).in_time_zone(TIMEZONE).midday
           end_at   = start_at + 4.hours
 
-          FactoryGirl.create :active_log, user: user, start_at: start_at, end_at: end_at
+          FactoryBot.create :active_log, user: user, start_at: start_at, end_at: end_at
         end
 
-        current_log = FactoryGirl.create :log, user: user, start_at: now - 1.minute
+        current_log = FactoryBot.create :log, user: user, start_at: now - 1.minute
         expect(user.current_log).to eql current_log
 
         # ensure that a new record (or active one) interferes with query
-        FactoryGirl.create :active_log, user: user, start_at: now, end_at: now
+        FactoryBot.create :active_log, user: user, start_at: now, end_at: now
         expect(user.reload.current_log).to eql current_log
       end
     end

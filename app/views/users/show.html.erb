@@ -36,7 +36,7 @@
               </td>
               <td class="text-left"><%= link_to log_title(log), log %></td>
               <td class="text-right"><%= duration log.start_at, log.end_at %></td>
-              <td class="text-center"><%= link_to icon("pencil"), edit_log_path(log) %></td>
+              <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
             </tr>
           <% end %>
         <% else %>

@@ -3,7 +3,7 @@
     <div class="spacer"></div>
     <div class="clearfix">
       <ul class="menu float-left">
-        <li><%= link_to icon("plus-circle", "Add User"), new_user_path %></li>
+        <li><%= link_to fa_icon("plus-circle", text: "Add User"), new_user_path %></li>
         <li><%= deactivated_view_toggle_link %></li>
       </ul>
     </div>
@@ -36,10 +36,10 @@
               <td><%= mail_to user.email, user.email %></td>
               <td><%= user.role.titleize %></td>
               <% if viewing_deactivated? %>
-                <td class="text-center"><%= link_to icon("battery-1"), user_deactivate_path(user, deactivate: false), method: :patch, class: 'deactivate-link', data: { confirm: "Are you sure?" } %></td>
+                <td class="text-center"><%= link_to fa_icon("battery-1"), user_deactivate_path(user, deactivate: false), method: :patch, class: 'deactivate-link', data: { confirm: "Are you sure?" } %></td>
               <% else %>
-                <td class="text-center"><%= link_to icon("pencil"), edit_user_path(user) %></td>
-                <td class="text-center"><%= link_to icon("battery-full"), user_deactivate_path(user, deactivate: true), method: :patch, class: 'deactivate-link', data: { confirm: "Are you sure?" } %></td>
+                <td class="text-center"><%= link_to fa_icon("pencil"), edit_user_path(user) %></td>
+                <td class="text-center"><%= link_to fa_icon("battery-full"), user_deactivate_path(user, deactivate: true), method: :patch, class: 'deactivate-link', data: { confirm: "Are you sure?" } %></td>
               <% end %>
             </tr>
           <% end %>
