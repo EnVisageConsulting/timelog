@@ -48,7 +48,7 @@ RSpec.describe Log, type: :model do
         log.end_at = log.start_at - 1.minute
 
         expect(log.valid?).to be_falsey
-        expect(log.errors[:start_at]).to include "cannot come before the end date"
+        expect(log.errors[:start_at]).to include "cannot come after the end date"
       end
     end
 

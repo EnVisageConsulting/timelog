@@ -20,7 +20,7 @@ class Log < ApplicationRecord
 
   def start_at_comes_before_end_at
     return unless start_at && end_at
-    errors.add(:start_at, "cannot come before the end date") if start_at > end_at
+    errors.add(:start_at, "cannot come after the end date") if start_at > end_at
   end
 
   def end_at_in_the_past
