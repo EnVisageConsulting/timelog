@@ -84,9 +84,6 @@ class Log
         unless $(this).val() == ''
           $projectFields.not($(this)).find('option[value=' + $(this).val() + ']').attr 'disabled', 'disabled'
 
-    setTimeout projectChangeListener, 2000
-
-
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>
   log = new Log
   log.logForm()
