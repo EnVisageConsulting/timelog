@@ -6,7 +6,7 @@
       <div class="input-group">
         <%= f.text_field :start_at, value: input_datetime(@log.start_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field datetime' %>
         <div class="input-group-button">
-          <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
+          <%= link_to fa_icon('clock-o', text: "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
         </div>
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="input-group">
         <%= f.text_field :end_at, value: input_datetime(@log.end_at), placeholder: "MM/DD/YYYY HH:MM XM", data: { inputmask: "'alias': 'mm/dd/yyyy hh:mm xm'" }, class: 'input-group-field datetime' %>
         <div class="input-group-button">
-          <%= link_to icon('clock-o', "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
+          <%= link_to fa_icon('clock-o', text: "Set Current Time"), 'javascript:void(0);', class: 'button datetime-setter' %>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
 <% unless @log.activated? %>
   <div class="row">
     <div class="columns">
-      <%= link_to icon("ban", "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
+      <%= link_to fa_icon("ban", text: "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
     </div>
   </div>
 <% end %>

@@ -7,7 +7,7 @@ RSpec.describe ProjectLog, type: :model do
   end
 
   describe "Validations" do
-    subject { FactoryGirl.build :project_log }
+    subject { FactoryBot.build :project_log }
     it { is_expected.to validate_presence_of :project_id }
     it { is_expected.to validate_presence_of :description }
     it { is_expected.to validate_presence_of :total_allocation }
@@ -18,7 +18,7 @@ RSpec.describe ProjectLog, type: :model do
   end
 
   describe "Setters & Getters" do
-    let(:project_log) { FactoryGirl.build :project_log }
+    let(:project_log) { FactoryBot.build :project_log }
 
     describe "#percent=" do
       it "converts string values to percent (as decimals) and sets :total_allocation" do

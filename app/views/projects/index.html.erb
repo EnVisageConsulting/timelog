@@ -3,7 +3,7 @@
     <div class="spacer"></div>
     <div class="clearfix">
       <ul class="menu float-left">
-        <li><%= link_to icon("plus-circle", "Add Project"), new_project_path %></li>
+        <li><%= link_to fa_icon("plus-circle", text: "Add Project"), new_project_path %></li>
         <li><%= deactivated_view_toggle_link %></li>
       </ul>
     </div>
@@ -26,7 +26,7 @@
           <% project_list.each do |project| %>
             <tr>
               <td><%= link_to project.name, edit_project_path(project) %></td>
-              <td class="text-center"><%= link_to icon("pencil"), edit_project_path(project) %></td>
+              <td class="text-center"><%= link_to fa_icon("pencil"), edit_project_path(project) %></td>
             </tr>
           <% end %>
         <% else %>

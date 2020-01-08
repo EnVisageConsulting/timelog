@@ -8,7 +8,7 @@ RSpec.describe Log, type: :model do
   end
 
   describe "Validations" do
-    let(:log) { FactoryGirl.build(:log) }
+    let(:log) { FactoryBot.build(:log) }
 
     it { is_expected.to validate_presence_of :start_at }
 
@@ -37,7 +37,7 @@ RSpec.describe Log, type: :model do
     end
 
     describe "#start_at_comes_before_end_at" do
-      let(:log) { FactoryGirl.create :active_log }
+      let(:log) { FactoryBot.create :active_log }
 
       it "adds error if :end_at is prior to :start_at" do
         log.start_at = 1.minute.ago
@@ -53,7 +53,7 @@ RSpec.describe Log, type: :model do
     end
 
     describe "#end_at_in_the_past" do
-      let(:log) { FactoryGirl.create :active_log }
+      let(:log) { FactoryBot.create :active_log }
 
       it "adds error if :end_at is in the future" do
         log.end_at = Time.now
@@ -69,7 +69,7 @@ RSpec.describe Log, type: :model do
 
     describe "#project_log_allocation" do
       it "adds error if total project log allocation is greater than 100%" do
-        project_logs = FactoryGirl.build_list :project_log, 2, total_allocation: 0.6 # times 2 (eqls 1.2)
+        project_logs = FactoryBot.build_list :project_log, 2, total_allocation: 0.6 # times 2 (eqls 1.2)
         log.project_logs = project_logs
 
         expect(log.valid?).to be_falsey
@@ -83,7 +83,7 @@ RSpec.describe Log, type: :model do
       end
 
       it "adds error if allocation doesn't match 100% and project has :end_at" do
-        project_logs = FactoryGirl.build_list :project_log, 2, total_allocation: 0.4 # times 2 (eqls 1.2)
+        project_logs = FactoryBot.build_list :project_log, 2, total_allocation: 0.4 # times 2 (eqls 1.2)
         log.project_logs = project_logs
         log.end_at = Time.now
 
@@ -100,7 +100,7 @@ RSpec.describe Log, type: :model do
     end
 
     describe "#max_date_range" do
-      let(:log) { FactoryGirl.create :active_log }
+      let(:log) { FactoryBot.create :active_log }
 
       it "adds error if logged range is greater than 8 hours" do
         log.end_at   = Time.now
@@ -116,11 +116,11 @@ RSpec.describe Log, type: :model do
     end
 
     describe "#overlapping_user_logs" do
-      let(:log) { FactoryGirl.create :active_log }
+      let(:log) { FactoryBot.create :active_log }
 
       it "adds error if the log's user has another log with overlapping daterange" do
         user         = log.user
-        existing_log = FactoryGirl.create :active_log, user: user, start_at: 2.hour.ago, end_at: 1.hour.ago
+        existing_log = FactoryBot.create :active_log, user: user, start_at: 2.hour.ago, end_at: 1.hour.ago
 
         log.start_at = existing_log.end_at - 30.minutes
         log.end_at   = existing_log.end_at + 30.minutes
@@ -136,7 +136,7 @@ RSpec.describe Log, type: :model do
 
   describe "Callbacks" do
     describe "#set_activation" do
-      let(:log) { FactoryGirl.build :log, :with_project_log }
+      let(:log) { FactoryBot.build :log, :with_project_log }
 
       it "sets :activated = true if end at is present on save" do
         expect(log.activated).to be_falsey
@@ -155,12 +155,12 @@ RSpec.describe Log, type: :model do
     end
 
     describe "#set_project_log_hours" do
-      let(:log) { FactoryGirl.create :log }
+      let(:log) { FactoryBot.create :log }
 
       it "divides up hour allocation on child project log records (on validation)" do
         duration        = 8.hours
-        project_log_one = FactoryGirl.build :project_log, log: log, total_allocation: 0.25
-        project_log_two = FactoryGirl.build :project_log, log: log, total_allocation: 0.75
+        project_log_one = FactoryBot.build :project_log, log: log, total_allocation: 0.25
+        project_log_two = FactoryBot.build :project_log, log: log, total_allocation: 0.75
 
         log.project_logs = [project_log_one, project_log_two]
         log.end_at       = Time.now
@@ -178,7 +178,7 @@ RSpec.describe Log, type: :model do
   end
 
   describe "Setters & Getters" do
-    let(:log) { FactoryGirl.create :log }
+    let(:log) { FactoryBot.create :log }
 
     [:start_at, :end_at].each do |datetime_field|
       describe "##{datetime_field}=" do
@@ -198,7 +198,7 @@ RSpec.describe Log, type: :model do
   end
 
   describe "Instance Methods" do
-    let(:log) { FactoryGirl.build :log }
+    let(:log) { FactoryBot.build :log }
 
     describe "#hours" do
       it "returns difference of date range in hours" do
