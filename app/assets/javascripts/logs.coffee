@@ -73,15 +73,16 @@ class Log
     updateTotalHours()
 
     projectChangeListener = ->
-      $("select[id$='_project_id']").on "change", distinctProjects
-      $("select[id$='_project_id']").each distinctProjects # Doesn't work yet.
+      $projectFields = $("select[id$='_project_id']")
+      $projectFields.on "change", distinctProjects
+      $projectFields.each distinctProjects # Doesn't work yet.
 
     distinctProjects = ->
-      console.log("hit it")
-      $("select[id$='_project_id']").children().removeAttr 'disabled'
-      $("select[id$='_project_id']").each ->
-        if $(this).val() != ''
-          $("select[id$='_project_id']").not($(this)).find('option[value=' + $(this).val() + ']').attr 'disabled', 'disabled'
+      $projectFields = $("select[id$='_project_id']")
+      $projectFields.children().removeAttr 'disabled'
+      $projectFields.each ->
+        unless $(this).val() == ''
+          $projectFields.not($(this)).find('option[value=' + $(this).val() + ']').attr 'disabled', 'disabled'
 
     setTimeout projectChangeListener, 2000
 
