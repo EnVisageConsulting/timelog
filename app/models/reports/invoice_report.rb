@@ -13,11 +13,12 @@ class Reports::InvoiceReport < TablelessModel
   end
 
   def project_id
-    self.project.try :id
+    self.project.map{|p| p.id}
   end
 
   def project_id= value
-    self.project = Project.find_by(id: value)
+    value.reject!(&:blank?)
+    self.project = Project.find(value)
   end
 
   def start_date
@@ -51,7 +52,7 @@ class Reports::InvoiceReport < TablelessModel
     return ProjectLog.none if [project, start_at, end_at].any?(&:blank?)
 
     log_ids       = Log.within(start_at, end_at).pluck(:id)
-    @project_logs = project.project_logs.where(log_id: log_ids).includes(:log => :user)
+    @project_logs = project.flat_map{|p| p.project_logs.where(log_id: log_ids).includes(:log => :user)}
   end
 
   def grouped_project_logs
