@@ -3,7 +3,7 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Invoice Report for: <%= @invoice_report.project.try :name %></h3>
+    <h3>Invoice Report for: <%= @invoice_report.project&.map(&:name)&.to_sentence %></h3>
     <h5 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
   </div>
 </div>
@@ -40,6 +40,9 @@
       <thead>
         <tr>
           <th class="text-right">Employee</th>
+          <% if @invoice_report.project.count > 1 %>
+            <th class="text-right">Project</th>
+          <% end %>
           <th class="text-right">Date</th>
           <th class="text-right">Hours</th>
           <th>Description</th>
@@ -55,12 +58,18 @@
               <% if index == 0 %>
                 <td rowspan="<%= project_logs.size %>" class="text-right"><%= project_log.log.user.name %></td>
               <% end %>
+              <% if @invoice_report.project.count > 1 %>
+                <td class="text-right"><%= project_log.project.name %></td>
+              <% end %>
               <td class="text-right"><%= project_log.log.date %></td>
               <td class="text-right"><%= project_log.hours %></td>
               <td><%= simple_format project_log.description %></td>
             </tr>
           <% end %>
           <tr class="subtotal">
+            <% if @invoice_report.project.count > 1 %>
+              <td></td>
+            <% end %>
             <td class="text-right" colspan="2">Subtotal:</td>
             <td class="text-right"><%= project_total %></td>
             <td></td>
@@ -69,6 +78,9 @@
       <% end %>
       <tfoot>
         <tr>
+          <% if @invoice_report.project.count > 1 %>
+            <td></td>
+          <% end %>
           <td class="text-right stat" colspan="2">Total:</td>
           <td class="text-right stat"><%= total %></td>
           <td></td>
