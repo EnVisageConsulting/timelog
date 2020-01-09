@@ -13,7 +13,8 @@
   <div class="row">
     <div class="columns">
       <%= f.label :user_id %>
-      <%= f.collection_select :user_id, User.activated, :id, :name, {include_blank: "Select a project"}, {multiple: true, class: "multiselect"} %>
+      <%= f.collection_select :user_id, User.activated, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+      <a onclick='return selectAll()' id="select-all">Select All</a>
     </div>
   </div>
 
@@ -34,3 +35,34 @@
     </div>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  function selectAll() {
+    if ($("#select-all").text() === "Select All") {
+      var selected = [];
+      $(".multiselect").find("option").each(function(i,e){
+        selected[selected.length]=$(e).attr("value");
+      });
+
+      $(".multiselect").val(selected);
+      $("#select-all").text("Deselect All")
+    }
+    else {
+      $(".multiselect").val([]);
+      $("#select-all").text("Select All")
+    }
+    $('.multiselect').trigger('change');
+    return false;
+  }
+
+  $(".multiselect").change(function () {
+    console.log("here");
+    var optionCount = $(".multiselect").find("option").length;
+    var numSelected = $(".multiselect").val();
+
+    if (numSelected === null || numSelected.length < optionCount / 2)
+      $("#select-all").text("Select All")
+    else
+      $("#select-all").text("Deselect All")
+  });
+</script>
