@@ -13,11 +13,12 @@ class Reports::PayrollReport < TablelessModel
   end
 
   def user_id
-    self.user.try :id
+    self.user&.map{|u| u.id}
   end
 
   def user_id= value
-    self.user = User.find_by(id: value)
+    value.reject!(&:blank?)
+    self.user = User.find(value)
   end
 
   def start_date
@@ -48,12 +49,12 @@ class Reports::PayrollReport < TablelessModel
 
   def logs
     return Log.none if [user, start_at, end_at].any?(&:blank?)
-    user.logs.within(start_at, end_at).includes(:project_logs => :project)
+    user.flat_map{|u| u.logs.within(start_at, end_at).includes(:project_logs => :project)}
   end
 
-  def grouped_logs
+  def grouped_logs(user)
     return logs unless logs.present?
-    logs.group_by(&:date)
+    logs.reject{|l| l.user != user}.group_by(&:date)
   end
 
   private

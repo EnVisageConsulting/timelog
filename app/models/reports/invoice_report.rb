@@ -13,7 +13,7 @@ class Reports::InvoiceReport < TablelessModel
   end
 
   def project_id
-    self.project.map{|p| p.id}
+    self.project&.map{|p| p.id}
   end
 
   def project_id= value
