@@ -56,7 +56,7 @@
                 date_total += project_log.hours
               %>
               <tr>
-                <% if index == 0 %>
+                <% if index == 0 && project_log == log.project_logs.first %>
                   <td class="text-right" rowspan="<%= logs.map(&:project_logs).flatten.size %>"><u><%= log.date %></u></td>
                 <% end %>
                 <td class="text-right"><%= log.start_time %></td>
