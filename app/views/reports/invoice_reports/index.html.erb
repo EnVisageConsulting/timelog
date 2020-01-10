@@ -40,7 +40,7 @@
       <thead>
         <tr>
           <th class="text-right">Employee</th>
-          <% if @invoice_report.project.count > 1 %>
+          <% if more_than_one_project(@invoice_report) %>
             <th class="text-right">Project</th>
           <% end %>
           <th class="text-right">Date</th>
@@ -58,7 +58,7 @@
               <% if index == 0 %>
                 <td rowspan="<%= project_logs.size %>" class="text-right"><%= project_log.log.user.name %></td>
               <% end %>
-              <% if @invoice_report.project.count > 1 %>
+              <% if more_than_one_project(@invoice_report) %>
                 <td class="text-right"><%= project_log.project.name %></td>
               <% end %>
               <td class="text-right"><%= project_log.log.date %></td>
@@ -67,7 +67,7 @@
             </tr>
           <% end %>
           <tr class="subtotal">
-            <% if @invoice_report.project.count > 1 %>
+            <% if more_than_one_project(@invoice_report) %>
               <td></td>
             <% end %>
             <td class="text-right" colspan="2">Subtotal:</td>
@@ -78,7 +78,7 @@
       <% end %>
       <tfoot>
         <tr>
-          <% if @invoice_report.project.count > 1 %>
+          <% if more_than_one_project(@invoice_report) %>
             <td></td>
           <% end %>
           <td class="text-right stat" colspan="2">Total:</td>
