@@ -12,8 +12,8 @@
 
   <div class="row">
     <div class="columns">
-      <%= f.label :project_id %>
-      <%= f.collection_select :project_id, Project.active, :id, :name, include_blank: "Select a project" %>
+      <%= f.label :project_ids %>
+      <%= f.collection_select :project_ids, Project.active, :id, :name, {}, {multiple: true, class: "multiselect"} %>
     </div>
   </div>
 

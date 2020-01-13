@@ -1,23 +1,24 @@
 require 'date_time_parser'
 
 class Reports::InvoiceReport < TablelessModel
-  validates :project, presence: true
+  validates :projects, presence: true
   validates :start_at, presence: true
   validates :end_at, presence: true
 
-  attr_accessor :project, :start_at, :end_at
+  attr_accessor :projects, :start_at, :end_at
 
   def initialize(attributes = {})
     set_default_attrs
     super attributes
   end
 
-  def project_id
-    self.project.try :id
+  def project_ids
+    self.projects&.map{|p| p.id}
   end
 
-  def project_id= value
-    self.project = Project.find_by(id: value)
+  def project_ids= value
+    value.reject!(&:blank?)
+    self.projects = Project.find(value)
   end
 
   def start_date
@@ -48,10 +49,10 @@ class Reports::InvoiceReport < TablelessModel
 
   def project_logs(reload=false)
     return @project_logs if defined?(@project_logs) && !reload
-    return ProjectLog.none if [project, start_at, end_at].any?(&:blank?)
+    return ProjectLog.none if [projects, start_at, end_at].any?(&:blank?)
 
     log_ids       = Log.within(start_at, end_at).pluck(:id)
-    @project_logs = project.project_logs.where(log_id: log_ids).includes(:log => :user)
+    @project_logs = projects.flat_map{|p| p.project_logs.where(log_id: log_ids).includes(:log => :user)}
   end
 
   def grouped_project_logs
@@ -66,6 +67,6 @@ class Reports::InvoiceReport < TablelessModel
 
       self.end_at   = (now    - 1.week).end_of_week
       self.start_at = (end_at - 1.week).beginning_of_week
-      self.project  = nil
+      self.projects = nil
     end
 end
