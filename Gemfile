@@ -56,12 +56,13 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]
 
 # Added after here
 
+gem 'factory_bot_rails'
 gem 'foundation-rails', "6.2.4.0"
 gem 'font-awesome-rails'
 gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'
-gem 'factory_bot_rails'
+gem 'letter_opener'
 
 group :test do
   # command line tool to easily handle events on file system modifications
