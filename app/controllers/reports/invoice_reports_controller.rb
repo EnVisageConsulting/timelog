@@ -28,6 +28,6 @@ class Reports::InvoiceReportsController < ApplicationController
         redirect_to(new_reports_invoice_report_path, alert: "Incomplete report parameters")
         return {}
       end
-      params.require(:reports_invoice_report).permit(:start_date, :end_date, project_id: [])
+      params.require(:reports_invoice_report).permit(:start_date, :end_date, project_ids: [])
     end
 end
