@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     respond_to do |format|
       if @user.save
+        UserMailer.new_user_email(@user).deliver_later
         format.html { redirect_to root_path, notice: "Successfully added employee!" }
       else
         format.html { render :new }
