@@ -1,24 +1,24 @@
 require 'date_time_parser'
 
 class Reports::PayrollReport < TablelessModel
-  validates :user, presence: true
+  validates :users, presence: true
   validates :start_at, presence: true
   validates :end_at, presence: true
 
-  attr_accessor :user, :start_at, :end_at
+  attr_accessor :users, :start_at, :end_at
 
   def initialize(attributes = {})
     set_default_attrs
     super attributes
   end
 
-  def user_id
-    self.user&.map{|u| u.id}
+  def user_ids
+    self.users&.map{|u| u.id}
   end
 
-  def user_id= value
+  def user_ids= value
     value.reject!(&:blank?)
-    self.user = User.find(value)
+    self.users = User.find(value)
   end
 
   def start_date
@@ -48,8 +48,8 @@ class Reports::PayrollReport < TablelessModel
   end
 
   def logs
-    return Log.none if [user, start_at, end_at].any?(&:blank?)
-    user.flat_map{|u| u.logs.within(start_at, end_at).includes(:project_logs => :project)}
+    return Log.none if [users, start_at, end_at].any?(&:blank?)
+    users.flat_map{|u| u.logs.within(start_at, end_at).includes(:project_logs => :project)}
   end
 
   def grouped_logs(user)
@@ -64,6 +64,6 @@ class Reports::PayrollReport < TablelessModel
 
       self.end_at   = (now    - 1.week).end_of_week
       self.start_at = (end_at - 1.week).beginning_of_week
-      self.user     = nil
+      self.users    = nil
     end
 end
