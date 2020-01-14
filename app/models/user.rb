@@ -72,6 +72,11 @@ class User < ApplicationRecord
     save
   end
 
+  def activate!
+    self.activated_at = Time.now
+    save
+  end
+
   def update_password(password_hash)
     _current      = password_hash[:current]
     _new          = password_hash[:new]

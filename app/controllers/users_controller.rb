@@ -9,7 +9,9 @@ class UsersController < ApplicationController
   def create
     respond_to do |format|
       if @user.save
+        @password_recovery = PasswordRecovery.create(user: @user)
         UserMailer.new_user_email(@user).deliver_later
+        UserMailer.user_activation_email(@user, @password_recovery).deliver_later
         format.html { redirect_to root_path, notice: "Successfully added employee!" }
       else
         format.html { render :new }
