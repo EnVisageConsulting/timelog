@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>An account has been created for you on the EnVisage Timelog!</p>
+    <p>User details<br>
+    --------------------------
+    </p>
+    <p>Name: <%= @new_user.name %></p>
+    <p>Email: <%= @new_user.email %></p>
+    <p>----------</p><br>
+    <p>Activate your account here: <%= link_to("Activate my account", user_activate_url(@new_user, password_recovery: @password_recovery, password_recovery_params: @password_recovery.token)) %></p>
+  </body>
+</html>

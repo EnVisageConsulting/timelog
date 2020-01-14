@@ -56,6 +56,17 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "timelog_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  host = 'ectimelog.herokuapp.com' #replace with your own url
+  config.action_mailer.default_url_options = { host: host }
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.envisageconsulting.org",
+    :port                 => 25,
+    :user_name            => ENV["EMAIL_USERNAME"],
+    :password             => ENV["EMAIL_PASSWORD"],
+    :authentication       => "plain"
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

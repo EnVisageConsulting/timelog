@@ -27,7 +27,21 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
+  host = 'localhost:3000'
+  config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
   config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
+  LetterOpener.configure do |config|
+    # To overrider the location for message storage.
+    # Default value is <tt>tmp/letter_opener</tt>
+    config.location = Rails.root.join('tmp', 'my_mails')
+
+    # To render only the message body, without any metadata or extra containers or styling.
+    # Default value is <tt>:default</tt> that renders styled message with showing useful metadata.
+    config.message_template = :light
+  end
 
   config.action_mailer.perform_caching = false
 
