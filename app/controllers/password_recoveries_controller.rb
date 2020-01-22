@@ -2,12 +2,17 @@ class PasswordRecoveriesController < ApplicationController
   load_resource find_by: :token, param_method: :password_recovery_params
   before_action :check_recovery_expiration, only: [:edit, :update]
 
+  def index
+    redirect_to edit_password_recovery_path(params[:password_recovery_params])
+  end
+
   def new
   end
 
   def create
     respond_to do |format|
       if @password_recovery.save
+        PasswordRecoveryMailer.password_reset_email(@password_recovery).deliver_later
         format.html { redirect_to login_path, notice: "Success! Check your email inbox for a password reset link." }
       else
         format.html { render :new }
