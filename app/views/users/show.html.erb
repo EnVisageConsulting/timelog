@@ -9,28 +9,25 @@
       <%= form_tag @user, method: :get do %>
         <div class="row">
           <div class="columns medium-4">
-            <%= label_tag :project_ids %>
+            <%= label_tag :project_ids, "Projects" %>
             <%= select_tag :project_ids, options_from_collection_for_select(Project.active, :id, :name), {multiple: true, class: "multiselect"} %>
           </div>
           <div class="columns medium-3 small-6">
-            <%= label_tag :start_date %>
+            <%= label_tag :start_date, "Start Date" %>
             <%= text_field_tag :start_date, params[:start_date], class: 'date' %>
           </div>
           <div class="columns medium-3 small-6">
-            <%= label_tag :end_date %>
+            <%= label_tag :end_date, "End Date" %>
             <%= text_field_tag :end_date, params[:end_date], class: 'date' %>
           </div>
           <div class="columns medium-2 small-6">
             <%= label_tag "", "&nbsp;".html_safe %>
             <%= submit_tag "Filter", class: 'button expanded' %>
           </div>
-          <div class="columns medium-2 small-6">
-            <%= label_tag "", "&nbsp;".html_safe %>
-            <%= submit_tag "Clear Filters", class: 'button expanded' %>
-          </div>
         </div>
       <% end %>
     </div>
+    <div class="spacer"></div>
 
     <h3><%= @user.name %>'s Logs</h3>
     <table>
