@@ -36,7 +36,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @logs = user_logs.page(pagination_page).per(@per_page)
+    @user ||= User.find(params[:id])
+    @logs = user_logs.page(params[:page]).per(@per_page)
   end
 
   private
@@ -49,11 +50,22 @@ class UsersController < ApplicationController
     end
 
     def user_logs
-      @user_logs ||= @user.logs.active.latest
+      start_date = DateTime.strptime(params[:start_date], '%m/%d/%Y').beginning_of_day if params[:start_date].present?
+      end_date = DateTime.strptime(params[:end_date], '%m/%d/%Y').end_of_day if params[:end_date].present?
+      if start_date.present? && end_date.present?
+        @user_logs = @user.logs.where("start_at >= ? AND end_at <= ?", start_date, end_date)
+      elsif start_date.present?
+        @user_logs = @user.logs.where("start_at >= ?", start_date)
+      elsif end_date.present?
+        @user_logs = @user.logs.where("end_at <= ?", end_date)
+      else
+        @user_logs ||= @user.logs.active.latest
+      end
+      @user_logs.order("start_at DESC")
     end
 
     def set_per_page
-      # return @per_page = 5 # uncomment for testing with smaller groups
+      # return @per_page = 3 # uncomment for testing with smaller groups
       @per_page = Kaminari.config.default_per_page
     end
 

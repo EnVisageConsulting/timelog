@@ -5,18 +5,33 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <% if @logs.total_count > @per_page %>
-      <div class="float-right">
-        <%= form_tag @user, method: :get do %>
-          <div class="input-group no-margin">
-            <%= text_field_tag :date, params[:date] || Date.today.strftime(DATE_STRFTIME), class: "input-group-field date" %>
-            <div class="input-group-button">
-              <%= submit_tag "Jump to Date", class: 'button' %>
-            </div>
+    <div id="user-log-filter">
+      <%= form_tag @user, method: :get do %>
+        <div class="row">
+          <div class="columns medium-4">
+            <%= label_tag :project_ids %>
+            <%= select_tag :project_ids, options_from_collection_for_select(Project.active, :id, :name), {multiple: true, class: "multiselect"} %>
           </div>
-        <% end %>
-      </div>
-    <% end %>
+          <div class="columns medium-3 small-6">
+            <%= label_tag :start_date %>
+            <%= text_field_tag :start_date, params[:start_date], class: 'date' %>
+          </div>
+          <div class="columns medium-3 small-6">
+            <%= label_tag :end_date %>
+            <%= text_field_tag :end_date, params[:end_date], class: 'date' %>
+          </div>
+          <div class="columns medium-2 small-6">
+            <%= label_tag "", "&nbsp;".html_safe %>
+            <%= submit_tag "Filter", class: 'button expanded' %>
+          </div>
+          <div class="columns medium-2 small-6">
+            <%= label_tag "", "&nbsp;".html_safe %>
+            <%= submit_tag "Clear Filters", class: 'button expanded' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
     <h3><%= @user.name %>'s Logs</h3>
     <table>
       <thead>
@@ -45,7 +60,7 @@
           <% end %>
         <% else %>
           <tr>
-            <td class="empty" colspan="3">You have no logs yet</td>
+            <td class="empty" colspan="6">No logs found</td>
           </tr>
         <% end %>
       </tbody>
