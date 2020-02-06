@@ -67,10 +67,12 @@ module ApplicationHelper
     end
   end
 
-  def duration start_at, end_at
+  def duration start_at, end_at, hours=false
     diff = end_at - start_at
 
-    if diff < 1.minute
+    if hours
+      strip_insignificant_zeros(Seconds.to_hrs(diff)).to_i
+    elsif diff < 1.minute
       return "#{strip_insignificant_zeros(diff)} seconds"
     elsif diff < 1.hour
       return "#{strip_insignificant_zeros(Seconds.to_mins(diff))} minutes"

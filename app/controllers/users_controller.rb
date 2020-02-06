@@ -50,6 +50,19 @@ class UsersController < ApplicationController
     end
 
     def user_logs
+      filter_by_date
+      filter_by_project
+      @user_logs.order("start_at DESC")
+    end
+
+    def filter_by_project
+      return unless params[:project_ids].present?
+
+      project_ids = params[:project_ids].map{|p| p.to_i}
+      @user_logs = @user_logs.joins(:project_logs).where(project_logs: {project_id: project_ids})
+    end
+
+    def filter_by_date
       start_date = DateTime.strptime(params[:start_date], '%m/%d/%Y').beginning_of_day if params[:start_date].present?
       end_date = DateTime.strptime(params[:end_date], '%m/%d/%Y').end_of_day if params[:end_date].present?
       if start_date.present? && end_date.present?
@@ -61,12 +74,11 @@ class UsersController < ApplicationController
       else
         @user_logs ||= @user.logs.active.latest
       end
-      @user_logs.order("start_at DESC")
     end
 
     def set_per_page
-      # return @per_page = 3 # uncomment for testing with smaller groups
-      @per_page = Kaminari.config.default_per_page
+      return @per_page = 3 # uncomment for testing with smaller groups
+      # @per_page = Kaminari.config.default_per_page
     end
 
     def page_from_date(date)
