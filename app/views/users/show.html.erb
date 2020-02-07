@@ -31,79 +31,11 @@
 
     <h3><%= @user.name %>'s Logs</h3>
     <% project_ids = params[:project_ids] %>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th class="text-left">Log Date</th>
-          <% if project_ids.present? %>
-            <th class="text-left">Project</th>
-          <% else %>
-            <th class="text-left">Start Time</th>
-            <th class="text-left">End Time</th>
-          <% end %>
-          <th class="text-right">Duration</th>
-          <th class="text-center">Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @logs.present? %>
-          <% total_page_time = 0 %>
-          <% total_time = @user_logs.flat_map(&:project_logs).map{|pl| project_in_user_log?(project_ids, pl) ? pl.hours : 0}.inject(:+) %>
-          <% @logs.each do |log| %>
-            <% if project_ids.present? %>
-              <% log.project_logs.each do |project_log| %>
-                <% next unless project_in_user_log?(project_ids, project_log) %>
-                <tr>
-                  <td class="text-right">
-                    <small><%= log_days_of_week(log) %></small>
-                  </td>
-                  <td class="text-left"><%= link_to log_title(log), log %></td>
-                  <td class="text-left"><%= project_log.project.name %></td>
-                  <td class="text-right"><%= project_log.hours + "Hours" %></td>
-                  <% total_page_time += project_log.hours %>
-                  <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
-                </tr>
-              <% end %>
-            <% else %>
-              <tr>
-                <td class="text-right">
-                  <small><%= log_days_of_week(log) %></small>
-                </td>
-                <td class="text-left"><%= link_to log_title(log), log %></td>
-                <td class="text-left"><%= log.start_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
-                <td class="text-left"><%= log.end_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
-                <td class="text-right"><%= duration log.start_at, log.end_at %></td>
-                <% total_page_time += duration log.start_at, log.end_at, true %>
-                <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
-              </tr>
-            <% end %>
-          <% end %>
-        <% else %>
-          <tr>
-            <% if project_ids.present? %>
-              <td class="empty" colspan="5">No logs found</td>
-            <% else %>
-              <td class="empty" colspan="6">No logs found</td>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-      <% if project_ids.present? %>
-        <tfoot>
-          <tr>
-            <td class="text-right" colspan="3">Page Total:</td>
-            <td class="text-right" colspan="1"><%= total_page_time %></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td class="text-right stat" colspan="3">Total:</td>
-            <td class="text-right stat" colspan="1"><%= total_time %></td>
-            <td></td>
-          </tr>
-        </tfoot>
-      <% end %>
-    </table>
+    <% if project_ids.present? %>
+      <%= render "project_log_table", logs: @logs, user_logs: @user_logs, project_ids: project_ids %>
+    <% else %>
+      <%= render "user_log_table", logs: @logs %>
+    <% end %>
     <%= paginate(@logs, {params: {date: nil}}) if @logs.present? %>
   </div>
 </div>

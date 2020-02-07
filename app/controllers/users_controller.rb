@@ -77,8 +77,8 @@ class UsersController < ApplicationController
     end
 
     def set_per_page
-      return @per_page = 3 # uncomment for testing with smaller groups
-      # @per_page = Kaminari.config.default_per_page
+      # return @per_page = 3 # uncomment for testing with smaller groups
+      @per_page = Kaminari.config.default_per_page
     end
 
     def page_from_date(date)
