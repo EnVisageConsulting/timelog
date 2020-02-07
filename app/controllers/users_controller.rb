@@ -80,21 +80,4 @@ class UsersController < ApplicationController
       # return @per_page = 3 # uncomment for testing with smaller groups
       @per_page = Kaminari.config.default_per_page
     end
-
-    def page_from_date(date)
-      records_from_date = user_logs.where('start_at >= ?', date).count.to_f
-
-      ( records_from_date / @per_page ).ceil
-    end
-
-    def pagination_page
-      if params[:date].is_a?(String) && params[:date].match(DATE_PATTERN)
-        date = DateTimeParser.string_to_datetime(params[:date])
-
-        # jump to page using supplied date
-        return page_from_date(date)
-      end
-
-      params[:page]
-    end
 end
