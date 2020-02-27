@@ -1,0 +1,41 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-left">Log Date</th>
+      <th class="text-left">Project</th>
+      <th class="text-right">Duration</th>
+      <th class="text-center">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if logs.present? %>
+      <% total_time = @user_logs.flat_map(&:project_logs).map{|pl| project_in_user_log?(project_ids, pl) ? pl.hours : 0}.inject(:+) %>
+      <% logs.each do |log| %>
+        <% log.project_logs.each do |project_log| %>
+          <% next unless project_in_user_log?(project_ids, project_log) %>
+          <tr>
+            <td class="text-right">
+              <small><%= log_days_of_week(log) %></small>
+            </td>
+            <td class="text-left"><%= link_to log_title(log), log %></td>
+            <td class="text-left"><%= project_log.project.name %></td>
+            <td class="text-right"><%= project_log.hours.to_s + " hours" %></td>
+            <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="empty" colspan="5">No logs found</td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot style="background: #fff; border: 0">
+    <tr>
+      <td class="text-right stat" colspan="3">Total:</td>
+      <td class="text-right stat" colspan="1"><%= total_time %></td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>

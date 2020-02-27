@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-left">Log Date</th>
+      <th class="text-left">Start Time</th>
+      <th class="text-left">End Time</th>
+      <th class="text-right">Duration</th>
+      <th class="text-center">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if logs.present? %>
+      <% logs.each do |log| %>
+        <tr>
+          <td class="text-right">
+            <small><%= log_days_of_week(log) %></small>
+          </td>
+          <td class="text-left"><%= link_to log_title(log), log %></td>
+          <td class="text-left"><%= log.start_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
+          <td class="text-left"><%= log.end_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
+          <td class="text-right"><%= duration log.start_at, log.end_at %></td>
+          <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="empty" colspan="6">No logs found</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

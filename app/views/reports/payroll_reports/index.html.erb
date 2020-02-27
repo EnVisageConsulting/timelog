@@ -11,7 +11,7 @@
 <%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report), html: { class: 'filters-form' } do |f| %>
   <div class="row">
     <div class="columns medium-4">
-      <%= f.label :user_ids, "Employee" %>
+      <%= f.label :user_ids, "Employees" %>
       <%= f.collection_select :user_ids, User.activated, :id, :name, {}, {multiple: true, class: "multiselect"} %>
       <a id="select-all"></a>
     </div>
