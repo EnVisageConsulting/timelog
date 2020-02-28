@@ -76,14 +76,15 @@ RSpec.describe Log, type: :model do
         expect(log.errors[:project_logs]).to include "%s cannot add up to more than 100%"
 
         project_logs.each do |pl|
-          pl.total_allocation = 0.4 # times 2 (eqls 0.8)
+          pl.total_allocation = 0.4 # times 2 (eqls 1.0)
         end
 
-        expect(log.valid?).to be_truthy
+        log.valid?
+        expect(log.errors[:project_logs]).to be_blank
       end
 
       it "adds error if allocation doesn't match 100% and project has :end_at" do
-        project_logs = FactoryBot.build_list :project_log, 2, total_allocation: 0.4 # times 2 (eqls 1.2)
+        project_logs = FactoryBot.build_list :project_log, 2, total_allocation: 0.4 # times 2 (eqls 0.8)
         log.project_logs = project_logs
         log.end_at = Time.now
 
@@ -159,8 +160,8 @@ RSpec.describe Log, type: :model do
 
       it "divides up hour allocation on child project log records (on validation)" do
         duration        = 8.hours
-        project_log_one = FactoryBot.build :project_log, log: log, total_allocation: 0.25
-        project_log_two = FactoryBot.build :project_log, log: log, total_allocation: 0.75
+        project_log_one = FactoryBot.create :project_log, log: log, total_allocation: 0.25
+        project_log_two = FactoryBot.create :project_log, log: log, total_allocation: 0.75
 
         log.project_logs = [project_log_one, project_log_two]
         log.end_at       = Time.now
@@ -206,8 +207,9 @@ RSpec.describe Log, type: :model do
 
         log.end_at   = Time.now
         log.start_at = log.end_at - diff
+        # raise [log.hours.hours, diff].inspect
 
-        expect(log.hours).to eql Seconds.to_hrs(diff)
+        expect(log.hours.to_i.hours).to eql diff
       end
 
       it "returns nil if :start_at or :end_at is blank" do

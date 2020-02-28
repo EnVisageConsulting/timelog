@@ -4,13 +4,13 @@ FactoryBot.define do
     start_at { Time.now }
 
     trait :with_project_log do
-      project_logs { [ FactoryBot.build(:project_log) ] }
+      project_logs { [ FactoryBot.create(:project_log) ] }
     end
   end
 
   factory :active_log, parent: :log do
     end_at { Time.now }
-    project_logs { [ FactoryBot.build(:project_log) ] }
+    project_logs { [ FactoryBot.create(:project_log) ] }
   end
 
   factory :invalid_log, parent: :log do
