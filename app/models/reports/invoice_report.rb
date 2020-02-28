@@ -47,17 +47,15 @@ class Reports::InvoiceReport < TablelessModel
     self.end_at = value
   end
 
-  def project_logs(reload=false)
-    return @project_logs if defined?(@project_logs) && !reload
+  def project_logs(project, reload=false)
     return ProjectLog.none if [projects, start_at, end_at].any?(&:blank?)
 
     log_ids       = Log.within(start_at, end_at).pluck(:id)
-    @project_logs = projects.flat_map{|p| p.project_logs.where(log_id: log_ids).includes(:log => :user)}
+    project_logs = ProjectLog.where(log_id: log_ids).where(project: project).includes(:log => :user)
   end
 
-  def grouped_project_logs
-    return project_logs unless project_logs.present?
-    project_logs.group_by { |project_log| project_log.log.user }
+  def grouped_project_logs(project)
+    project_logs(project).group_by { |project_log| project_log.log.user }
   end
 
   private
