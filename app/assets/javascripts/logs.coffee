@@ -26,6 +26,7 @@ class Log
       $newFields = $projectLogs.find('.project-log-fields').last()
       $newFields.find('input[name$="[percent]"]').val ''
       $newFields.find('select[name$="[project_id]"]').focus()
+      projectChangeListener()
 
 
     $projectLogFields.on "click", ".remove-project-link", (e) ->
@@ -43,6 +44,7 @@ class Log
       else
         $fields.remove()
 
+      projectChangeListener()
 
 
     $startAt    = $("#log_start_at")
@@ -70,6 +72,17 @@ class Log
 
     updateTotalHours()
 
+    projectChangeListener = ->
+      $projectFields = $("select[id$='_project_id']")
+      $projectFields.on "change", distinctProjects
+      $projectFields.each distinctProjects # Doesn't work yet.
+
+    distinctProjects = ->
+      $projectFields = $("select[id$='_project_id']")
+      $projectFields.children().removeAttr 'disabled'
+      $projectFields.each ->
+        unless $(this).val() == ''
+          $projectFields.not($(this)).find('option[value=' + $(this).val() + ']').attr 'disabled', 'disabled'
 
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>
   log = new Log

@@ -50,8 +50,21 @@ var initializePage = function(){
 
   $('body').addClass('js-initialized');
 
+  enableMultiselect();
+
   return true;
 }
+
+function enableMultiselect(selector, selectOptions){
+  if (selector === undefined)
+    selector = 'select[multiple="multiple"]';
+
+  if (selectOptions === undefined)
+    selectOptions = {};
+
+  var options = $.extend({}, {closeOnSelect: false}, {placeholder: "Make a Selection(s)"}, selectOptions);
+  $(selector).select2(options);
+};
 
 $(document).bind('turbolinks:load', function(){
   initializePage();

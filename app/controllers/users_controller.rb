@@ -9,6 +9,9 @@ class UsersController < ApplicationController
   def create
     respond_to do |format|
       if @user.save
+        @password_recovery = PasswordRecovery.create(user: @user)
+        UserMailer.new_user_email(@user).deliver_later
+        UserMailer.user_activation_email(@user, @password_recovery).deliver_later
         format.html { redirect_to root_path, notice: "Successfully added employee!" }
       else
         format.html { render :new }
@@ -33,7 +36,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @logs = user_logs.page(pagination_page).per(@per_page)
+    @user ||= User.find(params[:id])
+    @logs = user_logs.page(params[:page]).per(@per_page)
   end
 
   private
@@ -46,28 +50,34 @@ class UsersController < ApplicationController
     end
 
     def user_logs
-      @user_logs ||= @user.logs.active.latest
+      filter_by_date
+      filter_by_project
+      @user_logs.order("start_at DESC")
+    end
+
+    def filter_by_project
+      return unless params[:project_ids].present?
+
+      project_ids = params[:project_ids].map{|p| p.to_i}
+      @user_logs = @user_logs.joins(:project_logs).where(project_logs: {project_id: project_ids})
+    end
+
+    def filter_by_date
+      start_date = DateTime.strptime(params[:start_date], '%m/%d/%Y').beginning_of_day if params[:start_date].present?
+      end_date = DateTime.strptime(params[:end_date], '%m/%d/%Y').end_of_day if params[:end_date].present?
+      if start_date.present? && end_date.present?
+        @user_logs = @user.logs.where("start_at >= ? AND end_at <= ?", start_date, end_date)
+      elsif start_date.present?
+        @user_logs = @user.logs.where("start_at >= ?", start_date)
+      elsif end_date.present?
+        @user_logs = @user.logs.where("end_at <= ?", end_date)
+      else
+        @user_logs ||= @user.logs.active.latest
+      end
     end
 
     def set_per_page
-      # return @per_page = 5 # uncomment for testing with smaller groups
+      # return @per_page = 3 # uncomment for testing with smaller groups
       @per_page = Kaminari.config.default_per_page
-    end
-
-    def page_from_date(date)
-      records_from_date = user_logs.where('start_at >= ?', date).count.to_f
-
-      ( records_from_date / @per_page ).ceil
-    end
-
-    def pagination_page
-      if params[:date].is_a?(String) && params[:date].match(DATE_PATTERN)
-        date = DateTimeParser.string_to_datetime(params[:date])
-
-        # jump to page using supplied date
-        return page_from_date(date)
-      end
-
-      params[:page]
     end
 end

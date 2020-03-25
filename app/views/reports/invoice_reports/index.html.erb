@@ -3,8 +3,8 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Invoice Report for: <%= @invoice_report.project.try :name %></h3>
-    <h5 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
+    <h2>Invoice Report for: <%= @invoice_report.projects&.map(&:name)&.to_sentence %></h2>
+    <h3 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
   </div>
 </div>
 
@@ -13,17 +13,17 @@
 
   <div class="row">
     <div class="columns medium-4">
-      <%= f.label :project_id %>
-      <%= f.collection_select :project_id, Project.active, :id, :name %>
+      <%= f.label :project_ids, "Projects" %>
+      <%= f.collection_select :project_ids, Project.active, :id, :name, {}, {multiple: true, class: "multiselect"} %>
     </div>
 
     <div class="columns medium-3 small-6">
-      <%= f.label :start_date %>
+      <%= f.label :start_date, "Start Date" %>
       <%= f.text_field :start_date, class: 'date' %>
     </div>
 
     <div class="columns medium-3 small-6">
-      <%= f.label :end_date %>
+      <%= f.label :end_date, "End Date" %>
       <%= f.text_field :end_date, class: 'date' %>
     </div>
 
@@ -33,47 +33,50 @@
     </div>
   </div>
 <% end %>
+<br>
 
-<div class="row">
-  <div class="columns">
-    <table class="report invoice-report">
-      <thead>
-        <tr>
-          <th class="text-right">Employee</th>
-          <th class="text-right">Date</th>
-          <th class="text-right">Hours</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-
-      <% total = 0 %>
-      <% @invoice_report.grouped_project_logs.each do |user, project_logs| %>
-        <% project_total = project_logs.map(&:hours).inject(:+); total += project_total %>
-        <tbody>
-          <% project_logs.each_with_index do |project_log, index| %>
-            <tr>
-              <% if index == 0 %>
-                <td rowspan="<%= project_logs.size %>" class="text-right"><%= project_log.log.user.name %></td>
-              <% end %>
-              <td class="text-right"><%= project_log.log.date %></td>
-              <td class="text-right"><%= project_log.hours %></td>
-              <td><%= simple_format project_log.description %></td>
+<% @invoice_report.projects.each do |project| %>
+  <% total = 0 %>
+  <div class="row">
+    <div class="columns">
+      <h4><%= project.name %></h4>
+      <table class="report invoice-report">
+        <thead>
+          <tr>
+            <th class="text-right invoice-column">Employee</th>
+            <th class="text-right invoice-column">Date</th>
+            <th class="text-right invoice-column">Hours</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <% @invoice_report.grouped_project_logs(project).each do |user, project_logs| %>
+          <tbody>
+            <% user_total = project_logs.map(&:hours).inject(:+); total += user_total %>
+            <% project_logs.each do |project_log| %>
+              <tr>
+                <% if project_log == project_logs.first %>
+                  <td rowspan="<%= project_logs.size %>" class="text-right"><%= user.name %></td>
+                <% end %>
+                <td class="text-right"><%= project_log.log.date %></td>
+                <td class="text-right"><%= project_log.hours %></td>
+                <td><%= simple_format project_log.description %></td>
+              </tr>
+            <% end %>
+            <tr class="subtotal">
+              <td class="text-right" colspan="2">Subtotal:</td>
+              <td class="text-right"><b><%= user_total %></b></td>
+              <td></td>
             </tr>
-          <% end %>
-          <tr class="subtotal">
-            <td class="text-right" colspan="2">Subtotal:</td>
-            <td class="text-right"><%= project_total %></td>
+          </tbody>
+        <% end %>
+        <tfoot>
+          <tr>
+            <td class="text-right stat" colspan="2">Total:</td>
+            <td class="text-right stat"><%= total %></td>
             <td></td>
           </tr>
-        </tbody>
-      <% end %>
-      <tfoot>
-        <tr>
-          <td class="text-right stat" colspan="2">Total:</td>
-          <td class="text-right stat"><%= total %></td>
-          <td></td>
-        </tr>
-      </tfoot>
-    </table>
+        </tfoot>
+      </table>
+    </div>
   </div>
-</div>
+<% end %>

@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'sendgrid-ruby'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -46,6 +48,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'letter_opener'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -54,12 +57,12 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]
 
 # Added after here
 
+gem 'factory_bot_rails'
 gem 'foundation-rails', "6.2.4.0"
 gem 'font-awesome-rails'
 gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'
-gem 'factory_bot_rails'
 
 group :test do
   # command line tool to easily handle events on file system modifications

@@ -3,7 +3,7 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Personal Summary Report for: <%= @payroll_report.user.name %></h3>
+    <h3>Personal Summary Report</h3>
     <h5 class="subheader">Period of: <%= @payroll_report.start_date %> - <%= @payroll_report.end_date %></h5>
   </div>
 </div>
@@ -11,16 +11,17 @@
 <%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report), html: { class: 'filters-form' } do |f| %>
   <div class="row">
     <div class="columns medium-4">
-      <%= f.label :user_id, "Employee" %>
-      <%= f.collection_select :user_id, User.activated, :id, :name %>
+      <%= f.label :user_ids, "Employees" %>
+      <%= f.collection_select :user_ids, User.activated, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+      <a id="select-all"></a>
     </div>
 
     <div class="columns medium-3 small-6">
-      <%= f.label :start_date %>
+      <%= f.label :start_date, "Start Date" %>
       <%= f.text_field :start_date, class: 'date' %>
     </div>
     <div class="columns medium-3 small-6">
-      <%= f.label :end_date %>
+      <%= f.label :end_date, "End Date" %>
       <%= f.text_field :end_date, class: 'date' %>
     </div>
 
@@ -31,56 +32,60 @@
   </div>
 <% end %>
 
-<div class="row">
-  <div class="columns">
-    <table class="report payroll-report">
-      <thead>
-        <tr>
-          <th class="text-right">Date</th>
-          <th class="text-right">Start</th>
-          <th class="text-right">Stop</th>
-          <th class="text-right">Time</th>
-          <th>Project</th>
-          <th>Description</th>
-        </tr>
-      </thead>
+<% @payroll_report.users.each do |u| %>
+  <div class="row">
+    <div class="columns">
+      <h3><%= u.name %></h3>
+      <table class="report payroll-report">
+        <% text = @payroll_report.grouped_logs(u).present? %>
+        <thead>
+          <tr>
+            <th class="text-right">Date</th>
+            <th class="text-right">Start</th>
+            <th class="text-right">Stop</th>
+            <th class="text-right">Time</th>
+            <th>Project</th>
+            <th>Description</th>
+          </tr>
+        </thead>
 
-      <% total = 0 %>
-      <% @payroll_report.grouped_logs.each do |date, logs| %>
-        <% date_total = 0 %>
-        <tbody>
-          <% logs.each_with_index do |log, index| %>
-            <% log.project_logs.each do |project_log| %>
-              <%
-                total      += project_log.hours
-                date_total += project_log.hours
-              %>
-              <tr>
-                <% if index == 0 %>
-                  <td class="text-right" rowspan="<%= logs.map(&:project_logs).flatten.size %>"><u><%= log.date %></u></td>
-                <% end %>
-                <td class="text-right"><%= log.start_time %></td>
-                <td class="text-right"><%= log.end_time %></td>
-                <td class="text-right"><%= project_log.hours %></td>
-                <td><%= project_log.project.name %></td>
-                <td><%= simple_format project_log.description %></td>
-              </tr>
+        <% total = 0 %>
+        <% @payroll_report.grouped_logs(u).each do |date, logs| %>
+          <% date_total = 0 %>
+          <tbody>
+            <% logs.each_with_index do |log, index| %>
+              <% log.project_logs.each do |project_log| %>
+                <%
+                  total      += project_log.hours
+                  date_total += project_log.hours
+                %>
+                <tr>
+                  <% if index == 0 && project_log == log.project_logs.first %>
+                    <td class="text-right" rowspan="<%= logs.map(&:project_logs).flatten.size %>"><u><%= log.date %></u></td>
+                  <% end %>
+                  <td class="text-right"><%= log.start_time %></td>
+                  <td class="text-right"><%= log.end_time %></td>
+                  <td class="text-right"><%= project_log.hours %></td>
+                  <td><%= project_log.project.name %></td>
+                  <td><%= simple_format project_log.description %></td>
+                </tr>
+              <% end %>
             <% end %>
-          <% end %>
-          <tr class="subtotal">
-            <td class="text-right" colspan="3">Subtotal:</td>
-            <td class="text-right"><b><%= date_total %></b></td>
+            <tr class="subtotal">
+              <td class="text-right" colspan="3">Subtotal:</td>
+              <td class="text-right"><b><%= date_total %></b></td>
+              <td colspan="2"></td>
+            </tr>
+          </tbody>
+        <% end %>
+        <tfoot>
+          <tr>
+            <td class="text-right stat" colspan="3">Total:</td>
+            <td class="text-right stat"><b><%= total %></b></td>
             <td colspan="2"></td>
           </tr>
-        </tbody>
-      <% end %>
-      <tfoot>
-        <tr>
-          <td class="text-right stat" colspan="3">Total:</td>
-          <td class="text-right stat"><b><%= total %></b></td>
-          <td colspan="2"></td>
-        </tr>
-      </tfoot>
-    </table>
+        </tfoot>
+      </table>
+    </div>
   </div>
-</div>
+<% end %>

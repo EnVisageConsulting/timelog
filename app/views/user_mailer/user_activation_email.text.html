@@ -1,0 +1,9 @@
+
+An account has been created for you on the EnVisage Timelog!
+User details
+--------------------------
+
+Name: <%= @new_user.name %>
+Email: <%= @new_user.email %>
+----------
+Activate your account here: <%= link_to("Activate my account", user_activate_url(@new_user), password_recovery: @password_recovery, password_recovery_params: @password_recovery.token) %>

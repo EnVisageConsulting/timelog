@@ -46,7 +46,7 @@ class Log < ApplicationRecord
 
   def overlapping_user_logs
     return unless start_at && end_at && user
-    overlapping_log = user.logs.where.not(id: self.id).within((start_at + 1.minute), end_at).first
+    overlapping_log = user.logs.where.not(id: self.id).within((start_at + 1.minute), (end_at - 1.minute)).first
 
     if overlapping_log.present?
       sdate = overlapping_log.start_at.in_time_zone(TIMEZONE).strftime("%m/%d/%Y %I:%M %p")
