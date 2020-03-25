@@ -1,5 +1,5 @@
 class ActivatesController < ApplicationController
-  load_and_authorize_resource :user
+  load_resource :user
 
   def update
     respond_to do |format|
