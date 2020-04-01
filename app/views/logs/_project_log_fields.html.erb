@@ -3,6 +3,10 @@
     <div class="columns large-3 medium-3 small-4">
       <%= fields_for.label :project_id %>
       <%= fields_for.select :project_id, options_from_collection_for_select(Project.all, :id, :name), prompt: "Please select one" %>
+      <% if current_user.admin? %>
+        <%= fields_for.check_box :non_billable %>
+        <%= fields_for.label :non_billable, "Non-billable?", class: "checkbox-inline" %>
+      <% end %>
 
       <small><%= link_to_remove_project(fields_for) %></small>
     </div>

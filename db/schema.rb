@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2020_04_01_191200) do
     t.boolean "activated", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "non_billable", default: false, null: false
     t.index ["activated"], name: "index_logs_on_activated"
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
@@ -46,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_191200) do
     t.text "description", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "non_billable", default: false, null: false
     t.index ["log_id", "project_id"], name: "index_project_logs_on_log_id_and_project_id", unique: true
     t.index ["log_id"], name: "index_project_logs_on_log_id"
     t.index ["project_id"], name: "index_project_logs_on_project_id"
