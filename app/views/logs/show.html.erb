@@ -62,7 +62,9 @@
       <tfoot>
         <tr>
           <td>Totals:<span class="float-right">&nbsp;<%= pluralize(@log.project_logs.size, "project") %></span></td>
-          <td></td>
+          <% if current_user.admin? %>
+            <td></td>
+          <% end %>
           <td></td>
           <td class="text-right"><%= @log.hours.round(2) %></td>
         </tr>
