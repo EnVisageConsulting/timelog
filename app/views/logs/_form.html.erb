@@ -51,6 +51,12 @@
       <%= f.submit "Save Log", class: 'button success expanded' %>
     </div>
   </div>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit "Save and Start a New Log", class: 'button success expanded hollow' %>
+    </div>
+  </div>
 <% end %>
 
 <% unless @log.activated? %>

@@ -24,7 +24,14 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update_attributes(log_params)
-        format.html { redirect_to @log, notice: "Successfully updated log" }
+        if params[:commit] == "Save and Start a New Log"
+          load_new_log
+          if @log.save
+            format.html { redirect_to edit_log_path(@log), notice: "Successfully updated log" }
+          end
+        else
+          format.html { redirect_to @log, notice: "Successfully updated log" }
+        end
       else
         @log.project_logs.build if @log.project_logs.blank?
 
