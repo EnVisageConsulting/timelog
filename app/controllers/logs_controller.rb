@@ -57,12 +57,18 @@ class LogsController < ApplicationController
     def load_new_log
       start_at = DateTime.now
 
-      if params[:continue] && ToBoolean(params[:continue])
+      if continuing?
         last_log = current_user.logs.order('end_at DESC').first
         start_at = last_log.end_at + 1.second if last_log
       end
 
       @log = Log.new(user: current_user, start_at: start_at)
+    end
+
+    def continuing?
+      if (params[:continue] && ToBoolean(params[:continue])) || params[:commit] == "Save and Start a New Log"
+        return true
+      end
     end
 
     def log_params
