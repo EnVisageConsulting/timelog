@@ -3,7 +3,7 @@ class Dashboard
     ctx        = document.getElementById "hours_chart"
     labels     = ctx.dataset.chartLabels.split "|"
     values     = ctx.dataset.chartValues.split "|"
-                                        .map (v) -> (Math.round(v * 2) / 2).toFixed(1)
+                                        .map (v) -> (Math.round(v * 10) / 10).toFixed(1)
     hoursChart = new Chart ctx,
       type: 'bar',
       maintainAspectRatio: false,
