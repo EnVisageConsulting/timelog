@@ -1,21 +1,23 @@
 <div class="current-log">
   <div class="row">
     <div class="columns">
-      <%= link_to fa_icon("clock-o", text: "Finish Current Log"), edit_log_path(current_log) %>
-      <%= content_tag :div, nil, id: 'elapsed-time',
-                                 style: 'display: inline-block;',
-                                 title: 'Elapsed Time',
-                                 data: {
-                                   start_date: current_log.start_at.in_time_zone(TIMEZONE).to_s,
-                                   tooltip: ''
-                                 } %>
+      <% unless url_for.to_s.match(/\/logs\/\d+\/edit/) %>
+        <%= link_to fa_icon("clock-o", text: "Finish Current Log"), edit_log_path(current_log) %>
+        <%= content_tag :div, nil, id: 'elapsed-time',
+                                   style: 'display: inline-block;',
+                                   title: 'Elapsed Time',
+                                   data: {
+                                     start_date: current_log.start_at.in_time_zone(TIMEZONE).to_s,
+                                     tooltip: ''
+                                   } %>
+      <% end %>
     </div>
   </div>
 </div>
-
+<!-- current_log.start_at needs to be LESS than 24.hours.ago because those both return a DATE, not elapsed time -->
 <script>
 var $el   = $('#elapsed-time'),
     start = moment($el.data('start-date')).toDate();
 
-$el.countdown({since: start, layout: '<b>{hnn}h {mnn}m {snn}s</b>'});
+$el.countdown({since: start, layout: '<b> <% if current_log.start_at < 24.hours.ago %>{dnn}d<% end %> {hnn}h {mnn}m {snn}s</b>'});
 </script>
