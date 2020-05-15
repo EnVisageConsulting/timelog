@@ -24,7 +24,14 @@ class LogsController < ApplicationController
   def update
     respond_to do |format|
       if @log.update_attributes(log_params)
-        format.html { redirect_to @log, notice: "Successfully updated log" }
+        if params[:commit] == "Save and Start a New Log"
+          load_new_log
+          if @log.save
+            format.html { redirect_to edit_log_path(@log), notice: "Successfully updated log" }
+          end
+        else
+          format.html { redirect_to @log, notice: "Successfully updated log" }
+        end
       else
         @log.project_logs.build if @log.project_logs.blank?
 
@@ -50,7 +57,7 @@ class LogsController < ApplicationController
     def load_new_log
       start_at = DateTime.now
 
-      if params[:continue] && ToBoolean(params[:continue])
+      if continuing?
         last_log = current_user.logs.order('end_at DESC').first
         start_at = last_log.end_at + 1.second if last_log
       end
@@ -58,7 +65,13 @@ class LogsController < ApplicationController
       @log = Log.new(user: current_user, start_at: start_at)
     end
 
+    def continuing?
+      if (params[:continue] && ToBoolean(params[:continue])) || params[:commit] == "Save and Start a New Log"
+        return true
+      end
+    end
+
     def log_params
-      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :_destroy])
+      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy])
     end
 end

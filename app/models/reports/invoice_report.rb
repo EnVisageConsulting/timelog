@@ -51,7 +51,7 @@ class Reports::InvoiceReport < TablelessModel
     return ProjectLog.none if [projects, start_at, end_at].any?(&:blank?)
 
     log_ids       = Log.within(start_at, end_at).pluck(:id)
-    project_logs = ProjectLog.where(log_id: log_ids).where(project: project).includes(:log => :user)
+    project_logs = ProjectLog.where(log_id: log_ids).where(project: project).where(non_billable: false).includes(:log => :user)
   end
 
   def grouped_project_logs(project)

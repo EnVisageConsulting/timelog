@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.datetimepicker.full
+//= require jquery.datetimepicker.full-two
 //= require jquery.plugin
 //= require jquery.countdown
 //= require turbolinks

@@ -35,6 +35,9 @@
       <thead>
         <tr>
           <th>Project</th>
+          <% if current_user.admin? %>
+            <th class="text-right">Billable?</th>
+          <% end %>
           <th class="text-right">Allocation</th>
           <th class="text-right">Hours</th>
         </tr>
@@ -47,6 +50,9 @@
               <h5><%= project_log.project.name %></h5>
               <%= simple_format project_log.description %>
             </td>
+            <% if current_user.admin? %>
+              <td class="text-right"><%= fa_icon("check") unless project_log.non_billable? %></td>
+            <% end %>
             <td class="text-right"><%= project_log.total_allocation * 100 %>%</td>
             <td class="text-right"><%= project_log.hours %></td>
           </tr>
@@ -56,6 +62,9 @@
       <tfoot>
         <tr>
           <td>Totals:<span class="float-right">&nbsp;<%= pluralize(@log.project_logs.size, "project") %></span></td>
+          <% if current_user.admin? %>
+            <td></td>
+          <% end %>
           <td></td>
           <td class="text-right"><%= @log.hours.round(2) %></td>
         </tr>
