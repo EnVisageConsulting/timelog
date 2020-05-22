@@ -4,7 +4,7 @@ class DeactivatesController < ApplicationController
   require 'to_boolean'
 
   def update
-    raise NOT_FOUND unless params[:deactivate]
+    raise not_found unless params[:deactivate]
 
     respond_to do |format|
       if @user.deactivate! deactivating?

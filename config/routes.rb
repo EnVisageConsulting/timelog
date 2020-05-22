@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   get 'settings' => 'settings#index'
   patch 'settings' => 'settings#update'
   root 'dashboard#index'
+  match '*a', to: 'application#not_found', via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
