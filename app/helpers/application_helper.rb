@@ -73,11 +73,11 @@ module ApplicationHelper
     if hours
       strip_insignificant_zeros(Seconds.to_hrs(diff)).to_i
     elsif diff < 1.minute
-      return "#{strip_insignificant_zeros(diff)} seconds"
+      return pluralize(strip_insignificant_zeros(diff), "second")
     elsif diff < 1.hour
-      return "#{strip_insignificant_zeros(Seconds.to_mins(diff))} minutes"
+      return pluralize(strip_insignificant_zeros(Seconds.to_mins(diff)), "minute")
     else
-      return "#{strip_insignificant_zeros(Seconds.to_hrs(diff))} hours"
+      return pluralize(strip_insignificant_zeros(Seconds.to_hrs(diff)), "hour")
     end
   end
 end
