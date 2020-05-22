@@ -18,10 +18,31 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    raise NOT_FOUND if current_user.blank?
+    no_access if current_user.blank?
   end
 
   def require_admin
-    raise NOT_FOUND if !current_user.try(:admin?)
+    no_access if !current_user.try(:admin?)
+  end
+
+  def not_found
+    respond_to do |format|
+      format.json { head :not_found }
+      format.html { redirect_to root_url, :alert => "Page Not Found" }
+    end
+  end
+
+  def no_access
+    respond_to do |format|
+      format.json { head :no_access }
+      format.html { redirect_to root_url, :alert => "You are not authorized to access this page." }
+    end
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+      format.json { head :forbidden }
+      format.html { redirect_to root_url, :alert => exception.message }
+    end
   end
 end

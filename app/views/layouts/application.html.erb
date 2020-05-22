@@ -18,10 +18,15 @@
   </head>
 
   <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>" data-current-log="<%= current_log.present? %>">
-    <%= render 'layouts/header' %>
-    <%= render 'layouts/current_log' if current_log %>
-    <%= render 'layouts/flash' if flash.present? %>
-    <%= yield(:back_link) %>
-    <%= yield %>
+    <div id="page-container">
+      <div id="content-wrap">
+        <%= render 'layouts/header' %>
+        <%= render 'layouts/current_log' if current_log %>
+        <%= render 'layouts/flash' if flash.present? %>
+        <%= yield(:back_link) %>
+        <%= yield %>
+      </div>
+      <%= render 'layouts/footer' %>
+    </div>
   </body>
 </html>

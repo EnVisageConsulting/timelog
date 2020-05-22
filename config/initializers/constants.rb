@@ -5,7 +5,6 @@ EXAMPLE_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 ante sed felis bibendum convallis in vel orci. Ut at
                 tellus porttitor neque cras amet.".squish.freeze
 
-NOT_FOUND = ActionController::RoutingError.new('Not Found')
 TIMEZONE  = "Central Time (US & Canada)".freeze
 
 
