@@ -11,6 +11,8 @@
       <div class="float-right text-right">
         <% if !current_log && current_user.logs.order('end_at DESC').first == @log %>
           <%= link_to fa_icon("clock-o", text: "Continue With New Log"), logs_path(continue: true), method: :post, class: 'button no-margin hollow success small', title: "Start New Log From #{input_datetime @log.end_at}", data: { tooltip: true } %>
+        <% end %>
+        <% if !current_log %>
           <%= link_to fa_icon("clock-o", text: "Start New Log"), logs_path(continue: false), method: :post, class: 'button no-margin hollow success small', title: "Start New Log From Now", data: { tooltip: true } %>
         <% end %>
       </div>

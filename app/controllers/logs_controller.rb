@@ -25,9 +25,12 @@ class LogsController < ApplicationController
     respond_to do |format|
       if @log.update_attributes(log_params)
         if params[:commit] == "Save and Start a New Log"
-          load_new_log
-          if @log.save
-            format.html { redirect_to edit_log_path(@log), notice: "Successfully updated log" }
+          if load_new_log
+            if @log.save
+              format.html { redirect_to edit_log_path(@log), notice: "Successfully updated log" }
+            end
+          else
+            format.html { redirect_to @log, alert: "Cannot start a new log until this log is finished" }
           end
         else
           format.html { redirect_to @log, notice: "Successfully updated log" }
@@ -59,7 +62,11 @@ class LogsController < ApplicationController
 
       if continuing?
         last_log = current_user.logs.order('end_at DESC').first
-        start_at = last_log.end_at + 1.second if last_log
+        if last_log.end_at?
+          start_at = last_log.end_at + 1.second if last_log
+        else
+          return false
+        end
       end
 
       @log = Log.new(user: current_user, start_at: start_at)
