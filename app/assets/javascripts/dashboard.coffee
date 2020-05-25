@@ -36,7 +36,13 @@ class Dashboard
     numAnim = new CountUp stat, startVal, endVal, decimals
     numAnim.start()
 
-$(document).on 'dashboard_index.load', (e, obj) =>
+ready= ->
   dashboard = new Dashboard
   dashboard.hoursChart()
   dashboard.weekHoursCount()
+
+$(document).on 'dashboard_index.load', (e, obj) =>
+  ready()
+
+$(document).on 'turbolinks:load', (e, obj) =>
+  ready()
