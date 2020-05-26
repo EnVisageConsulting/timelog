@@ -44,7 +44,7 @@ class LogsController < ApplicationController
     if @log.activated?
       user = User.find(@log.user_id)
       user_logs = user.logs.active.latest.reverse
-      @next_log = user_logs[user_logs.index(@log)+1] if user_logs.index(@log)+1 != user_logs.size
+      @next_log = user_logs[user_logs.index(@log)+1] if user_logs.index(@log)+1 < user_logs.size
       @prev_log = user_logs[user_logs.index(@log)-1] if user_logs.index(@log)-1 >= 0
     else
       redirect_to edit_log_path(@log)
