@@ -45,4 +45,5 @@ $(document).on 'dashboard_index.load', (e, obj) =>
   ready()
 
 $(document).on 'turbolinks:load', (e, obj) =>
-  ready()
+  if window.location.pathname == '/' #dashboard
+    ready()
