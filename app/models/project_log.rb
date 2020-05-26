@@ -26,4 +26,10 @@ class ProjectLog < ApplicationRecord
 
     (total_allocation * 100).round.to_s
   end
+
+  def hours_two_decimals
+    return unless log.start_at? && log.end_at? && log.start_at <= log.end_at
+    return '%.2f' % 0.00 if log.end_at == log.start_at
+    '%.2f' % Seconds.to_hours(log.end_at - log.start_at)
+  end
 end

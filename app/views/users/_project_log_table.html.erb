@@ -20,7 +20,7 @@
             </td>
             <td class="text-left"><%= link_to log_title(log), log %></td>
             <td class="text-left"><%= project_log.project.name %></td>
-            <td class="text-right"><%= pluralize(project_log.hours, "hour") %></td>
+            <td class="text-right"><%= pluralize(project_log.hours_two_decimals, "hour") %></td>
             <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
           </tr>
         <% end %>
@@ -33,8 +33,8 @@
   </tbody>
   <tfoot style="background: #fff; border: 0">
     <tr>
-      <td class="text-right stat" colspan="3">Total:</td>
-      <td class="text-right stat" colspan="1"><%= total_time %></td>
+      <td class="text-right stat total" colspan="3">Total:</td>
+      <td class="text-right stat total" colspan="1"><%= total_time %></td>
       <td></td>
     </tr>
   </tfoot>

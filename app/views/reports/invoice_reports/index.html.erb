@@ -3,7 +3,7 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h2>Invoice Report for: <%= @invoice_report.projects&.map(&:name)&.to_sentence %></h2>
+    <h2>Timelog Report for: <%= @invoice_report.projects&.map(&:name)&.to_sentence %></h2>
     <h3 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
   </div>
 </div>
@@ -39,7 +39,7 @@
   <% total = 0 %>
   <div class="row">
     <div class="columns">
-      <h4><%= project.name %></h4>
+      <h4><b><%= project.name %></b></h4>
       <table class="report invoice-report">
         <thead>
           <tr>
@@ -55,10 +55,12 @@
             <% project_logs.each do |project_log| %>
               <tr>
                 <% if project_log == project_logs.first %>
-                  <td rowspan="<%= project_logs.size %>" class="text-right"><%= user.name %></td>
+                  <td class="text-right"><%= user.name %></td>
+                <% else %>
+                  <td></td>
                 <% end %>
                 <td class="text-right"><%= project_log.log.date %></td>
-                <td class="text-right"><%= project_log.hours %></td>
+                <td class="text-right"><%= project_log.hours_two_decimals %></td>
                 <td><%= simple_format project_log.description %></td>
               </tr>
             <% end %>
@@ -71,8 +73,8 @@
         <% end %>
         <tfoot>
           <tr>
-            <td class="text-right stat" colspan="2">Total:</td>
-            <td class="text-right stat"><%= total %></td>
+            <td class="text-right stat total" colspan="2">Total:</td>
+            <td class="text-right stat total"><%= total %></td>
             <td></td>
           </tr>
         </tfoot>
