@@ -75,3 +75,12 @@
     </table>
   </div>
 </div>
+
+<div class="row">
+  <div class="columns">
+    <%= link_to fa_icon("angle-left", text: "Previous Log"), @prev_log, class: 'button no-margin hollow small' if @prev_log.present? %>
+    <div class="float-right text-right">
+      <%= link_to fa_icon("angle-right", text: "Next Log", right: true), @next_log, class: 'button no-margin hollow small' if @next_log.present? %>
+    </div>
+  </div>
+</div>
