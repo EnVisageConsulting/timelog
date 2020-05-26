@@ -66,6 +66,14 @@ class Log
 
       $totalHours.text value
 
+      startNewLog = $("#start-new-log")
+      startNewLogRow = $("#start-new-log-row")
+
+      if endAt != "" && (startNewLogRow.data('current-log-id') == "" || startNewLogRow.data('current-log-id') == startNewLogRow.data('editing-log-id'))
+        startNewLog.show()
+      else
+        startNewLog.hide()
+
 
     $endAt.on   "change", updateTotalHours
     $startAt.on "change", updateTotalHours

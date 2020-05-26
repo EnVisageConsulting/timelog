@@ -46,8 +46,8 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="columns">
+  <div class="row" id="start-new-log-row" data-current-log-id="<%= current_log&.id %>" data-editing-log-id="<%= @log.id %>">
+    <div class="columns" id="start-new-log" style="display: none;">
       <%= f.submit "Save and Start a New Log", class: 'button success expanded hollow' %>
     </div>
   </div>
