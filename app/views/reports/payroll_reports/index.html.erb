@@ -3,7 +3,7 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Personal Summary Report</h3>
+    <h3>Payroll Report for: <%= @payroll_report.users&.map(&:name)&.to_sentence %></h3>
     <h5 class="subheader">Period of: <%= @payroll_report.start_date %> - <%= @payroll_report.end_date %></h5>
   </div>
 </div>
@@ -35,7 +35,7 @@
 <% @payroll_report.users.each do |u| %>
   <div class="row">
     <div class="columns">
-      <h3><%= u.name %></h3>
+      <h3><b><%= u.name %></b></h3>
       <table class="report payroll-report">
         <% text = @payroll_report.grouped_logs(u).present? %>
         <thead>
@@ -61,11 +61,13 @@
                 %>
                 <tr>
                   <% if index == 0 && project_log == log.project_logs.first %>
-                    <td class="text-right" rowspan="<%= logs.map(&:project_logs).flatten.size %>"><u><%= log.date %></u></td>
+                    <td class="text-right"><u><%= log.date %></u></td>
+                  <% else %>
+                    <td></td>
                   <% end %>
                   <td class="text-right"><%= log.start_time %></td>
                   <td class="text-right"><%= log.end_time %></td>
-                  <td class="text-right"><%= project_log.hours %></td>
+                  <td class="text-right"><%= project_log.hours_two_decimals %></td>
                   <td><%= project_log.project.name %></td>
                   <td><%= simple_format project_log.description %></td>
                 </tr>
@@ -80,8 +82,8 @@
         <% end %>
         <tfoot>
           <tr>
-            <td class="text-right stat" colspan="3">Total:</td>
-            <td class="text-right stat"><b><%= total %></b></td>
+            <td class="text-right stat total" colspan="3">Total:</td>
+            <td class="text-right stat total"><b><%= total %></b></td>
             <td colspan="2"></td>
           </tr>
         </tfoot>

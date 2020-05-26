@@ -6,7 +6,7 @@
   <div class="columns">
     <div class="spacer"></div>
     <div id="user-log-filter">
-      <%= form_tag @user, method: :get do %>
+      <%= form_tag @user, method: :get, class: 'filters-form' do %>
         <div class="row">
           <div class="columns medium-4">
             <%= label_tag :project_ids, "Projects" %>
@@ -29,7 +29,7 @@
     </div>
     <div class="spacer"></div>
 
-    <h3><%= @user.name %>'s Logs</h3>
+    <h3><b><%= @user.name %>'s Logs</b></h3>
     <% project_ids = params[:project_ids] %>
     <% if project_ids.present? %>
       <%= render "project_log_table", logs: @logs, user_logs: @user_logs, project_ids: project_ids %>
