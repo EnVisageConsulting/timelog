@@ -2,7 +2,14 @@
 
 <div class="row">
   <div class="columns">
-    <div class="spacer"></div>
+    <img width="150px;" src="<%= image_url("EnVisage_Logo.png") %>">
+    <p style="padding-left: 2px; margin-top: 5px; font-size: .8em">EnVisage Consulting, Inc.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <!-- <div class="spacer"></div> -->
     <h3>Payroll Report for: <%= @payroll_report.users&.map(&:name)&.to_sentence %></h3>
     <h5 class="subheader">Period of: <%= @payroll_report.start_date %> - <%= @payroll_report.end_date %></h5>
   </div>
