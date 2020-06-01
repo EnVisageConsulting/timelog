@@ -45,7 +45,7 @@ class Log < ApplicationRecord
   end
 
   def overlapping_user_logs
-    return unless start_at && end_at && user
+    return unless start_at && end_at && user && !user.admin?
     overlapping_log = user.logs.where.not(id: self.id).within((start_at + 1.minute), (end_at - 1.minute)).first
 
     if overlapping_log.present?
