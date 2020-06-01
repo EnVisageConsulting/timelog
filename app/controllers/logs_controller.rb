@@ -58,7 +58,7 @@ class LogsController < ApplicationController
     @log.destroy
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Log cancelled." }
+      format.html { redirect_to user_path(@log.user), notice: "Log Successfully Deleted" }
     end
   end
 

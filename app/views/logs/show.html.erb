@@ -5,6 +5,7 @@
       <% if can?(:edit, @log) %>
         <ul class="menu float-left">
           <li><%= link_to fa_icon("pencil", text: "Edit Log"), edit_log_path(@log) %></li>
+          <li><%= link_to fa_icon("minus-circle", text: "Delete Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure you want to delete this log?" }, class: 'alert-link' %></li>
         </ul>
       <% end %>
 

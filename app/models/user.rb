@@ -33,9 +33,9 @@ class User < ApplicationRecord
 
 
   # --- Scopes --- #
-  scope :activated, -> { where('activated_at IS NOT NULL') }
-  scope :deactivated, -> { where('deactivated_at IS NOT NULL') }
-  scope :undeactivated, -> { where('deactivated_at IS NULL') }
+  scope :activated, -> { where('activated_at IS NOT NULL').order(:last) }
+  scope :deactivated, -> { where('deactivated_at IS NOT NULL').order(:last) }
+  scope :undeactivated, -> { where('deactivated_at IS NULL').order(:last) }
 
 
   # --- Class Methods --- #

@@ -38,4 +38,8 @@ module LogsHelper
     value << " - " << end_at.strftime("%a") if start_at.day != end_at.day
     value
   end
+
+  def project_select_list(project)
+    project&.deactivated ? Project.active.alphabetized + [project] : Project.active.alphabetized
+  end
 end
