@@ -16,7 +16,7 @@ class Log < ApplicationRecord
   validate  :end_at_in_the_past
   validate  :project_log_allocation
   validate  :max_date_range
-  validate  :overlapping_user_logs
+  #validate  :overlapping_user_logs
 
   def start_at_comes_before_end_at
     return unless start_at && end_at
@@ -45,7 +45,7 @@ class Log < ApplicationRecord
   end
 
   def overlapping_user_logs
-    return unless start_at && end_at && user && !user.admin?
+    return unless start_at && end_at && user
     overlapping_log = user.logs.where.not(id: self.id).within((start_at + 1.minute), (end_at - 1.minute)).first
 
     if overlapping_log.present?
