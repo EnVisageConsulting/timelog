@@ -2,8 +2,8 @@ require 'date_time_parser'
 
 class Reports::InvoiceReport < TablelessModel
   validates :projects, presence: true
-  validates :start_at, presence: true
-  validates :end_at, presence: true
+  # validates :start_at, presence: true
+  # validates :end_at, presence: true
 
   attr_accessor :projects, :start_at, :end_at
 
@@ -48,9 +48,19 @@ class Reports::InvoiceReport < TablelessModel
   end
 
   def project_logs(project, reload=false)
-    return ProjectLog.none if [projects, start_at, end_at].any?(&:blank?)
+    return ProjectLog.none if projects.blank?
 
-    log_ids       = Log.within(start_at, end_at).pluck(:id)
+    log_ids =
+    if start_at.present? && end_at.present?
+      Log.within(start_at, end_at).pluck(:id)
+    elsif start_at.present?
+      Log.where("start_at >= ?", start_at)
+    elsif end_at.present?
+      Log.where("end_at <= ?", end_at)
+    else
+      Log.all
+    end
+
     project_logs = ProjectLog.where(log_id: log_ids).where(project: project).where(non_billable: false).includes(:log => :user)
   end
 

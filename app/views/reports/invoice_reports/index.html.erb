@@ -11,7 +11,7 @@
   <div class="columns">
     <!-- <div class="spacer"></div> -->
     <h2>Timelog Report for: <%= @invoice_report.projects&.map(&:name)&.to_sentence %></h2>
-    <h3 class="subheader">Period of: <%= @invoice_report.start_date %> - <%= @invoice_report.end_date %></h3>
+    <h3 class="subheader"><%= @date %></h3>
   </div>
 </div>
 
@@ -50,10 +50,13 @@
       <table class="report invoice-report">
         <thead>
           <tr>
-            <th class="text-right invoice-column">Employee</th>
-            <th class="text-right invoice-column">Date</th>
-            <th class="text-right invoice-column">Hours</th>
+            <th class="text-right invoice-column" style="width: 15%;">Employee</th>
+            <% if @invoice_report.start_date.present? && @invoice_report.end_date.present? %>
+              <th class="text-right invoice-column" style="width: 15%;">Date</th>
+            <% end %>
+            <th class="text-right invoice-column" style="width: 10%;">Hours</th>
             <th>Description</th>
+            <th></th>
           </tr>
         </thead>
         <% @invoice_report.grouped_project_logs(project).each do |user, project_logs| %>
@@ -66,22 +69,26 @@
                 <% else %>
                   <td></td>
                 <% end %>
-                <td class="text-right"><%= project_log.log.date %></td>
+                <% if @invoice_report.start_date.present? && @invoice_report.end_date.present? %>
+                  <td class="text-right"><%= project_log.log.date %></td>
+                <% end %>
                 <td class="text-right"><%= project_log.hours_two_decimals %></td>
                 <td><%= simple_format project_log.description %></td>
               </tr>
             <% end %>
             <tr class="subtotal">
-              <td class="text-right" colspan="2">Subtotal:</td>
+              <td class="text-right">Subtotal:</td>
               <td class="text-right"><b><%= user_total %></b></td>
+              <td></td>
               <td></td>
             </tr>
           </tbody>
         <% end %>
         <tfoot>
           <tr>
-            <td class="text-right stat total" colspan="2">Total:</td>
+            <td class="text-right stat total">Total:</td>
             <td class="text-right stat total"><%= total %></td>
+            <td></td>
             <td></td>
           </tr>
         </tfoot>

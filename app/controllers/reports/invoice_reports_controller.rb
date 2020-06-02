@@ -19,6 +19,16 @@ class Reports::InvoiceReportsController < ApplicationController
 
   def index
     @invoice_report = Reports::InvoiceReport.new(invoice_report_params)
+    @date =
+    if @invoice_report.start_at.present? && @invoice_report.end_at.present?
+      "Period of: #{@invoice_report.start_date} - #{@invoice_report.end_date}"
+    elsif @invoice_report.start_at.present?
+      "Period of: #{@invoice_report.start_date} - Now"
+    elsif @invoice_report.end_at.present?
+      "Period Before #{@invoice_report.end_date}"
+    else
+      "All Logs"
+    end
   end
 
   private
