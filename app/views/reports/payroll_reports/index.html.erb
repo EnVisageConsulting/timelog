@@ -47,11 +47,11 @@
         <% text = @payroll_report.grouped_logs(u).present? %>
         <thead>
           <tr>
-            <th class="text-right">Date</th>
-            <th class="text-right">Start</th>
-            <th class="text-right">Stop</th>
-            <th class="text-right">Time</th>
-            <th>Project</th>
+            <th class="text-center" style="width: 10%">Date</th>
+            <th class="text-center" style="width: 10%">Start</th>
+            <th class="text-center" style="width: 10%">Stop</th>
+            <th class="text-center" style="width: 10%">Time</th>
+            <th style="width: 20%">Project</th>
             <th>Description</th>
           </tr>
         </thead>
@@ -68,29 +68,33 @@
                 %>
                 <tr>
                   <% if index == 0 && project_log == log.project_logs.first %>
-                    <td class="text-right"><u><%= log.date %></u></td>
+                    <td class="text-center"><u><%= log.date %></u></td>
                   <% else %>
                     <td></td>
                   <% end %>
-                  <td class="text-right"><%= log.start_time %></td>
-                  <td class="text-right"><%= log.end_time %></td>
-                  <td class="text-right"><%= project_log.hours_two_decimals %></td>
+                  <td class="text-center"><%= log.start_time %></td>
+                  <td class="text-center"><%= log.end_time %></td>
+                  <td class="text-center"><%= project_log.hours_two_decimals %></td>
                   <td><%= project_log.project.name %></td>
                   <td><%= simple_format project_log.description %></td>
                 </tr>
               <% end %>
             <% end %>
             <tr class="subtotal">
-              <td class="text-right" colspan="3">Subtotal:</td>
-              <td class="text-right"><b><%= date_total %></b></td>
+              <td></td>
+              <td></td>
+              <td class="text-center">Subtotal:</td>
+              <td class="text-center"><b><%= date_total %></b></td>
               <td colspan="2"></td>
             </tr>
           </tbody>
         <% end %>
         <tfoot>
           <tr>
-            <td class="text-right stat total" colspan="3">Total:</td>
-            <td class="text-right stat total"><b><%= total %></b></td>
+            <td></td>
+            <td></td>
+            <td class="text-center stat total">Total:</td>
+            <td class="text-center stat total"><b><%= total %></b></td>
             <td colspan="2"></td>
           </tr>
         </tfoot>
