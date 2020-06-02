@@ -23,7 +23,7 @@
             <td class="text-left"><%= project_log.project.name %></td>
             <td class="text-right"><%= pluralize(project_log.hours_two_decimals, "hour") %></td>
             <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
-            <td class="text-center"><%= link_to fa_icon("minus-circle"), log_path(log), method: :delete, data: { confirm: "Are you sure you want to delete this log?" }, class: 'alert-link' %></td>
+            <td class="text-center"><%= link_to fa_icon("minus-circle"), log_path(log), method: :delete, data: { confirm: "Are you sure you want to delete this log? Deleting will remove this time from payroll hours!" }, class: 'alert-link' %></td>
           </tr>
         <% end %>
       <% end %>
