@@ -36,10 +36,20 @@ class Dashboard
     numAnim = new CountUp stat, startVal, endVal, decimals
     numAnim.start()
 
+  dayHoursCount: ->
+    stat     = $("#day_hours_count").find(".stat")[ 0 ]
+    endVal   = parseFloat stat.dataset.hours
+    startVal = 0
+    decimals = if endVal > 0 then 1 else 0
+
+    numAnim = new CountUp stat, startVal, endVal, decimals
+    numAnim.start()
+
 ready= ->
   dashboard = new Dashboard
   dashboard.hoursChart()
   dashboard.weekHoursCount()
+  dashboard.dayHoursCount()
 
 $(document).on 'dashboard_index.load', (e, obj) =>
   ready()

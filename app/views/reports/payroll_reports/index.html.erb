@@ -23,13 +23,19 @@
       <a id="select-all"></a>
     </div>
 
-    <div class="columns medium-3 small-6">
+    <div class="columns medium-2 small-6">
       <%= f.label :start_date, "Start Date" %>
       <%= f.text_field :start_date, class: 'date' %>
     </div>
-    <div class="columns medium-3 small-6">
+
+    <div class="columns medium-2 small-6">
       <%= f.label :end_date, "End Date" %>
       <%= f.text_field :end_date, class: 'date' %>
+    </div>
+
+    <div class="columns medium-2 small-6">
+      <%= label_tag :sort_date, "Sort Date" %>
+      <%= f.select :sort_date, {"Ascending" => "asc", "Descending" => "desc"} %>
     </div>
 
     <div class="columns medium-2">
