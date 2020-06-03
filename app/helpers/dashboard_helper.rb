@@ -23,6 +23,14 @@ module DashboardHelper
     strip_insignificant_zeros hours
   end
 
+  def current_day_hours
+    sdate = Time.now.in_time_zone(TIMEZONE).beginning_of_day
+    edate = sdate.end_of_day
+    hours = current_user.logs.active.within(sdate, edate).map(&:hours).inject(:+) || 0
+
+    strip_insignificant_zeros hours
+  end
+
   def recent_logs
     @recent_logs ||= current_user.logs.active.latest.limit(Kaminari.config.default_per_page)
   end
