@@ -1,0 +1,50 @@
+<div class="spacer"></div>
+<div class="row">
+  <div class="columns">
+    <h3>Admin Dashboard</h3>
+  </div>
+</div>
+
+<div class="row show-for-medium">
+  <div class="columns small-6 text-center">
+    <div class="callout primary">
+      <div class="spacer show-for-large"></div>
+      <h5>Total Employee Hours</h5>
+      <div id="week_hours_count" style="float: left; margin-left: 15%;">
+        <h5>Last Week</h5>
+        <strong class="stat monospaced primary-text" data-hours="<%= current_week_hours %>"></strong>
+      </div>
+      <div id="day_hours_count" style="float: right; margin-right: 15%;">
+        <h5>This Week</h5>
+        <strong class="stat monospaced primary-text" data-hours="<%= current_day_hours %>"></strong>
+      </div>
+      <div class="spacer"></div>
+      <div class="spacer"></div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+
+  <div class="columns small-6">
+    Graph for this week
+    <canvas id="hours_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="<%= hours_chart_labels %>"
+            data-chart-values="<%= hours_chart_values %>"></canvas>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <h5>Employees</h5>
+    <%= render "admin_log_table", obj: User.activated.order(:last) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <h5>Projects</h5>
+    <%= render "admin_log_table", obj: Project.active.alphabetized %>
+  </div>
+</div>
+
+<div class="spacer"></div>

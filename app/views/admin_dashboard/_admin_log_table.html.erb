@@ -1,0 +1,34 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-left">Hours Last Week</th>
+      <th class="text-left">Hours This Week</th>
+      <th class="text-left">Hours Last Month</th>
+      <th class="text-left">Hours This Month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% last_week_total = this_week_total = last_month_total = this_month_total = 0 %>
+    <% obj.each do |o| %>
+      <% last_week_total  += hours_last_week(o).to_f %>
+      <% this_week_total  += hours_this_week(o).to_f %>
+      <% last_month_total += hours_last_month(o).to_f %>
+      <% this_month_total += hours_this_month(o).to_f %>
+      <tr>
+        <td class="text-left"><%= user_link(o) %></td>
+        <td class="text-left"><%= hours_last_week(o) %></td>
+        <td class="text-left"><%= hours_this_week(o) %></td>
+        <td class="text-left"><%= hours_last_month(o) %></td>
+        <td class="text-left"><%= hours_this_month(o) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td class="text-left"><b>Totals</b></td>
+      <td class="text-left"><%= strip_insignificant_zeros last_week_total %></td>
+      <td class="text-left"><%= strip_insignificant_zeros this_week_total %></td>
+      <td class="text-left"><%= strip_insignificant_zeros last_month_total %></td>
+      <td class="text-left"><%= strip_insignificant_zeros this_month_total %></td>
+    </tr>
+  </tbody>
+</table>
