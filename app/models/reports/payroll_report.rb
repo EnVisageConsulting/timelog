@@ -5,7 +5,7 @@ class Reports::PayrollReport < TablelessModel
   validates :start_at, presence: true
   validates :end_at, presence: true
 
-  attr_accessor :users, :start_at, :end_at
+  attr_accessor :users, :start_at, :end_at, :sort_date
 
   def initialize(attributes = {})
     set_default_attrs
@@ -54,7 +54,11 @@ class Reports::PayrollReport < TablelessModel
 
   def grouped_logs(user)
     return logs unless logs.present?
-    logs.reject{|l| l.user != user}.group_by(&:date)
+    if sort_date == "desc"
+      logs.reject{|l| l.user != user}.group_by(&:date)
+    else
+      logs.reject{|l| l.user != user}.reverse.group_by(&:date)
+    end
   end
 
   private
