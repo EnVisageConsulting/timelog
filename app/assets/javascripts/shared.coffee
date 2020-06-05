@@ -5,7 +5,8 @@ window.loadShared = ->
     formatTime: 'g:i A',
     maxDate: 0,
     scrollMonth: false,
-    yearStart: 2016
+    step: 30,
+    yearStart: 2016,
     yearEnd: new Date().getFullYear()
 
   $(".date").datetimepicker

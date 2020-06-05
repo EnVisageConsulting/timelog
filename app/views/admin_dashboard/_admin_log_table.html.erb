@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center">Hours Last Week <br><%= last_week_range %></th>
+      <th class="text-center">Hours This Week <br><%= this_week_range %></th>
+      <th class="text-center">Hours Last Month <br><%= last_month_name %></th>
+      <th class="text-center">Hours This Month <br><%= this_month_name %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% obj.each do |o| %>
+      <tr>
+        <td class="text-left"><%= user_link(o) %></td>
+        <td class="text-center"><%= hours_last_week(o) %></td>
+        <td class="text-center"><%= hours_this_week(o) %></td>
+        <td class="text-center"><%= hours_last_month(o) %></td>
+        <td class="text-center"><%= hours_this_month(o) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td class="text-left"><b>Totals</b></td>
+      <td class="text-center"><b><%= last_week_total(obj) %></b></td>
+      <td class="text-center"><b><%= this_week_total(obj) %></b></td>
+      <td class="text-center"><b><%= last_month_total(obj) %></b></td>
+      <td class="text-center"><b><%= this_month_total(obj) %></b></td>
+    </tr>
+  </tbody>
+</table>

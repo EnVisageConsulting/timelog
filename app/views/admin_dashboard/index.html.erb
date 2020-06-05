@@ -1,0 +1,38 @@
+<div class="spacer"></div>
+<div class="row">
+  <div class="columns">
+    <h3>Admin Dashboard</h3>
+  </div>
+</div>
+
+<div class="row show-for-medium">
+  <div class="columns small-6">
+    <canvas id="employee_week_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="Last Week|This Week"
+            data-chart-values="<%= graph_week_totals %>"></canvas>
+  </div>
+
+  <div class="columns small-6">
+    <canvas id="employee_month_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="Last Month <%= last_month_name %>|This Month <%= this_month_name %>"
+            data-chart-values="<%= graph_month_totals %>"></canvas>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <h5>Employees</h5>
+    <%= render "admin_log_table", obj: User.undeactivated.order(:last) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <h5>Projects</h5>
+    <%= render "admin_log_table", obj: Project.active.alphabetized %>
+  </div>
+</div>
+
+<div class="spacer"></div>
