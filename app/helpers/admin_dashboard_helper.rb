@@ -86,9 +86,9 @@ module AdminDashboardHelper
       hours =
       case obj
         when User
-          obj.logs.active.within(sdate, edate).map(&:hours).inject(:+) || 0
+          Log.within(sdate, edate).reject{|l| l.user_id != obj.id}.map(&:project_logs).flatten!&.map(&:hours)&.inject(:+) || 0
         when Project
-          Log.within(sdate, edate).map(&:project_logs).flatten!.reject{|pl|pl.project_id != obj.id}.map(&:hours).inject(:+) || 0
+          Log.within(sdate, edate).map(&:project_logs).flatten!.reject{|pl| pl.project_id != obj.id}.map(&:hours).inject(:+) || 0
         else
           raise InvalidObject
       end
