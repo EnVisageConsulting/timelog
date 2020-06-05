@@ -24,26 +24,30 @@
 </div>
 
 <div class="row show-for-medium">
-  <div class="columns small-6 text-center">
-    <div class="callout primary">
-      <div class="spacer show-for-large"></div>
-      <h5>Hours Completed</h5>
-      <div id="week_hours_count" style="float: left; margin-left: 15%;">
-        <h5>This Week</h5>
-        <strong class="stat monospaced primary-text" data-hours="<%= current_week_hours %>"></strong>
+  <div class="columns text-center">
+    <div class="callout primary dashboard-hours-div">
+      <div id="day_hours_count" class="dashboard-today-count">
+        <h5>Today: <strong class="stat monospaced primary-text" data-hours="<%= current_day_hours %>"></strong></h5>
       </div>
-      <div id="day_hours_count" style="float: right; margin-right: 15%;">
-        <h5>Today</h5>
-        <strong class="stat monospaced primary-text" data-hours="<%= current_day_hours %>"></strong>
+      <div class="text-center <%= hours_completed_class %>"><h5>Hours Completed</h5></div>
+      <div id="week_hours_count" class="dashboard-this-week-count">
+        <h5>This Week: <strong class="stat monospaced primary-text" data-hours="<%= current_week_hours %>"></strong></h5>
       </div>
-      <div class="spacer"></div>
-      <div class="spacer"></div>
-      <div class="spacer"></div>
     </div>
+  </div>
+</div>
+
+<div class="row show-for-medium">
+
+  <div class="columns small-6">
+    <canvas id="hours_by_day_chart"
+            style="margin-bottom: 1rem"
+            data-chart-labels="<%= daily_hours_chart_labels %>"
+            data-chart-values="<%= daily_hours_chart_values %>"></canvas>
   </div>
 
   <div class="columns small-6">
-    <canvas id="hours_chart"
+    <canvas id="hours_by_week_chart"
             style="margin-bottom: 1rem"
             data-chart-labels="<%= hours_chart_labels %>"
             data-chart-values="<%= hours_chart_values %>"></canvas>

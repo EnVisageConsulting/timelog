@@ -1,6 +1,6 @@
 class Dashboard
-  hoursChart: ->
-    ctx        = document.getElementById "hours_chart"
+  hoursChart: (id, title)->
+    ctx        = document.getElementById id
     labels     = ctx.dataset.chartLabels.split "|"
     values     = ctx.dataset.chartValues.split "|"
                                         .map (v) -> (Math.round(v * 10) / 10).toFixed(1)
@@ -18,7 +18,7 @@ class Dashboard
       options:
         title:
           display: true,
-          text: 'Number of Hours by Week'
+          text: title
         legend:
           display: false
         scales:
@@ -47,7 +47,8 @@ class Dashboard
 
 ready= ->
   dashboard = new Dashboard
-  dashboard.hoursChart()
+  dashboard.hoursChart("hours_by_week_chart", "Number of Hours by Week")
+  dashboard.hoursChart("hours_by_day_chart", "Number of Hours - Last 5 Days")
   dashboard.weekHoursCount()
   dashboard.dayHoursCount()
 
