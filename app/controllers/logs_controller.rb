@@ -1,6 +1,7 @@
 class LogsController < ApplicationController
   before_action :load_new_log, only: :create
   load_and_authorize_resource param_method: :log_params
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 
   def create
     if current_log
@@ -58,8 +59,10 @@ class LogsController < ApplicationController
     @log.destroy
 
     respond_to do |format|
-      format.html { redirect_to user_path(@log.user), notice: "Log Successfully Deleted" }
+      format.html { redirect_back fallback_location: root_path }
+      flash[:notice] = "Log Successfully Deleted"
     end
+
   end
 
   private
@@ -87,5 +90,9 @@ class LogsController < ApplicationController
 
     def log_params
       params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy])
+    end
+
+    def record_not_found
+      redirect_to root_path, notice: "Log Successfully Deleted"
     end
 end
