@@ -74,16 +74,25 @@ class Log
       else
         startNewLog.hide()
 
+    $percent_total = $("#total_percent")
+
+    updatePercentage = ->
+      total = 0
+      $(".percent_field").each (id, field) ->
+        total += parseInt(field.value)
+      $percent_total.val(total)
 
     $endAt.on   "change", updateTotalHours
     $startAt.on "change", updateTotalHours
+    $(".percent_field").on "change", updatePercentage
 
     updateTotalHours()
 
     projectChangeListener = ->
       $projectFields = $("select[id$='_project_id']")
       $projectFields.on "change", distinctProjects
-      $projectFields.each distinctProjects # Doesn't work yet.
+      $projectFields.each distinctProjects
+      $(".percent_field").on "change", updatePercentage #restablish trigger
 
     distinctProjects = ->
       $projectFields = $("select[id$='_project_id']")
