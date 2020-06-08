@@ -15,6 +15,18 @@ module DashboardHelper
     hours_chart.values.join("|")
   end
 
+  def daily_hours_chart
+    @daily_hours_chart ||= DailyHoursChart.new(current_user)
+  end
+
+  def daily_hours_chart_labels
+    daily_hours_chart.labels.join("|")
+  end
+
+  def daily_hours_chart_values
+    daily_hours_chart.values.join("|")
+  end
+
   def current_week_hours
     sdate = Time.now.in_time_zone(TIMEZONE).beginning_of_week
     edate = sdate.end_of_week
@@ -29,6 +41,10 @@ module DashboardHelper
     hours = current_user.logs.active.within(sdate, edate).map(&:hours).inject(:+) || 0
 
     strip_insignificant_zeros hours
+  end
+
+  def hours_completed_class
+    current_day_hours == "0" ? "dashboard-hours-completed-zero" : "dashboard-hours-completed"
   end
 
   def recent_logs
