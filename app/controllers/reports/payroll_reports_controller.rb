@@ -1,5 +1,5 @@
 class Reports::PayrollReportsController < ApplicationController
-  before_action :require_admin
+  #before_action :require_admin
 
   def new
     @payroll_report = Reports::PayrollReport.new
