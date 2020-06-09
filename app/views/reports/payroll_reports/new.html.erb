@@ -1,4 +1,4 @@
-<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" %>
+<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" if current_user.admin? %>
 
 <div class="row">
   <div class="columns">
@@ -13,7 +13,7 @@
   <div class="row">
     <div class="columns">
       <%= f.label :user_ids, "Employees" %>
-      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+      <%= f.collection_select :user_ids, @users, :id, :name, {}, {multiple: true, class: "multiselect"} %>
       <a id="select-all"></a>
     </div>
   </div>

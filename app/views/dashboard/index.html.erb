@@ -54,7 +54,14 @@
   </div>
 </div>
 
-<%= render "reports/date_shortcut_buttons" %>
+<div class="row">
+  <div style="margin:auto; width: 90%">
+    <%= render "reports/date_shortcut_button", range: "Last Week" %>
+    <%= render "reports/date_shortcut_button", range: "This Week" %>
+    <%= render "reports/date_shortcut_button", range: "Last Month" %>
+    <%= render "reports/date_shortcut_button", range: "This Month" %>
+  </div>
+</div>
 
 <div class="row">
   <div class="columns">
