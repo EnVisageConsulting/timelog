@@ -55,6 +55,15 @@
 </div>
 
 <div class="row">
+  <div style="margin:auto; width: 90%">
+    <%= render "reports/date_shortcut_button", range: "Last Week" %>
+    <%= render "reports/date_shortcut_button", range: "This Week" %>
+    <%= render "reports/date_shortcut_button", range: "Last Month" %>
+    <%= render "reports/date_shortcut_button", range: "This Month" %>
+  </div>
+</div>
+
+<div class="row">
   <div class="columns">
     <%= link_to "View All Logs", user_path(current_user), class: 'float-right' %>
     <h3>Recent Logs</h3>

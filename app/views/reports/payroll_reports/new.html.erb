@@ -1,9 +1,9 @@
-<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" %>
+<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" if current_user.admin? %>
 
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h1>Payroll Report</h1>
+    <h1>Personal Report</h1>
   </div>
 </div>
 
@@ -13,7 +13,7 @@
   <div class="row">
     <div class="columns">
       <%= f.label :user_ids, "Employees" %>
-      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+      <%= f.collection_select :user_ids, @users, :id, :name, {}, {multiple: true, class: "multiselect"} %>
       <a id="select-all"></a>
     </div>
   </div>
@@ -32,6 +32,15 @@
   <div class="row">
     <div class="columns">
       <%= f.submit "View Report", class: 'button' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div style="margin:auto; width: 90%">
+      <%= render "reports/date_shortcut_button", range: "Last Week" %>
+      <%= render "reports/date_shortcut_button", range: "This Week" %>
+      <%= render "reports/date_shortcut_button", range: "Last Month" %>
+      <%= render "reports/date_shortcut_button", range: "This Month" %>
     </div>
   </div>
 <% end %>
