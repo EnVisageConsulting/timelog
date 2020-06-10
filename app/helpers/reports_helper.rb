@@ -5,6 +5,11 @@ module ReportsHelper
   end
 
   def personal_report_params(range)
+    dates = personal_report_date_range(range)
+    {"start_date"=>dates[0].to_s, "end_date"=>dates[1].to_s, "user_ids"=>[current_user.id.to_s]}
+  end
+
+  def personal_report_date_range(range)
     dates =
     case range
       when "Last Week"
@@ -18,7 +23,7 @@ module ReportsHelper
       else
         raise InvalidDateRange
     end
-    {"start_date"=>dates[0].to_s, "end_date"=>dates[1].to_s, "user_ids"=>[current_user.id.to_s]}
+    dates.map{ |d| d.strftime("%m/%d/%Y")}
   end
 
   class InvalidDateRange < StandardError; end

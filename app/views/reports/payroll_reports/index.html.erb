@@ -16,6 +16,16 @@
 </div>
 
 <%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report), html: { class: 'filters-form' } do |f| %>
+
+  <div class="row">
+    <div style="margin:auto; width: 90%">
+      <%= render "reports/date_shortcut_button", range: "Last Week" %>
+      <%= render "reports/date_shortcut_button", range: "This Week" %>
+      <%= render "reports/date_shortcut_button", range: "Last Month" %>
+      <%= render "reports/date_shortcut_button", range: "This Month" %>
+    </div>
+  </div>
+
   <div class="row">
     <div class="columns medium-4">
       <%= f.label :user_ids, "Employees" %>
@@ -42,6 +52,7 @@
       <%= label_tag "", "&nbsp;".html_safe %>
       <%= f.submit "Filter", class: 'button expanded' %>
     </div>
+
   </div>
 <% end %>
 
