@@ -1,4 +1,4 @@
-<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" if current_user.admin? %>
+<%= back_link "Run Project Report", new_reports_project_report_path, icon: "line-chart" if current_user.admin? %>
 
 <div class="row">
   <div class="columns">
@@ -7,8 +7,8 @@
   </div>
 </div>
 
-<%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report) do |f| %>
-  <%= form_errors @payroll_report %>
+<%= form_for @personal_report, url: reports_personal_reports_path(@personal_report) do |f| %>
+  <%= form_errors @personal_report %>
 
   <div class="row">
     <div class="columns">

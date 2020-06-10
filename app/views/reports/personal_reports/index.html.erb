@@ -1,4 +1,4 @@
-<%= back_link "Run Project Report", new_reports_invoice_report_path, icon: "line-chart" if current_user.admin? %>
+<%= back_link "Run Project Report", new_reports_project_report_path, icon: "line-chart" if current_user.admin? %>
 
 <div class="row">
   <div class="columns">
@@ -10,12 +10,12 @@
 <div class="row">
   <div class="columns">
     <!-- <div class="spacer"></div> -->
-    <h3>Personal Report for: <%= @payroll_report.users&.map(&:name)&.to_sentence %></h3>
-    <h5 class="subheader">Period of: <%= @payroll_report.start_date %> - <%= @payroll_report.end_date %></h5>
+    <h3>Personal Report for: <%= @personal_report.users&.map(&:name)&.to_sentence %></h3>
+    <h5 class="subheader">Period of: <%= @personal_report.start_date %> - <%= @personal_report.end_date %></h5>
   </div>
 </div>
 
-<%= form_for @payroll_report, url: reports_payroll_reports_path(@payroll_report), html: { class: 'filters-form' } do |f| %>
+<%= form_for @personal_report, url: reports_personal_reports_path(@personal_report), html: { class: 'filters-form' } do |f| %>
 
   <div class="row">
     <div style="margin:auto; width: 90%">
@@ -56,12 +56,12 @@
   </div>
 <% end %>
 
-<% @payroll_report.users.each do |u| %>
+<% @personal_report.users.each do |u| %>
   <div class="row">
     <div class="columns">
       <h3><b><%= u.name %></b></h3>
-      <table class="report payroll-report">
-        <% text = @payroll_report.grouped_logs(u).present? %>
+      <table class="report personal-report">
+        <% text = @personal_report.grouped_logs(u).present? %>
         <thead>
           <tr>
             <th class="text-center" style="width: 10%">Date</th>
@@ -74,7 +74,7 @@
         </thead>
 
         <% total = 0 %>
-        <% @payroll_report.grouped_logs(u).each do |date, logs| %>
+        <% @personal_report.grouped_logs(u).each do |date, logs| %>
           <% date_total = 0 %>
           <tbody>
             <% logs.each_with_index do |log, index| %>

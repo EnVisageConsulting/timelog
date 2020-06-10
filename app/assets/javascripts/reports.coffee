@@ -25,7 +25,7 @@ window.loadReport = ->
   $(".log-date-button").click (e) ->
     e.preventDefault()
     dates = $(this).data("dates")
-    $("#reports_payroll_report_start_date").val(dates[0])
-    $("#reports_payroll_report_end_date").val(dates[1])
-    $("#new_reports_payroll_report").submit()
+    $("#reports_personal_report_start_date").val(dates[0])
+    $("#reports_personal_report_end_date").val(dates[1])
+    $("#new_reports_personal_report").submit()
     $(".log-date-button").attr("disabled", true)
