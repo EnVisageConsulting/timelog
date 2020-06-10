@@ -4,9 +4,6 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <img src="<%= attachments['EnVisage_Logo.png'].url %>" style="width: 120px;">
-    <p style="padding-left: 1.5px; margin-top: 0px; font-size: .8em">EnVisage Consulting, Inc.</p>
-
     <p>An account has been created for you on the EnVisage Timelog!</p>
     <p>User details<br>
     --------------------------
@@ -15,5 +12,8 @@
     <p>Email: <%= @new_user.email %></p>
     <p>----------</p>
     <p>Activate your account here: <%= link_to("Activate my account", user_activate_url(@new_user, password_recovery: @password_recovery, password_recovery_params: @password_recovery.token)) %></p>
+
+    <img src="<%= attachments['EnVisage_Logo.png'].url %>" width="130">
+    <p style="padding-left: 1.5px; margin-top: 0px; font-size: .8em">EnVisage Consulting, Inc.</p>
   </body>
 </html>
