@@ -14,11 +14,11 @@
           </div>
           <div class="columns medium-3 small-6">
             <%= label_tag :start_date, "Start Date" %>
-            <%= text_field_tag :start_date, params[:start_date], class: 'date' %>
+            <%= text_field_tag :start_date, params[:start_date], autocomplete: "off", class: 'date' %>
           </div>
           <div class="columns medium-3 small-6">
             <%= label_tag :end_date, "End Date" %>
-            <%= text_field_tag :end_date, params[:end_date], class: 'date' %>
+            <%= text_field_tag :end_date, params[:end_date], autocomplete: "off", class: 'date' %>
           </div>
           <div class="columns medium-2 small-6">
             <%= label_tag "", "&nbsp;".html_safe %>
