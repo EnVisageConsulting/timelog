@@ -49,16 +49,14 @@ class Reports::PayrollReport < TablelessModel
 
   def logs
     return Log.none if [users, start_at, end_at].any?(&:blank?)
-    users.flat_map{|u| u.logs.within(start_at, end_at).includes(:project_logs => :project)}
+    users.flat_map{|u| u.logs.within(start_at, end_at).order(:start_at).includes(:project_logs => :project)}
   end
 
   def grouped_logs(user)
     return logs unless logs.present?
-    if sort_date == "desc"
-      logs.reject{|l| l.user != user}.group_by(&:date)
-    else
-      logs.reject{|l| l.user != user}.reverse.group_by(&:date)
-    end
+    group_logs = logs.reject{|l| l.user != user}.group_by(&:date)
+    group_logs = group_logs.to_a.reverse.to_h if sort_date == "desc"
+    group_logs
   end
 
   private
