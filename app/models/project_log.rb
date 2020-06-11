@@ -30,6 +30,6 @@ class ProjectLog < ApplicationRecord
   def hours_two_decimals
     return unless log.start_at? && log.end_at? && log.start_at <= log.end_at
     return '%.2f' % 0.00 if log.end_at == log.start_at
-    '%.2f' % Seconds.to_hours(log.end_at - log.start_at)
+    '%.2f' % self.hours
   end
 end
