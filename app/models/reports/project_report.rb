@@ -5,7 +5,7 @@ class Reports::ProjectReport < TablelessModel
   # validates :start_at, presence: true
   # validates :end_at, presence: true
 
-  attr_accessor :projects, :start_at, :end_at
+  attr_accessor :projects, :start_at, :end_at, :sort_date
 
   def initialize(attributes = {})
     set_default_attrs
@@ -61,11 +61,15 @@ class Reports::ProjectReport < TablelessModel
       Log.all
     end
 
-    project_logs = ProjectLog.where(log_id: log_ids).where(project: project).where(non_billable: false).includes(:log => :user)
+    project_logs = ProjectLog.joins(:log).where(log_id: log_ids).where(project: project).where(non_billable: false).order(:start_at).includes(:log => :user)
   end
 
   def grouped_project_logs(project)
-    project_logs(project).group_by { |project_log| project_log.log.user }
+    if sort_date == "desc"
+      project_logs(project).reverse.group_by { |project_log| project_log.log.user }
+    else
+      project_logs(project).group_by { |project_log| project_log.log.user }
+    end
   end
 
   private
