@@ -1,0 +1,50 @@
+.dashboard-hours-div { width: 80%; margin: auto; height: 70px; }
+.dashboard-hours-completed { float:left; margin-left: 85px; }
+.dashboard-hours-completed-zero { float:left; margin-left: 125px; }
+.dashboard-today-count { float:left; margin-left: 50px;}
+.dashboard-this-week-count { float: right; margin-right: 30px; }
+
+.table-tabs {
+  padding: 0;
+  border: 0;
+  .tabs-info {
+    float: right;
+    padding-top: 1.5em;
+    padding-right: 1em;
+    height: 1em;
+    color: dark-gray
+  }
+  .ui-widget-header { border: 0; }
+  table.ui-tabs-panel { display: table; }
+  .tabs-nav {
+    background: 0;
+    border-radius: 0;
+    margin: 1rem 0 0;
+    padding: 0 1rem;
+    li {
+      list-style-type: none;
+      display: inline-block;
+      font-size: 1.1em;
+      border: 0; /*solid #2199e8 1px
+      border-bottom: 0;*/
+      float: left;
+      margin: 0 0 0 0.25rem;
+      padding: 0;
+      font-weight: bold;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      a {
+        font-weight: normal;
+        color: #2199e8;
+        padding: 0.75rem 1rem;
+        display: block;
+      }
+      &:not(.active-tab):hover { opacity: 0.8; }
+    }
+    li.active-tab {
+      border: 0;
+      background: #2199e8;
+      a { color: white; cursor: default; }
+    }
+  }
+}

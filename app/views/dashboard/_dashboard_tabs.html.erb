@@ -1,0 +1,22 @@
+<div class="table-tabs">
+  <ul class="tabs-nav">
+    <li class="table-title active-tab"><a>Last 25</a></li>
+    <li><%= link_to "Last Week", reports_personal_reports_path(reports_personal_report: personal_report_params("Last Week")) %></li>
+    <li><%= link_to "This Week", reports_personal_reports_path(reports_personal_report: personal_report_params("This Week")) %></li>
+    <li><%= link_to "Last Month", reports_personal_reports_path(reports_personal_report: personal_report_params("Last Month")) %></li>
+    <li><%= link_to "This Month", reports_personal_reports_path(reports_personal_report: personal_report_params("This Month")) %></li>
+
+    <!--
+    <li class="table-title"><%#= link_to "Last 25", '#recent' %></li>
+    <li class="table-title"><%#= link_to "This Week", '#this-week' %></li>
+    <li class="table-title"><%#= link_to "Last Week", '#last-week' %></li>
+    <li class="table-title"><%#= link_to "This Month", '#this-month' %></li>
+    <li class="table-title"><%#= link_to "Last Month", '#last-month' %></li> -->
+  </ul>
+
+  <%= render "users/user_log_table", logs: recent_logs, id: "recent" %>
+  <%#= render "users/user_log_table", logs: logs_this_week, id: "this-week" %>
+  <%#= render "users/user_log_table", logs: logs_last_week, id: "last-week" %>
+  <%#= render "users/user_log_table", logs: logs_this_month, id: "this-month" %>
+  <%#= render "users/user_log_table", logs: logs_last_month, id: "last-month" %>
+</div>

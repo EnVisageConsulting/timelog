@@ -34,7 +34,7 @@
     <% if project_ids.present? %>
       <%= render "project_log_table", logs: @logs, user_logs: @user_logs, project_ids: project_ids %>
     <% else %>
-      <%= render "user_log_table", logs: @logs %>
+      <%= render "user_log_table", logs: @logs, id: "user_logs" %>
     <% end %>
     <%= paginate(@logs, {params: {date: nil}}) if @logs.present? %>
   </div>
