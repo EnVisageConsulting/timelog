@@ -1,0 +1,9 @@
+<li><%= link_to "Last Week", reports_personal_reports_path(reports_personal_report: personal_report_params("Last Week")), data: { dates: personal_report_date_range("Last Week")}, class: klass, style: sty %></li>
+<li><%= link_to "This Week", reports_personal_reports_path(reports_personal_report: personal_report_params("This Week")), data: { dates: personal_report_date_range("This Week")}, class: klass, style: sty %></li>
+<li><%= link_to "Last Month", reports_personal_reports_path(reports_personal_report: personal_report_params("Last Month")), data: { dates: personal_report_date_range("Last Month")}, class: klass, style: sty %></li>
+<li><%= link_to "This Month", reports_personal_reports_path(reports_personal_report: personal_report_params("This Month")), data: { dates: personal_report_date_range("This Month")}, class: klass, style: sty+"padding-right: 0" %></li>
+
+<!-- <div class="columns large-3 small-3">
+  <%#= link_to fa_icon("graph", text: "Logs from "+range), reports_personal_reports_path(reports_personal_report: personal_report_params(range)), class: 'button no-margin log-date-button', data: { dates: personal_report_date_range(range) } %>
+</div>
+ -->

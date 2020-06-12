@@ -31,16 +31,12 @@
 
   <div class="row">
     <div class="columns">
-      <%= f.submit "View Report", class: 'button' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div style="margin:auto; width: 90%">
-      <%= render "reports/date_shortcut_button", range: "Last Week" %>
-      <%= render "reports/date_shortcut_button", range: "This Week" %>
-      <%= render "reports/date_shortcut_button", range: "Last Month" %>
-      <%= render "reports/date_shortcut_button", range: "This Month" %>
+      <%= f.submit "View Report", class: 'button float-left' %>
+      <div class="table-tabs float-left">
+        <ul class="tabs-nav" style="margin-top: 0;">
+          <%= render "reports/date_shortcut_links", klass: "log-date-button", sty: "padding-top: 6px;" %>
+        </ul>
+      </div>
     </div>
   </div>
 <% end %>

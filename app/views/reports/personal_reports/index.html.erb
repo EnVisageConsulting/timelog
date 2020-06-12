@@ -18,15 +18,6 @@
 <%= form_for @personal_report, url: reports_personal_reports_path(@personal_report), html: { class: 'filters-form' } do |f| %>
 
   <div class="row">
-    <div style="margin:auto; width: 90%">
-      <%= render "reports/date_shortcut_button", range: "Last Week" %>
-      <%= render "reports/date_shortcut_button", range: "This Week" %>
-      <%= render "reports/date_shortcut_button", range: "Last Month" %>
-      <%= render "reports/date_shortcut_button", range: "This Month" %>
-    </div>
-  </div>
-
-  <div class="row">
     <div class="columns medium-4">
       <%= f.label :user_ids, "Employees" %>
       <%= f.collection_select :user_ids, @users, :id, :name, {}, {multiple: true, class: "multiselect"} %>
@@ -53,6 +44,15 @@
       <%= f.submit "Filter", class: 'button expanded' %>
     </div>
 
+    <div class="row">
+      <div class="columns" style="padding-right: 0; width: 65%;">
+        <div class="table-tabs" style="float: right;">
+          <ul class="tabs-nav" style="margin-top: 0;">
+            <%= render "reports/date_shortcut_links", klass: "log-date-button", sty: "padding: 0 0.75rem;" %>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
 
