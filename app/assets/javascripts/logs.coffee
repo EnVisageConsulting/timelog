@@ -79,7 +79,8 @@ class Log
     updatePercentage = ->
       total = 0
       $(".percent_field").each (id, field) ->
-        total += parseInt(field.value)
+        if !isNaN(parseInt(field.value))
+          total += parseInt(field.value)
       $percent_total.val(total)
 
     $endAt.on   "change", updateTotalHours
