@@ -2,6 +2,8 @@ class PasswordRecoveriesController < ApplicationController
   load_resource find_by: :token, param_method: :password_recovery_params
   before_action :check_recovery_expiration, only: [:edit, :update]
 
+  skip_before_action :require_user
+
   def index
     redirect_to edit_password_recovery_path(params[:password_recovery_params])
   end
