@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get 'activate' => 'activates#update'
     resource :password, only: [:edit, :update]
   end
+  resources :imports, only: [:new, :create]
   get 'settings' => 'settings#index'
   patch 'settings' => 'settings#update'
   get 'admin_dashboard' => 'admin_dashboard#index'
