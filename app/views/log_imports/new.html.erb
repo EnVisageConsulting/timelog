@@ -1,0 +1,60 @@
+<div class="small-container">
+  <div class="row">
+    <div class="columns">
+      <div class="spacer"></div>
+      <h1>Import Logs</h1>
+    </div>
+  </div>
+
+  <% if @logs.present? && !@result.nil? %>
+    <% if @result %>
+      <div class="callout success">
+        <p><strong>Successfully imported <%= pluralize(@logs.size, "log") %>!</strong></p>
+        <table>
+          <% @logs.each do |row_id, log| %>
+            <tr>
+              <td><%= row_id + 1 %>.</td>
+              <td><%= log.projects.last.name %></td>
+              <td><%= input_datetime log.start_at %></td>
+              <td><%= input_datetime log.end_at %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    <% else %>
+      <div class="callout warning">
+        <p><strong>Unable to import because of following errors:</strong></p>
+        <ul>
+          <% @logs.each do |row_id, log| %>
+            <% next if log.valid? %>
+            <li><strong>Row <%=  row_id + 1 %>.</strong> <%= log.errors.full_messages.to_sentence %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="row">
+    <div class="columns">
+      <%= link_to 'Download Template', "/templates/Timelog Import Template.csv" %>
+      <p>Note this import is only set up for 1 project, multi-project logs should be inputted manually for now</p>
+    </div>
+  </div>
+
+  <br>
+
+  <%= form_tag log_imports_path, method: :post, multipart: true do %>
+    <div class="row">
+      <div class="columns">
+        <%= label_tag :file, "Import File (.csv)" %>
+        <%= file_field_tag :file %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns">
+        <%= submit_tag "Import", class: 'button success' %>
+      </div>
+    </div>
+  <% end %>
+</div>
