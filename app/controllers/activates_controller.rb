@@ -1,4 +1,5 @@
 class ActivatesController < ApplicationController
+  skip_before_action :require_user
   load_resource :user
 
   def update
