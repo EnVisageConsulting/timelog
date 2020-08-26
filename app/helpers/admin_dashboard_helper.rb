@@ -81,19 +81,21 @@ module AdminDashboardHelper
 
   class InvalidObject < StandardError; end
 
-  private
-    def get_hours(obj, sdate, edate)
-      hours =
-      case obj
-        when User
-          Log.within(sdate, edate)&.reject{|l| l.user_id != obj.id}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
-        when Project
-          Log.within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| pl.project_id != obj.id}&.map(&:hours)&.inject(:+) || 0
-        else
-          raise InvalidObject
-      end
-      format_hours(hours)
+
+  def get_hours(obj, sdate, edate)
+    hours =
+    case obj
+      when User
+        Log.within(sdate, edate)&.reject{|l| l.user_id != obj.id}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
+      when Project
+        Log.within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| pl.project_id != obj.id}&.map(&:hours)&.inject(:+) || 0
+      else
+        raise InvalidObject
     end
+    format_hours(hours)
+  end
+
+  private
 
     def get_total_time(obj, sdate, edate)
       hours =

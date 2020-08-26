@@ -47,57 +47,91 @@
 <% end %>
 <br>
 
-<% @project_report.projects.each do |project| %>
-  <% total = 0 %>
+<div class="table-tabs">
   <div class="row">
-    <div class="columns">
-      <h4><b><%= project.name %></b></h4>
-      <table class="report project-report">
-        <thead>
-          <tr>
-            <th class="text-right project-column" style="width: 15%;">Employee</th>
-            <% if @project_report.start_date.present? && @project_report.end_date.present? %>
-              <th class="text-right project-column" style="width: 15%;">Date</th>
-            <% end %>
-            <th class="text-right project-column" style="width: 10%;">Hours</th>
-            <th>Description</th>
-            <th></th>
-          </tr>
-        </thead>
-        <% @project_report.grouped_project_logs(project).each do |user, project_logs| %>
-          <tbody>
-            <% user_total = project_logs.map(&:hours).inject(:+); total += user_total %>
-            <% project_logs.each do |project_log| %>
+    <ul class="tabs-nav">
+      <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Full View</a></li>
+      <li class="table-title" id="summary-view-li"><a id="summary-view-button">Summary View</a></li>
+    </ul>
+  </div>
+
+  <div id="full-view">
+    <% @project_report.projects.each do |project| %>
+      <% total = 0 %>
+      <div class="row">
+        <div class="columns">
+          <h4><b><%= project.name %></b></h4>
+          <table class="report project-report">
+            <thead>
               <tr>
-                <% if project_log == project_logs.first %>
-                  <td class="text-right"><%= user.name %></td>
-                <% else %>
-                  <td></td>
-                <% end %>
+                <th class="text-right project-column" style="width: 15%;">Employee</th>
                 <% if @project_report.start_date.present? && @project_report.end_date.present? %>
-                  <td class="text-right"><%= project_log.log.date %></td>
+                  <th class="text-right project-column" style="width: 15%;">Date</th>
                 <% end %>
-                <td class="text-right"><%= project_log.hours_two_decimals %></td>
-                <td><%= simple_format project_log.description %></td>
+                <th class="text-right project-column" style="width: 10%;">Hours</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <% @project_report.grouped_project_logs(project).each do |user, project_logs| %>
+              <tbody>
+                <% user_total = project_logs.map(&:hours).inject(:+); total += user_total %>
+                <% project_logs.each do |project_log| %>
+                  <tr>
+                    <% if project_log == project_logs.first %>
+                      <td class="text-right"><%= user.name %></td>
+                    <% else %>
+                      <td></td>
+                    <% end %>
+                    <% if @project_report.start_date.present? && @project_report.end_date.present? %>
+                      <td class="text-right"><%= project_log.log.date %></td>
+                    <% end %>
+                    <td class="text-right"><%= project_log.hours_two_decimals %></td>
+                    <td><%= simple_format project_log.description %></td>
+                  </tr>
+                <% end %>
+                <tr class="subtotal">
+                  <td class="text-right">Subtotal:</td>
+                  <td class="text-right"><b><%= user_total %></b></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            <% end %>
+            <tfoot>
+              <tr>
+                <td class="text-right stat total">Total:</td>
+                <td class="text-right stat total"><%= total %></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="summary-view" style="display: none;">
+    <div class="row">
+      <div class="columns">
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left">Project</th>
+              <th class="text-center">Hours</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @project_report.projects.each do |p| %>
+              <tr>
+                <td class="text-left"><%= p.name %></td>
+                <td class="text-center"><%= get_hours(p, @project_report.start_date, @project_report.end_date) %></td>
               </tr>
             <% end %>
-            <tr class="subtotal">
-              <td class="text-right">Subtotal:</td>
-              <td class="text-right"><b><%= user_total %></b></td>
-              <td></td>
-              <td></td>
-            </tr>
           </tbody>
-        <% end %>
-        <tfoot>
-          <tr>
-            <td class="text-right stat total">Total:</td>
-            <td class="text-right stat total"><%= total %></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+        </table>
+      </div>
     </div>
   </div>
-<% end %>
+</div>

@@ -29,3 +29,16 @@ window.loadReport = ->
     $("#reports_personal_report_end_date").val(dates[1])
     $("#new_reports_personal_report").submit()
     $(".log-date-button").attr("disabled", true)
+
+  $("#summary-view-button").on "click", ->
+    $("#full-view-li").removeClass("active-tab")
+    $("#summary-view-li").addClass("active-tab")
+    $("#full-view").hide()
+    $("#summary-view").show()
+
+  $("#full-view-button").on "click", ->
+    $("#summary-view-li").removeClass("active-tab")
+    $("#full-view-li").addClass("active-tab")
+    $("#summary-view").hide()
+    $("#full-view").show()
+
