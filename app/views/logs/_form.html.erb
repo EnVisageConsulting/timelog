@@ -1,5 +1,19 @@
 <%= form_for @log do |f| %>
   <%= form_errors @log %>
+
+  <% if current_user.admin? %>
+    <div class="row">
+      <div class="columns medium-5">
+        <%= f.label :user, "Employee" %>
+        <div class="input-group">
+          <%= f.select :user, options_from_collection_for_select(User.undeactivated, :id, :name, current_user.id), {}, data: {current_user_id: current_user.id} %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <%= f.hidden_field :user, value: current_user.id, data: {current_user_id: current_user.id} %>
+  <% end %>
+
   <div class="row">
     <div class="columns medium-5">
       <%= f.label :start_at, "Start Date" %>

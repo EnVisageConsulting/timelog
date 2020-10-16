@@ -46,6 +46,13 @@ class Log
 
       projectChangeListener()
 
+    $("#log_user").on "change", ->
+      if parseInt($("#log_user").val()) == $("#log_user").data("current-user-id")
+        $("input.button").removeAttr('data-confirm');
+      else
+        data = { confirm: "Are you sure you want to create a log for another user?" }
+        $("input.button").attr("data-confirm",data.confirm);
+        $("#start-new-log").hide();
 
     $startAt    = $("#log_start_at")
     $endAt      = $("#log_end_at")
@@ -69,7 +76,7 @@ class Log
       startNewLog = $("#start-new-log")
       startNewLogRow = $("#start-new-log-row")
 
-      if endAt != "" && (startNewLogRow.data('current-log-id') == "" || startNewLogRow.data('current-log-id') == startNewLogRow.data('editing-log-id'))
+      if endAt != "" && (startNewLogRow.data('current-log-id') == "" || startNewLogRow.data('current-log-id') == startNewLogRow.data('editing-log-id')) && parseInt($("#log_user").val()) == $("#log_user").data("current-user-id")
         startNewLog.show()
       else
         startNewLog.hide()

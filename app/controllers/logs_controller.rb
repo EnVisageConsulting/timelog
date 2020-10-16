@@ -24,7 +24,8 @@ class LogsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @log.update_attributes(log_params)
+      @log.user = User.find(log_params[:user])
+      if @log.update_attributes(log_params.except(:user))
         if params[:commit] == "Save and Start a New Log"
           if load_new_log
             if @log.save
@@ -89,7 +90,7 @@ class LogsController < ApplicationController
     end
 
     def log_params
-      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy])
+      params.require(:log).permit(:user, :start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy])
     end
 
     def record_not_found
