@@ -29,6 +29,13 @@
     </div>
     <div class="spacer"></div>
 
+    <% if current_user.admin? %>
+      <div class="float-right">
+        <%= button_to logs_path(user: @user.id), method: :post, class: 'button no-margin hollow success' do %>
+          <%= fa_icon("clock-o", text: "Add Log For #{@user.first}") %>
+        <% end %>
+      </div>
+    <% end %>
     <h3><b><%= @user.name %>'s Logs</b></h3>
     <% project_ids = params[:project_ids] %>
     <% if project_ids.present? %>

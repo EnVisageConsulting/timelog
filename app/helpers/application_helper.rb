@@ -8,6 +8,8 @@ module ApplicationHelper
   def readable_date_range(start_at, end_at)
     value = start_at.strftime("%b %-e, %Y")
 
+    return value unless end_at.present?
+
     if start_at.year != end_at.year
       value += " - #{end_at.strftime("%b %-e, %Y")}"
     elsif start_at.month != end_at.month
@@ -68,6 +70,8 @@ module ApplicationHelper
   end
 
   def duration start_at, end_at, hours=false
+    return "--" if end_at.blank?
+
     diff = end_at - start_at
 
     if hours

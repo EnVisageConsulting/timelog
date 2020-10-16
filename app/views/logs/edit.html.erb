@@ -1,7 +1,12 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h3>Edit Log</h3>
+    <h3>
+      Edit Log
+      <% if @log.user != current_user %>
+        <small>(For <%= @log.user.name %>)</small>
+      <% end %>
+    </h3>
   </div>
 </div>
 

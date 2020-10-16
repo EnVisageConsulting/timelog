@@ -72,7 +72,7 @@ class UsersController < ApplicationController
       elsif end_date.present?
         @user_logs = @user.logs.where("end_at <= ?", end_date)
       else
-        @user_logs ||= @user.logs.active.latest
+        @user_logs ||= @user.logs.latest
       end
     end
 

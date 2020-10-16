@@ -14,14 +14,14 @@
   <tbody>
     <% if logs.present? %>
       <% logs.each do |log| %>
-        <tr>
+        <tr class="<%= 'pending' unless log.activated? %>">
           <td class="text-right">
             <small><%= log_days_of_week(log) %></small>
           </td>
           <td class="text-left"><%= link_to log_title(log), log %></td>
           <td class="text-left"><%= log.project_logs.map{|pl| pl.project.name}.join(", ") %></td>
           <td class="text-left"><%= log.start_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
-          <td class="text-left"><%= log.end_at.in_time_zone(TIMEZONE).strftime("%-I:%M %p") %></td>
+          <td class="text-left"><%= log.end_at&.in_time_zone(TIMEZONE)&.strftime("%-I:%M %p") || "--" %></td>
           <td class="text-right"><%= duration log.start_at, log.end_at %></td>
           <td class="text-center"><%= link_to fa_icon("pencil"), edit_log_path(log) %></td>
           <td class="text-center"><%= link_to fa_icon("minus-circle"), log_path(log), method: :delete, data: { confirm: "Are you sure you want to delete this log? Deleting will remove this time from payroll hours!" }, class: 'alert-link' %></td>

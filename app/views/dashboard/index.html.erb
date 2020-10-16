@@ -15,7 +15,9 @@
         <% if current_log %>
           <%= link_to fa_icon("clock-o", text: "Finish Log"), edit_log_path(current_log), class: 'button no-margin hollow warning' %>
         <% else %>
-          <%= link_to fa_icon("clock-o", text: "Start New Log"), logs_path, method: :post, class: 'button no-margin hollow success' %>
+          <%= button_to logs_path, method: :post, class: 'button no-margin hollow success' do %>
+            <%= fa_icon("clock-o", text: "Start New Log") %>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -56,10 +58,10 @@
 
 <div class="row">
   <div class="columns">
-    <%= link_to "View All Logs", user_path(current_user), class: 'float-right' %>
+    <%= link_to fa_icon("history", text: "View All Logs"), user_path(current_user), class: 'float-right' %>
     <h3>Recent Logs</h3>
     <%= render "dashboard_tabs" %>
-    <%= link_to "View All Logs", user_path(current_user), class: 'float-right' %>
+    <%= link_to fa_icon("history", text: "View All Logs"), user_path(current_user), class: 'float-right' %>
   </div>
 </div>
 

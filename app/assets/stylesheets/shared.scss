@@ -17,6 +17,10 @@ a.alert-link:hover { color: scale-color($alert-color, $lightness: -14%); }
 .small-container { max-width: 30rem; margin: auto; }
 
 table {
+  tr.pending {
+    background: $warning-color;
+  }
+
   td.empty {
     background: $light-gray;
     padding: 4rem 1rem;

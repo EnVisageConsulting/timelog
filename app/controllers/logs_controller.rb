@@ -1,10 +1,11 @@
 class LogsController < ApplicationController
   before_action :load_new_log, only: :create
+  skip_load_resource only: :create
   load_and_authorize_resource param_method: :log_params
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
 
   def create
-    if current_log
+    if @log.user == current_user && current_log
       flash[:alert] = "You have an active log that needs to be completed first."
       return redirect_to edit_log_path(current_log)
     end
@@ -69,6 +70,7 @@ class LogsController < ApplicationController
 
     def load_new_log
       start_at = DateTime.now
+      user = current_user
 
       if continuing?
         last_log = current_user.logs.order('end_at DESC').first
@@ -77,9 +79,11 @@ class LogsController < ApplicationController
         else
           return false
         end
+      elsif params[:user].present? && user.admin?
+        user = User.find(params[:user])
       end
 
-      @log = Log.new(user: current_user, start_at: start_at)
+      @log = Log.new(user: user, start_at: start_at)
     end
 
     def continuing?

@@ -25,17 +25,17 @@ module LogsHelper
 
   def log_title log
     start_at = log.start_at.in_time_zone(TIMEZONE)
-    end_at   = log.end_at.in_time_zone(TIMEZONE)
+    end_at   = log.end_at&.in_time_zone(TIMEZONE)
 
     readable_date_range(start_at, end_at)
   end
 
   def log_days_of_week(log)
     start_at = log.start_at.in_time_zone(TIMEZONE)
-    end_at   = log.end_at.in_time_zone(TIMEZONE)
+    end_at   = log.end_at&.in_time_zone(TIMEZONE)
 
     value = start_at.strftime("%a")
-    value << " - " << end_at.strftime("%a") if start_at.day != end_at.day
+    value << " - " << end_at.strftime("%a") if end_at.present? && start_at.day != end_at.day
     value
   end
 
