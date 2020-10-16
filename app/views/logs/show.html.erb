@@ -24,14 +24,6 @@
 
 <div class="row">
   <div class="columns">
-    <% if @log.user != current_user %>
-      <h4>Employee: <%= @log.user.name %></h4>
-    <% end %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="columns">
     <h1>
       <%= log_title(@log) %>
       <small style="font-size: 60%;">
