@@ -86,9 +86,9 @@ module AdminDashboardHelper
     hours =
     case obj
       when User
-        Log.within(sdate, edate)&.reject{|l| l.user_id != obj.id}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
+        Log.includes(:user, :project_logs).within(sdate, edate)&.reject{|l| l.user_id != obj.id}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
       when Project
-        Log.within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| pl.project_id != obj.id}&.map(&:hours)&.inject(:+) || 0
+        Log.includes(:project_logs).within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| pl.project_id != obj.id}&.map(&:hours)&.inject(:+) || 0
       else
         raise InvalidObject
     end
@@ -101,9 +101,9 @@ module AdminDashboardHelper
       hours =
       case obj.first
         when User
-          Log.within(sdate, edate)&.reject{|l| !User.undeactivated.pluck(:id).include?(l.user_id)}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
+          Log.includes(:user, :project_logs).within(sdate, edate)&.reject{|l| !User.undeactivated.pluck(:id).include?(l.user_id)}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
         when Project
-          Log.within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| !Project.active.pluck(:id).include?(pl.project_id)}&.map(&:hours)&.inject(:+) || 0
+          Log.includes(:project_logs).within(sdate, edate)&.flat_map(&:project_logs)&.reject{|pl| !Project.active.pluck(:id).include?(pl.project_id)}&.map(&:hours)&.inject(:+) || 0
         else
           raise InvalidObject
       end
