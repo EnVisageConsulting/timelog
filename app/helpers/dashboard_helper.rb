@@ -48,7 +48,7 @@ module DashboardHelper
   end
 
   def recent_logs
-    @recent_logs = current_user.logs.latest.limit(Kaminari.config.default_per_page)
+    @recent_logs = current_user.logs.latest.includes(project_logs: :project).limit(Kaminari.config.default_per_page)
   end
 
   # def logs_last_week
