@@ -59,3 +59,7 @@ textarea { resize: vertical; }
   padding: $menu-item-padding;
   line-height: 1;
 }
+
+.select2-container--default .select2-results>.select2-results__options {
+    max-height: 340px !important;
+}
