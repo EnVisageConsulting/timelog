@@ -57,3 +57,11 @@
 #checkbox-label {
   display: inline-block;
 }
+
+#content-wrap {
+  min-height: calc(100vh - 107px);
+}
+
+#footer {
+  text-align: center;
+}
