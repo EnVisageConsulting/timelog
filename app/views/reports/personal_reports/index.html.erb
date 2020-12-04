@@ -61,6 +61,7 @@
       <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Full View</a></li>
       <li class="table-title" id="summary-view-li"><a id="summary-view-button">Summary View</a></li>
     </ul>
+    <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_personal_reports_csv_path(start_date: @personal_report.start_date, end_date: @personal_report.end_date, users: @personal_report.users), class: "button", style: "float: right;") %>
   </div>
 
   <div id="full-view">

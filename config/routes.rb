@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   namespace :reports do
     resources :project_reports, only: [:new, :create, :index]
     resources :personal_reports, only: [:new, :create, :index]
+
+    get 'project_reports_csv/:project_report' => 'project_reports#csv', as: 'project_reports_csv'
+    get 'personal_reports_csv/:start_date/:end_date/:users' => 'personal_reports#csv', as: 'personal_reports_csv'
   end
 
   get    'login' => 'sessions#new'

@@ -24,6 +24,14 @@ class Reports::PersonalReportsController < ApplicationController
     @users = accessible_users
   end
 
+  def csv
+    personal_report = Reports::PersonalReport.new(start_date: params[:start_date], end_date: params[:end_date], users:  User.find(params[:users].split("/").map(&:to_i)))
+
+    # raise personal_report.inspect
+    csv = PersonalReportCsvExport.new(personal_report)
+    send_data csv.render, filename: "Personal Report - #{Date.today}.csv"
+  end
+
   private
 
     def personal_report_params
