@@ -1,5 +1,6 @@
 class Reports::PersonalReportsController < ApplicationController
   #before_action :require_admin
+  require 'csv_export/personal_report_csv_export'
 
   def new
     @personal_report = Reports::PersonalReport.new
