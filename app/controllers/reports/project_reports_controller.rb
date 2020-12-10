@@ -1,5 +1,6 @@
 class Reports::ProjectReportsController < ApplicationController
   before_action :require_admin
+  require 'csv_export/project_report_csv_export'
 
   def new
     @project_report = Reports::ProjectReport.new
@@ -29,6 +30,12 @@ class Reports::ProjectReportsController < ApplicationController
     else
       "All Logs"
     end
+  end
+
+  def csv
+    project_report = Reports::ProjectReport.new(start_date: params[:start_date], end_date: params[:end_date], projects: Project.find(params[:projects].split("/").map(&:to_i)))
+    csv = ProjectReportCsvExport.new(project_report)
+    send_data csv.render, filename: "Project Report - #{Date.today}.csv"
   end
 
   private

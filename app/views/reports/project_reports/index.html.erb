@@ -10,7 +10,7 @@
 <div class="row">
   <div class="columns">
     <!-- <div class="spacer"></div> -->
-    <h2>Timelog Report for: <%= @project_report.projects&.map(&:name)&.to_sentence %></h2>
+    <h2>Project Report for: <%= @project_report.projects&.map(&:name)&.to_sentence %></h2>
     <h3 class="subheader"><%= @date %></h3>
   </div>
 </div>
@@ -52,6 +52,8 @@
     <ul class="tabs-nav">
       <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Full View</a></li>
       <li class="table-title" id="summary-view-li"><a id="summary-view-button">Summary View</a></li>
+      <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_project_reports_csv_path(start_date: @project_report.start_date, end_date: @project_report.end_date, projects: @project_report.projects), class: "button", style: "float: right;") %>
+
     </ul>
   </div>
 
@@ -91,18 +93,18 @@
                   </tr>
                 <% end %>
                 <tr class="subtotal">
+                  <td></td>
                   <td class="text-right">Subtotal:</td>
                   <td class="text-right"><b><%= user_total %></b></td>
-                  <td></td>
                   <td></td>
                 </tr>
               </tbody>
             <% end %>
             <tfoot>
               <tr>
+                <td></td>
                 <td class="text-right stat total">Total:</td>
                 <td class="text-right stat total"><%= total %></td>
-                <td></td>
                 <td></td>
               </tr>
             </tfoot>
