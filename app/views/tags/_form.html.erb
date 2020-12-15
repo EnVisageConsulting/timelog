@@ -1,0 +1,25 @@
+<%= form_for @tag do |f| %>
+  <%= form_errors @tag %>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+  </div>
+
+  <% if @tag.persisted? %>
+    <div class="row">
+      <div class="columns">
+        <%= f.check_box :deactivated %>
+        <%= f.label :deactivated, "Deactivate?" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="columns">
+      <%= f.submit class: 'button' %>
+    </div>
+  </div>
+<% end %>
