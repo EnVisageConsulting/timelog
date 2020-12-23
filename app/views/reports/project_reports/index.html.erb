@@ -90,12 +90,14 @@
                     <% end %>
                     <td class="text-right"><%= project_log.hours_two_decimals %></td>
                     <td><%= simple_format project_log.description %></td>
+                    <td class="text-right"><%= link_to fa_icon("search"), log_path(project_log.log) %></td>
                   </tr>
                 <% end %>
                 <tr class="subtotal">
                   <td></td>
                   <td class="text-right">Subtotal:</td>
                   <td class="text-right"><b><%= user_total %></b></td>
+                  <td></td>
                   <td></td>
                 </tr>
               </tbody>
@@ -105,6 +107,7 @@
                 <td></td>
                 <td class="text-right stat total">Total:</td>
                 <td class="text-right stat total"><%= total %></td>
+                <td></td>
                 <td></td>
               </tr>
             </tfoot>
