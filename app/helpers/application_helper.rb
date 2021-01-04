@@ -10,9 +10,7 @@ module ApplicationHelper
 
     return value unless end_at.present?
 
-    if start_at.year != end_at.year
-      value += " - #{end_at.strftime("%b %-e, %Y")}"
-    elsif start_at.month != end_at.month
+    if start_at.month != end_at.month
       value = value.gsub /\A\w{3} \d+/ do |match|
         match + " - #{end_at.strftime("%b %-e")}"
       end
