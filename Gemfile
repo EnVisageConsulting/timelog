@@ -4,7 +4,7 @@ ruby '2.6.6'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.18'
+gem 'pg', '~> 1.2.3'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
@@ -52,8 +52,8 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby]
-
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :jruby, :x64_mingw]
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # Added after here
 
