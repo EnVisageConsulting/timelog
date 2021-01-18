@@ -46,6 +46,5 @@ class ProjectLog < ApplicationRecord
     values = values.map do |val|
       self.project_tags.build(tag_id: val)
     end
-    super(values)
   end
 end

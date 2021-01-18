@@ -1,5 +1,11 @@
 class Log
   logForm: ->
+    enableMultiselect({placeholder: "Project Tags"})
+
+    #load existing project tags
+    $(".project-tags").each (id, select) ->
+      $(select).val($(select).data("selected")).trigger('change');
+
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
 
@@ -105,5 +111,4 @@ class Log
 
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>
   log = new Log
-  enableMultiselect({placeholder: "Project Tags"})
   log.logForm()
