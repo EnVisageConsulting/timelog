@@ -27,6 +27,7 @@ class Log
       $newFields.find('input[name$="[percent]"]').val ''
       $newFields.find('select[name$="[project_id]"]').focus()
       projectChangeListener()
+      enableMultiselect({placeholder: "Project Tags"})
 
 
     $projectLogFields.on "click", ".remove-project-link", (e) ->
@@ -104,4 +105,5 @@ class Log
 
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>
   log = new Log
+  enableMultiselect({placeholder: "Project Tags"})
   log.logForm()

@@ -30,6 +30,12 @@ module LogsHelper
     readable_date_range(start_at, end_at)
   end
 
+  def project_tags_list(log)
+    tags = log.project_tags
+    tags = Tag.find(tags.pluck(:tag_id))
+    tags.pluck(:name).to_sentence
+  end
+
   def log_days_of_week(log)
     start_at = log.start_at.in_time_zone(TIMEZONE)
     end_at   = log.end_at&.in_time_zone(TIMEZONE)

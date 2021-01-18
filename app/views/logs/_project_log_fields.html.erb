@@ -3,6 +3,8 @@
     <div class="columns large-3 medium-3 small-4">
       <%= fields_for.label :project_id %>
       <%= fields_for.select :project_id, options_from_collection_for_select(project_select_list(fields_for.object.project), :id, :name, fields_for.object.project_id), prompt: "Please select one" %>
+      <%# raise fields_for.object.project_tags.pluck(:tag_id).inspect %>
+      <%= fields_for.collection_select :project_tags, Tag.active, :id, :name, {}, {selected: fields_for.object.project_tags.pluck(:tag_id), multiple: true, class: "multiselect"} %>
       <% if current_user.admin? %>
         <div class="row">
           <div class="columns">

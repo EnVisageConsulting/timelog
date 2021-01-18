@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :password_recoveries, only: [:index, :new, :create, :edit, :update]
   resources :logs, only: [:create, :edit, :update, :show, :destroy]
   resources :projects, only: [:index, :new, :create, :edit, :update]
-  resources :tags, only: [:index, :new, :create, :edit, :update]
+  resources :tags, only: [:new, :create, :edit, :update]
   resources :users, only: [:new, :create, :index, :edit, :update, :show] do
     resource :deactivate, only: [:update]
     get 'activate' => 'activates#update'

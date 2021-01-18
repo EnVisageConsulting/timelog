@@ -11,7 +11,7 @@ class TagsController < ApplicationController
   def create
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to tags_path, notice: "Succesfully created new project tag!" }
+        format.html { redirect_to projects_path, notice: "Succesfully created new project tag!" }
       else
         format.html { render :new }
       end
@@ -24,7 +24,7 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update_attributes(tag_params)
-        format.html { redirect_to tags_path, notice: "Successfully updated project tag!" }
+        format.html { redirect_to projects_path, notice: "Successfully updated project tag!" }
       else
         format.html { render :edit }
       end
