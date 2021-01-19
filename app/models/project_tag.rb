@@ -4,6 +4,5 @@ class ProjectTag < ApplicationRecord
   belongs_to :tag
 
   # --- Validations --- #
-  validates :project_log_id, :tag_id, presence: true
   validates :project_log_id, uniqueness: { scope: :tag_id }
 end
