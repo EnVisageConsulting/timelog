@@ -55,9 +55,8 @@ var initializePage = function(){
   return true;
 }
 
-function enableMultiselect(selector, selectOptions){
-  if (selector === undefined)
-    selector = 'select[multiple="multiple"]';
+function enableMultiselect(selectOptions){
+  selector = 'select[multiple="multiple"]';
 
   if (selectOptions === undefined)
     selectOptions = {};

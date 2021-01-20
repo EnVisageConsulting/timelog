@@ -1,5 +1,11 @@
 class Log
   logForm: ->
+    enableMultiselect({placeholder: "Project Tags"})
+
+    #load existing project tags
+    $(".project-tags").each (id, select) ->
+      $(select).val($(select).data("selected")).trigger('change');
+
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
 
@@ -27,6 +33,7 @@ class Log
       $newFields.find('input[name$="[percent]"]').val ''
       $newFields.find('select[name$="[project_id]"]').focus()
       projectChangeListener()
+      enableMultiselect({placeholder: "Project Tags"})
 
 
     $projectLogFields.on "click", ".remove-project-link", (e) ->

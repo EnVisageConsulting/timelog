@@ -93,7 +93,7 @@ class LogsController < ApplicationController
     end
 
     def log_params
-      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy])
+      params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy, project_tags: []])
     end
 
     def record_not_found

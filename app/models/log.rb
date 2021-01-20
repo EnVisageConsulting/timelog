@@ -7,6 +7,7 @@ class Log < ApplicationRecord
   has_many :project_logs
     accepts_nested_attributes_for :project_logs, reject_if: :all_blank, allow_destroy: true
   has_many :projects, through: :project_logs
+  has_many :project_tags, through: :project_logs
 
   # --- Validations --- #
   validates :start_at, presence: true

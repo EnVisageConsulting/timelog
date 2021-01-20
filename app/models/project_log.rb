@@ -2,6 +2,7 @@ class ProjectLog < ApplicationRecord
   # --- Associations --- #
   belongs_to :log
   belongs_to :project
+  has_many   :project_tags, autosave: true
 
   # --- Validations --- #
   validates :project_id,          presence: true
@@ -31,5 +32,19 @@ class ProjectLog < ApplicationRecord
     return unless log.start_at? && log.end_at? && log.start_at <= log.end_at
     return '%.2f' % 0.00 if log.end_at == log.start_at
     '%.2f' % self.hours
+  end
+
+  def project_tags=(values)
+    values = Array(values).reject(&:blank?)
+
+    self.project_tags.each do |existing_tag|
+      values.include?(existing_tag.tag_id.to_s) ?
+        values.delete(existing_tag.tag_id.to_s) :
+        existing_tag.mark_for_destruction
+    end
+
+    values = values.map do |val|
+      self.project_tags.build(tag_id: val)
+    end
   end
 end

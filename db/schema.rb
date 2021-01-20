@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_191200) do
+ActiveRecord::Schema.define(version: 2020_12_15_202032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "logs", id: :serial, force: :cascade do |t|
+  create_table "logs", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "start_at", null: false
     t.datetime "end_at"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_191200) do
     t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
-  create_table "password_recoveries", id: :serial, force: :cascade do |t|
+  create_table "password_recoveries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "token", null: false
     t.datetime "expires_at", null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_191200) do
     t.index ["user_id"], name: "index_password_recoveries_on_user_id"
   end
 
-  create_table "project_logs", id: :serial, force: :cascade do |t|
+  create_table "project_logs", force: :cascade do |t|
     t.integer "log_id", null: false
     t.integer "project_id", null: false
     t.decimal "hours", precision: 4, scale: 2, default: "0.0", null: false
@@ -51,14 +51,31 @@ ActiveRecord::Schema.define(version: 2020_04_01_191200) do
     t.index ["project_id"], name: "index_project_logs_on_project_id"
   end
 
-  create_table "projects", id: :serial, force: :cascade do |t|
+  create_table "project_tags", force: :cascade do |t|
+    t.bigint "project_log_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_log_id", "tag_id"], name: "index_project_tags_on_project_log_id_and_tag_id", unique: true
+    t.index ["project_log_id"], name: "index_project_tags_on_project_log_id"
+    t.index ["tag_id"], name: "index_project_tags_on_tag_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "deactivated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "deactivated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "first", null: false
     t.string "last", null: false
     t.string "email", null: false
