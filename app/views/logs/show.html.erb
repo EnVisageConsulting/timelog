@@ -64,7 +64,7 @@
               <h5><%= project_log.project.name %></h5>
               <%= simple_format project_log.description %>
             </td>
-            <td><%= project_tags_list(project_log) %></td>
+            <td><%= project_log.project_tags.map(&:tag).pluck(:name).to_sentence %></td>
             <% if current_user.admin? %>
               <td class="text-right"><%= fa_icon("check") unless project_log.non_billable? %></td>
             <% end %>
