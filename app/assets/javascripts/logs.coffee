@@ -53,6 +53,22 @@ class Log
 
       projectChangeListener()
 
+    # confirm leaving if there's a change
+    formSubmitting = false
+    hasChanged = false
+
+    $(".edit_log").on "submit", ->
+      formSubmitting = true
+
+    $(".edit_log :input").on "change", ->
+      hasChanged = true
+
+    window.addEventListener 'beforeunload', (e) ->
+      if formSubmitting or !hasChanged
+        return undefined
+      confirmationMessage = 'Changes you made may not be saved.'
+      (e or window.event).returnValue = confirmationMessage #Gecko + IE
+      confirmationMessage #Gecko + Webkit, Safari, Chrome etc.
 
     $startAt    = $("#log_start_at")
     $endAt      = $("#log_end_at")
