@@ -33,7 +33,10 @@ class Reports::ProjectReportsController < ApplicationController
   end
 
   def csv
-    project_report = Reports::ProjectReport.new(start_date: params[:start_date], end_date: params[:end_date], projects: Project.find(params[:projects].split("/").map(&:to_i)))
+    project_report = Reports::ProjectReport.new(start_date: params[:start_date], end_date: params[:end_date],
+      projects: Project.find(params[:projects].split("/").map(&:to_i)),
+      project_tags: params[:project_tags] && Tag.find(params[:project_tags]&.join("/")&.split("/")&.map(&:to_i))
+    )
     csv = ProjectReportCsvExport.new(project_report)
     send_data csv.render, filename: "Project Report - #{Date.today}.csv"
   end
@@ -45,6 +48,6 @@ class Reports::ProjectReportsController < ApplicationController
         redirect_to(new_reports_project_report_path, alert: "Incomplete report parameters")
         return {}
       end
-      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, project_ids: [])
+      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, project_ids: [], project_tag_ids: [])
     end
 end

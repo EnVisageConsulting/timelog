@@ -3,6 +3,7 @@ class ProjectLog < ApplicationRecord
   belongs_to :log
   belongs_to :project
   has_many   :project_tags, autosave: true
+  has_many   :tags, through: :project_tags
 
   # --- Validations --- #
   validates :project_id,          presence: true

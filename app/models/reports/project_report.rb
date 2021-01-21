@@ -5,7 +5,7 @@ class Reports::ProjectReport < TablelessModel
   # validates :start_at, presence: true
   # validates :end_at, presence: true
 
-  attr_accessor :projects, :start_at, :end_at, :sort_date
+  attr_accessor :projects, :project_tags, :start_at, :end_at, :sort_date
 
   def initialize(attributes = {})
     set_default_attrs
@@ -19,6 +19,15 @@ class Reports::ProjectReport < TablelessModel
   def project_ids= value
     value.reject!(&:blank?)
     self.projects = Project.find(value)
+  end
+
+   def project_tag_ids
+    self.project_tags&.map{|p| p.id}
+  end
+
+  def project_tag_ids= value
+    value.reject!(&:blank?)
+    self.project_tags = Tag.find(value)
   end
 
   def start_date
@@ -61,7 +70,11 @@ class Reports::ProjectReport < TablelessModel
       Log.all
     end
 
+    project_tags_ids = project_tags&.map(&:id)
+
     project_logs = ProjectLog.joins(:log).where(log_id: log_ids).where(project: project).where(non_billable: false).order(:start_at).includes(:log => :user)
+    project_logs = project_logs.reject{|proj_log| proj_log.project_tags.map(&:tag_id).flat_map{|tag_id| project_tags_ids.include?(tag_id)}.all?(false)} if project_tags.present?
+    project_logs
   end
 
   def grouped_project_logs(project)

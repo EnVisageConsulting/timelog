@@ -11,6 +11,9 @@
   <div class="columns">
     <!-- <div class="spacer"></div> -->
     <h2>Project Report for: <%= @project_report.projects&.map(&:name)&.to_sentence %></h2>
+    <% if @project_report.project_tags.present? %>
+      <h3 class="subheader">Tags: <%= @project_report.project_tags&.map(&:name)&.to_sentence %></h3>
+    <% end %>
     <h3 class="subheader"><%= @date %></h3>
   </div>
 </div>
@@ -19,27 +22,34 @@
   <%= form_errors @project_report %>
 
   <div class="row">
-    <div class="columns medium-4">
+    <div class="columns large-6 medium-6">
       <%= f.label :project_ids, "Projects" %>
       <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
     </div>
 
-    <div class="columns medium-2 small-6">
+    <div class="columns large-6 medium-6">
+      <%= f.label :project_tag_ids, "Project Tags" %>
+      <%= f.collection_select :project_tag_ids, Tag.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns large-3 medium-2 small-6">
       <%= f.label :start_date, "Start Date" %>
       <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
     </div>
 
-    <div class="columns medium-2 small-6">
+    <div class="columns large-3 medium-2 small-6">
       <%= f.label :end_date, "End Date" %>
       <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
     </div>
 
-    <div class="columns medium-2 small-6">
+    <div class="columns large-3 medium-2 small-6">
       <%= label_tag :sort_date, "Sort Date" %>
       <%= f.select :sort_date, {"Ascending" => "asc", "Descending" => "desc"} %>
     </div>
 
-    <div class="columns medium-2">
+    <div class="columns large-3 medium-2">
       <%= label_tag "", "&nbsp;".html_safe %>
       <%= f.submit "Filter", class: 'button expanded' %>
     </div>
@@ -52,7 +62,7 @@
     <ul class="tabs-nav">
       <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Full View</a></li>
       <li class="table-title" id="summary-view-li"><a id="summary-view-button">Summary View</a></li>
-      <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_project_reports_csv_path(start_date: @project_report.start_date, end_date: @project_report.end_date, projects: @project_report.projects), class: "button", style: "float: right;") %>
+      <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_project_reports_csv_path(start_date: @project_report.start_date, end_date: @project_report.end_date, projects: @project_report.projects, project_tags: @project_report.project_tags), class: "button", style: "float: right;") %>
 
     </ul>
   </div>
@@ -67,9 +77,8 @@
             <thead>
               <tr>
                 <th class="text-right project-column" style="width: 15%;">Employee</th>
-                <% if @project_report.start_date.present? && @project_report.end_date.present? %>
-                  <th class="text-right project-column" style="width: 15%;">Date</th>
-                <% end %>
+                <th class="text-right project-column" style="width: 15%;">Date</th>
+                <th class="text-right project-column" style="width: 15%;">Tags</th>
                 <th class="text-right project-column" style="width: 10%;">Hours</th>
                 <th>Description</th>
                 <th></th>
@@ -85,30 +94,27 @@
                     <% else %>
                       <td></td>
                     <% end %>
-                    <% if @project_report.start_date.present? && @project_report.end_date.present? %>
-                      <td class="text-right"><%= project_log.log.date %></td>
-                    <% end %>
+                    <td class="text-right"><%= project_log.log.date %></td>
+                    <td class="text-right"><%= project_log.project_tags.map(&:tag).pluck(:name).to_sentence %></td>
                     <td class="text-right"><%= project_log.hours_two_decimals %></td>
                     <td><%= simple_format project_log.description %></td>
                     <td class="text-right"><%= link_to fa_icon("search"), log_path(project_log.log) %></td>
                   </tr>
                 <% end %>
                 <tr class="subtotal">
-                  <td></td>
+                  <td colspan="2"></td>
                   <td class="text-right">Subtotal:</td>
                   <td class="text-right"><b><%= user_total %></b></td>
-                  <td></td>
-                  <td></td>
+                  <td colspan="3"></td>
                 </tr>
               </tbody>
             <% end %>
             <tfoot>
               <tr>
-                <td></td>
+                <td colspan="2"></td>
                 <td class="text-right stat total">Total:</td>
                 <td class="text-right stat total"><%= total %></td>
-                <td></td>
-                <td></td>
+                <td colspan="3"></td>
               </tr>
             </tfoot>
           </table>
@@ -128,10 +134,10 @@
             </tr>
           </thead>
           <tbody>
-            <% @project_report.projects.each do |p| %>
+            <% @project_report.projects.each do |project| %>
               <tr>
-                <td class="text-left"><%= p.name %></td>
-                <td class="text-center"><%= get_hours(p, @project_report.start_date, @project_report.end_date) %></td>
+                <td class="text-left"><%= project.name %></td>
+                <td class="text-center"><%= @project_report.project_logs(project).pluck(:hours).inject(:+) %></td>
               </tr>
             <% end %>
           </tbody>
