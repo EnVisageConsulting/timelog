@@ -37,6 +37,7 @@ class PersonalReportCsvExport < ApplicationCsvExport
           end
         end
         rows << ["","","Subtotal", date_total]
+        rows << []
       end
       rows << ["","","Total", total]
       rows << []

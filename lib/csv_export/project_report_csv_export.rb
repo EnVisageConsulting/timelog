@@ -32,6 +32,7 @@ class ProjectReportCsvExport < ApplicationCsvExport
           rows << report_row
         end
         rows << ["","","Subtotal", user_total]
+        rows << []
       end
       rows << ["","", "Total", total]
       rows << []
