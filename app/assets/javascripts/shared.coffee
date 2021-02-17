@@ -1,8 +1,8 @@
 window.loadShared = ->
   $('.datetime').datetimepicker
     validateOnBlur: false,
-    format: 'm/d/Y g:i A',
-    formatTime: 'g:i A',
+    format: 'm/d/Y h:i A',
+    formatTime: 'h:i A',
     maxDate: 0,
     scrollMonth: false,
     step: 30,

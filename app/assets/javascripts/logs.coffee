@@ -16,6 +16,54 @@ class Log
       $input.val     value
             .trigger 'change'
 
+    keyboard_input = false
+    old_date = ""
+
+    $("#log_start_at, #log_end_at").on "click", (e) ->
+      keyboard_input = false
+      document.addEventListener 'keydown', (event) ->
+        keyboard_input = true
+
+    $("#log_start_at, #log_end_at").on "change", (e) ->
+      date = new Date($(this).val());
+
+      if old_date == ""
+        old_date = $(this).data("old-date")
+      old_date = new Date(old_date)
+
+      if !keyboard_input && !(sameDates(date, old_date))
+        hour = date.getHours();
+
+        if hour == 23
+          date.setHours(hour - 11);
+        else
+          date.setHours(hour + 1);
+
+        hour = date.getHours();
+        am_pm = "AM"
+        if hour >= 12
+          am_pm = "PM"
+        if hour > 12
+          hour = hour - 12
+        if hour == 0
+          hour = 12
+        if hour < 10
+          hour = "0" + hour
+
+        month = date.getMonth() + 1;
+        if month < 10
+          month = "0" + month
+
+        day = date.getDate();
+        if day < 10
+          day = "0" + day
+
+        min = date.getMinutes();
+        if min < 10
+          min = "0" + min
+
+        $(this).val(month + "/" + day + "/" + date.getFullYear() + " " + hour + ":" + min + " " + am_pm);
+      old_date = date
 
     $projectLogFields = $("label[for='log_project_logs']").closest 'fieldset'
     $projectLogFields.on "click", ".add-project-link", (e) ->
@@ -124,6 +172,9 @@ class Log
       $projectFields.each ->
         unless $(this).val() == ''
           $projectFields.not($(this)).find('option[value=' + $(this).val() + ']').attr 'disabled', 'disabled'
+
+    sameDates = (date1, date2) ->
+      date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate()
 
 $(document).on 'logs_edit.load logs_update.load', (e, obj) =>
   log = new Log
