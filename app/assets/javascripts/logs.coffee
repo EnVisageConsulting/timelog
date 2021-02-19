@@ -6,6 +6,9 @@ class Log
     $(".project-tags").each (id, select) ->
       $(select).val($(select).data("selected")).trigger('change');
 
+    keyboard_input = false
+    old_date = ""
+
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
 
@@ -13,11 +16,10 @@ class Log
       $input = $(this).closest '.input-group'
                       .find    '.input-group-field'
 
+      keyboard_input = true
+
       $input.val     value
             .trigger 'change'
-
-    keyboard_input = false
-    old_date = ""
 
     $("#log_start_at, #log_end_at").on "click", (e) ->
       keyboard_input = false
@@ -29,9 +31,10 @@ class Log
 
       if old_date == ""
         old_date = $(this).data("old-date")
-      old_date = new Date(old_date)
+      if old_date != undefined
+        old_date = new Date(old_date)
 
-      if !keyboard_input && !(sameDates(date, old_date))
+      if !keyboard_input && old_date != undefined && !(sameDates(date, old_date))
         hour = date.getHours();
 
         if hour == 23
