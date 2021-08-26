@@ -15,7 +15,6 @@ class ProjectReportCsvExport < ApplicationCsvExport
 
     @report.projects.each do |project|
       total = 0;
-      rows << [project.name]
       rows << headers
 
       @report.grouped_project_logs(project).each do |user, project_logs|
