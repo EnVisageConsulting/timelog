@@ -95,6 +95,31 @@ module AdminDashboardHelper
     format_hours(hours)
   end
 
+  def get_months(sdate, edate)
+    sdate = Date.strptime(sdate, "%m/%d/%Y")
+    edate = Date.strptime(edate, "%m/%d/%Y")
+
+    months = []
+    date = sdate
+
+    while date < edate || (date.month == edate.month && date.year == edate.year)
+      months << [date.month, date.year]
+      date += 1.month
+    end
+    months
+  end
+
+  def get_month_hours(month, obj, sdate, edate)
+    month = Date.strptime(month[0].to_s + "/01/" + month[1].to_s, "%m/%d/%Y")
+    sdate = Date.strptime(sdate, "%m/%d/%Y")
+    edate = Date.strptime(edate, "%m/%d/%Y")
+
+    start_date = month < sdate ? sdate : month
+    end_date = month.end_of_month > edate ? edate : month.end_of_month
+
+    get_hours(obj, start_date, end_date)
+  end
+
   private
 
     def get_total_time(obj, sdate, edate)

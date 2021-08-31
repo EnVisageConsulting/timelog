@@ -141,16 +141,27 @@
           <thead>
             <tr>
               <th class="text-left">Employee</th>
-              <th class="text-center">Hours</th>
+              <% months = get_months(@personal_report.start_date, @personal_report.end_date) %>
+              <% months.each_with_index do |m, i| %>
+                <% asterisk = i == 0 || i == months.length - 1 ? "*" : "" %>
+                <th class="text-center"><%= Date::ABBR_MONTHNAMES[m[0]] + asterisk %></th>
+              <% end %>
+              <th class="text-center">Total Hours</th>
             </tr>
           </thead>
           <tbody>
             <% @personal_report.users.each do |u| %>
               <tr>
                 <td class="text-left"><%= u.name %></td>
+                <% months.each do |m| %>
+                  <td class="text-center"><%= get_month_hours(m, u, @personal_report.start_date, @personal_report.end_date) %></td>
+                <% end %>
                 <td class="text-center"><%= get_hours(u, @personal_report.start_date, @personal_report.end_date) %></td>
               </tr>
             <% end %>
+            <tr>
+              <td colspan="<%= months.length + 2 %>">* The first and last month follow the date range and don't include the whole month unless specified.<br> Example: if the date range was March 4 - May 20, then the hours include: March: March 4-31, April: April 1-30, May: May 1-20</td>
+            </tr>
           </tbody>
         </table>
       </div>
