@@ -10,7 +10,6 @@
 
 <div class="row">
   <div class="columns">
-    <!-- <div class="spacer"></div> -->
     <h2>Comprehensive Report</h2>
     <h3>Projects: <%= @comprehensive_report.projects&.map(&:name)&.to_sentence %></h3>
     <h3>Employees: <%= @comprehensive_report.users.length == User.undeactivated.length ? "All" : @comprehensive_report.users&.map(&:name)&.to_sentence %></h3>
@@ -142,7 +141,7 @@
               <td></td>
               <% project_totals = {} %>
               <% @comprehensive_report.projects.each do |project| %>
-                <td class="text-center" style="font-weight: normal;"><%= link_to project.name, reports_project_reports_path(reports_project_report: {project_ids: [project.id], start_date: @comprehensive_report.start_date, end_date: @comprehensive_report.end_date}) %></td>
+                <td class="text-center" style="font-weight: normal;"><%= project.name %></td>
                 <% project_totals[project.id] = 0 %>
               <% end %>
               <td class="text-center">Employee Total</td>
@@ -157,7 +156,7 @@
                   <% amount = @comprehensive_report.project_user_total_hours(project, user) %>
                   <% user_total += amount %>
                   <% project_totals[project.id] += amount %>
-                  <td class="text-center"><%= amount %></td>
+                  <td class="text-center"><%= link_to amount, reports_comprehensive_reports_path(reports_comprehensive_report: {start_date: @comprehensive_report.start_date, end_date: @comprehensive_report.end_date, project_ids: [project.id], user_ids: [user.id]}) %></td>
                 <% end %>
                 <td class="text-center"><b><%= user_total %></b></td>
               </tr>
