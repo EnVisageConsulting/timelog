@@ -2,25 +2,25 @@ window.loadReport = ->
   $('#select-all').click ->
     if $('#select-all').text() == 'Select All'
       selected = []
-      $('.multiselect').find('option').each (i, e) ->
+      $('.multiselect-users').find('option').each (i, e) ->
         selected[selected.length] = $(e).attr('value')
         return
-      $('.multiselect').val selected
+      $('.multiselect-users').val selected
     else
-      $('.multiselect').val []
-    $('.multiselect').trigger 'change'
+      $('.multiselect-users').val []
+    $('.multiselect-users').trigger 'change'
     false
 
-  $('.multiselect').change ->
-    optionCount = $('.multiselect').find('option').length
-    numSelected = $('.multiselect').val()
+  $('.multiselect-users').change ->
+    optionCount = $('.multiselect-users').find('option').length
+    numSelected = $('.multiselect-users').val()
     if numSelected == null or numSelected.length < optionCount / 2
       $('#select-all').text 'Select All'
     else
       $('#select-all').text 'Deselect All'
     return
 
-  $('.multiselect').trigger 'change'
+  $('.multiselect-users').trigger 'change'
 
   $(".log-date-button").click (e) ->
     e.preventDefault()

@@ -1,17 +1,19 @@
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <div class="spacer"></div>
-    <div class="spacer show-for-medium"></div>
-    <div style="max-width: 480px; margin: auto;">
+    <h1>Reports</h1>
+    <div style="max-width: 100%; margin: auto;">
       <hr/>
       <div class="row">
-        <div class="columns small-5">
+        <div class="columns small-4">
           <%= link_to "Personal Report", new_reports_personal_report_path, class: 'button expanded no-margin' %>
         </div>
-        <div class="columns small-2 text-center">Or</div>
-        <div class="columns small-5">
+        <div class="columns small-4">
           <%= link_to "Project Report", new_reports_project_report_path, class: 'button expanded no-margin' %>
+        </div>
+        <br><br><br>
+        <div class="columns small-4">
+          <%= link_to "Comprehensive Report", new_reports_comprehensive_report_path, class: 'button expanded no-margin' %>
         </div>
       </div>
       <hr/>

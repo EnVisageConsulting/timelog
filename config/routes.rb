@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   namespace :reports do
     resources :project_reports, only: [:new, :create, :index]
     resources :personal_reports, only: [:new, :create, :index]
+    resources :comprehensive_reports, only: [:new, :create, :index]
 
     get 'personal_reports_csv/:start_date/:end_date/:users' => 'personal_reports#csv', as: 'personal_reports_csv'
     get 'project_reports_csv/:start_date/:end_date/:projects' => 'project_reports#csv', as: 'project_reports_csv'
+    get 'comprehensive_reports_csv/:start_date/:end_date/:projects/:users' => 'comprehensive_reports#csv', as: 'comprehensive_reports_csv'
+    get 'matrix_reports_csv/:start_date/:end_date/:projects/:users' => 'comprehensive_reports#csv_matrix', as: 'matrix_reports_csv'
   end
 
   get    'login' => 'sessions#new'

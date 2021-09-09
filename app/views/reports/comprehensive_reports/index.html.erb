@@ -1,0 +1,179 @@
+<%= back_link "Run Personal Report", new_reports_personal_report_path, icon: "line-chart" %>
+<%= back_link "Run Project Report", new_reports_project_report_path, icon: "line-chart" %>
+
+<div class="row">
+  <div class="columns">
+    <img width="150px;" src="<%= image_url("EnVisage_Logo.png") %>">
+    <p style="padding-left: 2px; margin-top: 5px; font-size: .8em">EnVisage Consulting, Inc.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="columns">
+    <!-- <div class="spacer"></div> -->
+    <h2>Comprehensive Report</h2>
+    <h3>Projects: <%= @comprehensive_report.projects&.map(&:name)&.to_sentence %></h3>
+    <h3>Employees: <%= @comprehensive_report.users.length == User.undeactivated.length ? "All" : @comprehensive_report.users&.map(&:name)&.to_sentence %></h3>
+    <h3 class="subheader"><%= @date %></h3>
+  </div>
+</div>
+
+<%= form_for @comprehensive_report, url: reports_comprehensive_reports_path(@comprehensive_report), html: { class: 'filters-form' } do |f| %>
+  <%= form_errors @comprehensive_report %>
+
+  <div class="row">
+    <div class="columns large-5 medium-5">
+      <%= f.label :project_ids, "Projects" %>
+      <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+    </div>
+
+    <div class="columns large-7 medium-7">
+      <%= f.label :user_ids, "Employees" %>
+      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <a id="select-all"></a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns large-5 medium-5 small-6">
+      <%= f.label :start_date, "Start Date" %>
+      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-5 medium-5 small-6">
+      <%= f.label :end_date, "End Date" %>
+      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-2 medium-2">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<div class="table-tabs">
+  <div class="row">
+    <ul class="tabs-nav">
+      <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Comprehensive View</a></li>
+      <li class="table-title" id="summary-view-li"><a id="summary-view-button">Matrix View</a></li>
+    </ul>
+    <%= link_to(fa_icon("download", text: "Export Matrix CSV Report"), reports_matrix_reports_csv_path(start_date: @comprehensive_report.start_date, end_date: @comprehensive_report.end_date, projects: @comprehensive_report.projects, users: @comprehensive_report.users), class: "button", style: "float: right;") %>
+    <%= link_to(fa_icon("download", text: "Export Comprehensive CSV Report"), reports_comprehensive_reports_csv_path(start_date: @comprehensive_report.start_date, end_date: @comprehensive_report.end_date, projects: @comprehensive_report.projects, users: @comprehensive_report.users), class: "button", style: "float: right; margin-right: 20px;") %>
+  </div>
+
+  <div id="full-view">
+    <% @comprehensive_report.users.each do |u| %>
+      <div class="row">
+        <div class="columns">
+          <h3><b><%= u.name %></b></h3>
+          <% @comprehensive_report.projects.each do |p| %>
+            <h4><%= p.name %></h4>
+            <table class="report comprehensive-report">
+              <thead>
+                <tr>
+                  <th class="text-center" style="width: 10%">Date</th>
+                  <th class="text-center" style="width: 10%">Start</th>
+                  <th class="text-center" style="width: 10%">Stop</th>
+                  <th class="text-center" style="width: 10%">Time</th>
+                  <th style="width: 20%">Project</th>
+                  <th>Tags</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <% total = 0 %>
+              <% @comprehensive_report.grouped_project_logs(p,u).each do |date, project_logs| %>
+                <% date_total = 0 %>
+                <tbody>
+                  <% project_logs.each_with_index do |project_log, index| %>
+                    <% log = project_log.log %>
+                    <%
+                      total      += project_log.hours
+                      date_total += project_log.hours
+                    %>
+                    <tr>
+                      <% if index == 0 && project_log == log.project_logs.first %>
+                        <td class="text-center"><u><%= date %></u></td>
+                      <% else %>
+                        <td></td>
+                      <% end %>
+                      <td class="text-center"><%= log.start_time %></td>
+                      <td class="text-center"><%= log.end_time %></td>
+                      <td class="text-center"><%= project_log.hours_two_decimals %></td>
+                      <td><%= project_log.project.name %></td>
+                      <td><%= project_log.project_tags.map(&:tag).pluck(:name).to_sentence %></td>
+                      <td><%= simple_format project_log.description %></td>
+                      <td class="text-right"><%= link_to fa_icon("search"), log_path(project_log.log) %></td>
+                    </tr>
+                  <% end %>
+                    <tr class="subtotal">
+                      <td></td>
+                      <td></td>
+                      <td class="text-center">Subtotal:</td>
+                      <td class="text-center"><b><%= date_total %></b></td>
+                      <td colspan="4"></td>
+                    </tr>
+                  </tbody>
+              <% end %>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="text-center stat total">Total:</td>
+                  <td class="text-center stat total"><b><%= total %></b></td>
+                  <td colspan="4"></td>
+                </tr>
+              </tfoot>
+            </table>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="summary-view" style="display: none;">
+    <div class="row">
+      <div class="columns">
+        <table>
+          <thead>
+            <tr>
+              <td></td>
+              <% project_totals = {} %>
+              <% @comprehensive_report.projects.each do |project| %>
+                <td class="text-center" style="font-weight: normal;"><%= link_to project.name, reports_project_reports_path(reports_project_report: {project_ids: [project.id], start_date: @comprehensive_report.start_date, end_date: @comprehensive_report.end_date}) %></td>
+                <% project_totals[project.id] = 0 %>
+              <% end %>
+              <td class="text-center">Employee Total</td>
+            </tr>
+          </thead>
+          <tbody>
+            <% @comprehensive_report.users.each do |user| %>
+              <% user_total = 0 %>
+              <tr>
+                <td><%= user.name %></td>
+                <% @comprehensive_report.projects.each do |project| %>
+                  <% amount = @comprehensive_report.project_user_total_hours(project, user) %>
+                  <% user_total += amount %>
+                  <% project_totals[project.id] += amount %>
+                  <td class="text-center"><%= amount %></td>
+                <% end %>
+                <td class="text-center"><b><%= user_total %></b></td>
+              </tr>
+            <% end %>
+            <tr>
+              <% grand_total = 0 %>
+              <td><b>Project Total</b></td>
+              <% project_totals.each do |id, total| %>
+                <td class="text-center"><b><%= total %></b></td>
+                <% grand_total += total %>
+              <% end %>
+              <td class="text-center"><b><%= grand_total %></b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

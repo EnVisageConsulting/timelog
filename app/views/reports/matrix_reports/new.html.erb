@@ -1,15 +1,15 @@
 <%= back_link "Run Personal Report", new_reports_personal_report_path, icon: "line-chart" %>
-<%= back_link "Run Matrix Report", new_reports_matrix_report_path, icon: "line-chart" %>
+<%= back_link "Run Project Report", new_reports_project_report_path, icon: "line-chart" %>
 
 <div class="row">
   <div class="columns">
     <div class="spacer"></div>
-    <h1>Project Report</h1>
+    <h1>Matrix Report</h1>
   </div>
 </div>
 
-<%= form_for @project_report, url: reports_project_reports_path(@project_report) do |f| %>
-  <%= form_errors @project_report %>
+<%= form_for @matrix_report, url: reports_matrix_reports_path(@matrix_report) do |f| %>
+  <%= form_errors @matrix_report %>
 
   <div class="row">
     <div class="columns large-6">
@@ -17,8 +17,9 @@
       <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
     </div>
     <div class="columns large-6">
-      <%= f.label :project_tag_ids, "Project Tags" %>
-      <%= f.collection_select :project_tag_ids, Tag.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+      <%= f.label :user_ids, "Employees" %>
+      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <a id="select-all"></a>
     </div>
   </div>
 
