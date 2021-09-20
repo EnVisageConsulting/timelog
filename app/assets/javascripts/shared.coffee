@@ -1,8 +1,16 @@
 window.loadShared = ->
+  $.datetimepicker.setDateFormatter
+    parseDate: (date, format) ->
+      d = moment(date, format)
+      if d.isValid() then d.toDate() else false
+    formatDate: (date, format) ->
+      moment(date).format format
+    formatTime: (time, format) ->
+      moment(time).format format
+
   $('.datetime').datetimepicker
-    validateOnBlur: false,
-    format: 'm/d/Y h:i A',
-    formatTime: 'h:i A',
+    format: 'MM/DD/Y h:mm A',
+    formatTime: 'h:mm A',
     maxDate: 0,
     scrollMonth: false,
     step: 30,
