@@ -6,8 +6,9 @@ class PasswordsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update_password(password_params)
-        format.html { redirect_to settings_path, notice: "Successfully updated password!" }
+      if @user.update_password(password_params, current_user)
+        path = current_user.admin? ? users_path : settings_path
+        format.html { redirect_to path, notice: "Successfully updated password!" }
       else
         format.html { render :edit }
       end

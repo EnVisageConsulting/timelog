@@ -32,6 +32,15 @@
     </div>
   </div>
 
+  <% if current_user.admin? || current_user == @user %>
+    <div class="row">
+      <div class="columns">
+        <%= label_tag :password %>
+        <p><%= link_to fa_icon("lock", text: "Change Password"), edit_user_password_path(@user) %></p>
+      </div>
+    </div>
+  <% end %>
+
 
   <div class="row">
     <div class="columns">
