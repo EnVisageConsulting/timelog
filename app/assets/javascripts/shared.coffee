@@ -1,15 +1,24 @@
 window.loadShared = ->
+  $.datetimepicker.setDateFormatter
+    parseDate: (date, format) ->
+      d = moment(date, format)
+      if d.isValid() then d.toDate() else false
+    formatDate: (date, format) ->
+      moment(date).format format
+    formatTime: (time, format) ->
+      moment(time).format format
+
   $(".date").datetimepicker
     maxDate: 0,
     timepicker: false,
     scrollMonth: false,
     yearStart: 2016,
-    format: 'm/d/Y',
+    format: 'MM/DD/Y',
     yearEnd: new Date().getFullYear()
 
   $('.datetime').datetimepicker
-    format: 'm/d/Y g:i A',
-    formatTime: 'g:i A',
+    format: 'MM/DD/Y h:mm A',
+    formatTime: 'h:mm A',
     maxDate: 0,
     scrollMonth: false,
     step: 30,
