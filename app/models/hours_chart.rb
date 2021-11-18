@@ -13,7 +13,7 @@ class HoursChart
 
   def values
     @values ||= weeks.map do |sdate|
-      logs = grouped_logs[sdate]
+      logs = grouped_logs[sdate.strftime("%m %d %Y")]
       logs.present? ? logs.map(&:hours).inject(:+) : 0.0
     end
   end
@@ -25,7 +25,7 @@ class HoursChart
   private
 
     def grouped_logs
-      @grouped_logs ||= logs.group_by { |log| log.start_at.in_time_zone(TIMEZONE).beginning_of_week.to_time }
+      @grouped_logs ||= logs.group_by { |log| log.start_at.in_time_zone(TIMEZONE).beginning_of_week.strftime("%m %d %Y") }
     end
 
     def weeks
