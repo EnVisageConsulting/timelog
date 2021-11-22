@@ -120,6 +120,10 @@ module AdminDashboardHelper
     get_hours(obj, start_date, end_date)
   end
 
+  def format_hours(hours)
+    hours == 0.00 ? 0 : '%.2f' % hours
+  end
+
   private
 
     def get_total_time(obj, sdate, edate)
@@ -133,9 +137,5 @@ module AdminDashboardHelper
           raise InvalidObject
       end
       format_hours(hours)
-    end
-
-    def format_hours(hours)
-      hours == 0.00 ? 0 : '%.2f' % hours
     end
 end

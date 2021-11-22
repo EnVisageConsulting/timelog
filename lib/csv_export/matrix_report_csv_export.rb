@@ -14,7 +14,7 @@ class MatrixReportCsvExport < ApplicationCsvExport
       projects << project.name
       project_totals[project.id] = 0
     end
-    projects << "Employee Total"
+    projects << "Team Member Total"
     rows << projects
 
     @report.users.each do |user|

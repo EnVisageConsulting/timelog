@@ -6,9 +6,9 @@ class ComprehensiveReportCsvExport < ApplicationCsvExport
   end
 
   def add_content
-    headers = ["Date", "Start Time", "Stop Time", "Total Time", "Project", "Tags", "Description"]
+    headers = ["Date", "Start Time", "Stop Time", "Total Time", "Project", "Description"]
 
-    rows << ["Comprehensive Report for: " + (@report.users.length == User.undeactivated.length ? "All Employees" : @report.users&.map(&:name)&.to_sentence)]
+    rows << ["Comprehensive Report for: " + (@report.users.length == User.undeactivated.length ? "All Team Members" : @report.users&.map(&:name)&.to_sentence)]
     rows << ["Period of " + @report.start_date + " - " + @report.end_date]
     rows << []
 
@@ -32,7 +32,7 @@ class ComprehensiveReportCsvExport < ApplicationCsvExport
             report_row << log.end_time
             report_row << project_log.hours_two_decimals
             report_row << project_log.project.name
-            report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
+            # report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
             report_row << project_log.description
             rows << report_row
           end
