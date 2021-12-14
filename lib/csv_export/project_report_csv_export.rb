@@ -6,7 +6,7 @@ class ProjectReportCsvExport < ApplicationCsvExport
   end
 
   def add_content
-    headers = ["Team Member", "Date", "Hours", "Description"]
+    headers = ["Team Member", "Date", "Hours", "Project Tags", "Description"]
 
     rows << ["Project Report for: " + @report.projects&.map(&:name)&.to_sentence]
     rows << ["Tags: " + @report.project_tags&.map(&:name)&.to_sentence] if @report.project_tags.present?
@@ -25,16 +25,16 @@ class ProjectReportCsvExport < ApplicationCsvExport
           report_row = []
           report_row << user.name
           report_row << project_log.log.date
-          # report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
           report_row << project_log.hours_two_decimals
+          report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
           report_row << project_log.description
 
           rows << report_row
         end
-        rows << ["","","Subtotal", user_total]
+        rows << ["","Subtotal", user_total]
         rows << []
       end
-      rows << ["","", "Total", total]
+      rows << ["", "Total", total]
       rows << []
     end
   end

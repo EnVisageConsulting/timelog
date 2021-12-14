@@ -6,7 +6,7 @@ class PersonalReportCsvExport < ApplicationCsvExport
   end
 
   def add_content
-    headers = ["Date", "Start Time", "Stop Time", "Total Time", "Project", "Description"]
+    headers = ["Date", "Start Time", "Stop Time", "Total Time", "Project", "Project Tags", "Description"]
 
     rows << ["Personal Report for: " + @report.users&.map(&:name)&.to_sentence]
     rows << ["Period of " + @report.start_date + " - " + @report.end_date]
@@ -30,7 +30,7 @@ class PersonalReportCsvExport < ApplicationCsvExport
             report_row << log.end_time
             report_row << project_log.hours_two_decimals
             report_row << project_log.project.name
-            # report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
+            report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
             report_row << project_log.description
 
             rows << report_row
