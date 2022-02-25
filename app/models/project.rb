@@ -21,4 +21,8 @@ class Project < ApplicationRecord
       self.deactivated_at = nil
     end
   end
+
+  def active?
+    self.deactivated_at.nil?
+  end
 end

@@ -8,34 +8,4 @@
   </div>
 </div>
 
-<%= form_for @project_report, url: reports_project_reports_path(@project_report) do |f| %>
-  <%= form_errors @project_report %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <%= f.label :project_ids, "Projects" %>
-      <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
-    </div>
-    <div class="columns large-6">
-      <%= f.label :project_tag_ids, "Project Tags" %>
-      <%= f.collection_select :project_tag_ids, Tag.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns small-6">
-      <%= f.label :start_date, "Start Date" %>
-      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
-    </div>
-    <div class="columns small-6">
-      <%= f.label :end_date, "End Date" %>
-      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns">
-      <%= f.submit "View Report", class: 'button' %>
-    </div>
-  </div>
-<% end %>
+<%= render "form" %>

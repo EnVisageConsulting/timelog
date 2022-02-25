@@ -36,6 +36,7 @@ class User < ApplicationRecord
   scope :activated, -> { where('activated_at IS NOT NULL').order(:last) }
   scope :deactivated, -> { where('deactivated_at IS NOT NULL').order(:last) }
   scope :undeactivated, -> { where('deactivated_at IS NULL').order(:last) }
+  scope :alphabetized, -> { order('last ASC') }
 
 
   # --- Class Methods --- #
@@ -75,6 +76,10 @@ class User < ApplicationRecord
   def activate!
     self.activated_at = Time.now
     save
+  end
+
+  def active?
+    self.activated_at.present? && self.deactivated_at.nil?
   end
 
   def update_password(password_hash, current_user)

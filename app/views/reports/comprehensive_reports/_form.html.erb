@@ -1,0 +1,34 @@
+<%= form_for @comprehensive_report, url: reports_comprehensive_reports_path(@comprehensive_report), html: { class: 'filters-form' } do |f| %>
+  <%= form_errors @comprehensive_report %>
+
+  <div class="row">
+    <div class="columns large-5 medium-5">
+      <%= f.label :project_ids, "Projects" %>
+      <%= f.select :project_ids, options_for_select(Project.alphabetized.map {|p| [p.name, p.id, {data: {active: p.active?}}]}, params[:reports_comprehensive_report] && params[:reports_comprehensive_report][:project_ids]), {}, {multiple: true, class: "multiselect multiselect-projects"} %>
+      <a id="select-all-projects"></a> | <a id="select-active-projects">Select Only Active</a>
+    </div>
+
+    <div class="columns large-7 medium-7">
+      <%= f.label :user_ids, "Employees" %>
+      <%= f.select :user_ids, options_for_select(User.alphabetized.map {|u| [u.name, u.id, {data: {active: u.active?}}]}, params[:reports_comprehensive_report] && params[:reports_comprehensive_report][:user_ids]), {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <a id="select-all-users"></a> | <a id="select-active-users">Select Only Active</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns large-5 medium-5 small-6">
+      <%= f.label :start_date, "Start Date" %>
+      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-5 medium-5 small-6">
+      <%= f.label :end_date, "End Date" %>
+      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-2 medium-2">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
+  </div>
+<% end %>

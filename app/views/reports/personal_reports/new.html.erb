@@ -8,36 +8,4 @@
   </div>
 </div>
 
-<%= form_for @personal_report, url: reports_personal_reports_path(@personal_report) do |f| %>
-  <%= form_errors @personal_report %>
-
-  <div class="row">
-    <div class="columns">
-      <%= f.label :user_ids, "Employees" %>
-      <%= f.collection_select :user_ids, @users, :id, :name, {}, {multiple: true, class: "multiselect multiselect-users"} %>
-      <a id="select-all"></a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns small-6">
-      <%= f.label :start_date, "Start Date" %>
-      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
-    </div>
-    <div class="columns small-6">
-      <%= f.label :end_date, "End Date" %>
-      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns">
-      <%= f.submit "View Report", class: 'button float-left' %>
-      <div class="table-tabs float-left">
-        <ul class="tabs-nav" style="margin-top: 0;">
-          <%= render "reports/date_shortcut_links", klass: "log-date-button", sty: "padding-top: 6px;" %>
-        </ul>
-      </div>
-    </div>
-  </div>
-<% end %>
+<%= render "form" %>

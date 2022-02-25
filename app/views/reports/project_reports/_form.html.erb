@@ -1,0 +1,38 @@
+<%= form_for @project_report, url: reports_project_reports_path(@project_report), html: { class: 'filters-form' } do |f| %>
+  <%= form_errors @project_report %>
+
+  <div class="row">
+    <div class="columns large-6 medium-6">
+      <%= f.label :project_ids, "Projects" %>
+      <%= f.select :project_ids, options_for_select(Project.alphabetized.map {|p| [p.name, p.id, {data: {active: p.active?}}]}, params[:reports_project_report] && params[:reports_project_report][:project_ids]), {}, {multiple: true, class: "multiselect multiselect-projects"} %>
+      <a id="select-all-projects"></a> | <a id="select-active-projects">Select Only Active</a>
+    </div>
+
+    <div class="columns large-6 medium-6">
+      <%= f.label :project_tag_ids, "Project Tags" %>
+      <%= f.collection_select :project_tag_ids, Tag.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns large-3 medium-2 small-6">
+      <%= f.label :start_date, "Start Date" %>
+      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-3 medium-2 small-6">
+      <%= f.label :end_date, "End Date" %>
+      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns large-3 medium-2 small-6">
+      <%= label_tag :sort_date, "Sort Date" %>
+      <%= f.select :sort_date, {"Ascending" => "asc", "Descending" => "desc"} %>
+    </div>
+
+    <div class="columns large-3 medium-2">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
+  </div>
+<% end %>

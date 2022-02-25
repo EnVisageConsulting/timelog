@@ -8,35 +8,4 @@
   </div>
 </div>
 
-<%= form_for @comprehensive_report, url: reports_comprehensive_reports_path(@comprehensive_report) do |f| %>
-  <%= form_errors @comprehensive_report %>
-
-  <div class="row">
-    <div class="columns large-6">
-      <%= f.label :project_ids, "Projects" %>
-      <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
-    </div>
-    <div class="columns large-6">
-      <%= f.label :user_ids, "Employees" %>
-      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect multiselect-users"} %>
-      <a id="select-all"></a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns small-6">
-      <%= f.label :start_date, "Start Date" %>
-      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
-    </div>
-    <div class="columns small-6">
-      <%= f.label :end_date, "End Date" %>
-      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns">
-      <%= f.submit "View Report", class: 'button' %>
-    </div>
-  </div>
-<% end %>
+<%= render "form" %>

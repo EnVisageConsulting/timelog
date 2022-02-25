@@ -39,6 +39,6 @@ class Reports::PersonalReportsController < ApplicationController
     end
 
     def accessible_users
-      current_user.admin? ? User.undeactivated : [current_user]
+      current_user.admin? ? User.alphabetized : [current_user]
     end
 end

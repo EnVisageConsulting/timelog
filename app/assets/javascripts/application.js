@@ -26,7 +26,7 @@
 var loadJavascript = function(controller, action){
   loadShared();
   if (controller.split("/")[0] == "reports")
-    loadReport();
+    new Report();
 
   $.event.trigger( controller + ".load");
   $.event.trigger( controller + "_" + action + ".load" );

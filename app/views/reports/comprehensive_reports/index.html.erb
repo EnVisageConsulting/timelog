@@ -12,45 +12,12 @@
   <div class="columns">
     <h2>Comprehensive Report</h2>
     <h3>Projects: <%= @comprehensive_report.projects&.map(&:name)&.to_sentence %></h3>
-    <h3>Employees: <%= @comprehensive_report.users.length == User.undeactivated.length ? "All" : @comprehensive_report.users&.map(&:name)&.to_sentence %></h3>
+    <h3>Employees: <%= @comprehensive_report.users&.map(&:name)&.to_sentence %></h3>
     <h3 class="subheader"><%= @date %></h3>
   </div>
 </div>
 
-<%= form_for @comprehensive_report, url: reports_comprehensive_reports_path(@comprehensive_report), html: { class: 'filters-form' } do |f| %>
-  <%= form_errors @comprehensive_report %>
-
-  <div class="row">
-    <div class="columns large-5 medium-5">
-      <%= f.label :project_ids, "Projects" %>
-      <%= f.collection_select :project_ids, Project.active.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
-    </div>
-
-    <div class="columns large-7 medium-7">
-      <%= f.label :user_ids, "Employees" %>
-      <%= f.collection_select :user_ids, User.undeactivated, :id, :name, {}, {multiple: true, class: "multiselect multiselect-users"} %>
-      <a id="select-all"></a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="columns large-5 medium-5 small-6">
-      <%= f.label :start_date, "Start Date" %>
-      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
-    </div>
-
-    <div class="columns large-5 medium-5 small-6">
-      <%= f.label :end_date, "End Date" %>
-      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
-    </div>
-
-    <div class="columns large-2 medium-2">
-      <%= label_tag "", "&nbsp;".html_safe %>
-      <%= f.submit "Filter", class: 'button expanded' %>
-    </div>
-  </div>
-<% end %>
-<br>
+<%= render "form" %><br>
 
 <div class="table-tabs">
   <div class="row">

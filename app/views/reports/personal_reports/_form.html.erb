@@ -1,0 +1,39 @@
+<%= form_for @personal_report, url: reports_personal_reports_path(@personal_report), html: { class: 'filters-form' } do |f| %>
+  <div class="row">
+    <div class="columns">
+      <%= f.label :user_ids, "Employees" %>
+      <%= f.select :user_ids, options_for_select(@users.map {|u| [u.name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report] && params[:reports_personal_report][:user_ids]), {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <a id="select-all-users"></a> | <a id="select-active-users">Select Only Active</a>
+    </div>
+
+    <div class="columns medium-3">
+      <%= f.label :start_date, "Start Date" %>
+      <%= f.text_field :start_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns medium-3">
+      <%= f.label :end_date, "End Date" %>
+      <%= f.text_field :end_date, autocomplete: "off", class: 'date' %>
+    </div>
+
+    <div class="columns medium-3">
+      <%= label_tag :sort_date, "Sort Date" %>
+      <%= f.select :sort_date, {"Ascending" => "asc", "Descending" => "desc"} %>
+    </div>
+
+    <div class="columns medium-3">
+      <%= label_tag "", "&nbsp;".html_safe %>
+      <%= f.submit "Filter", class: 'button expanded' %>
+    </div>
+
+    <div class="row">
+      <div class="columns" style="padding-right: 0;">
+        <div class="table-tabs" style="float: right;">
+          <ul class="tabs-nav" style="margin-top: 0;">
+            <%= render "reports/date_shortcut_links", klass: "log-date-button", sty: "padding: 0 0.75rem;" %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
