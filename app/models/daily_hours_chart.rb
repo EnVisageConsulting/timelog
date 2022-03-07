@@ -4,11 +4,11 @@ class DailyHoursChart
   def initialize(user)
     @user       = user
     @end_date   = Time.now.in_time_zone(TIMEZONE).end_of_day.to_time
-    @start_date = (end_date - 6.days).beginning_of_day.to_time
+    @start_date = (end_date - 29.days).beginning_of_day.to_time
   end
 
   def labels
-    @labels ||= days.map { |sdate| sdate.strftime("%A") }
+    @labels ||= days.map { |sdate| sdate.strftime("%a") }
   end
 
   def values
@@ -32,12 +32,14 @@ class DailyHoursChart
       return @days if defined?(@days)
       @days = []
       num_days = 0
+      num_work_days = 0
 
-      0.upto(6) do |x|
-        if (weekday?(end_date - x.days) || has_logs?(end_date - x.days)) && num_days < 5
-          @days.push (end_date - x.days).in_time_zone(TIMEZONE).beginning_of_day.to_time
-          num_days += 1
+      until num_work_days == 30
+        if (weekday?(end_date - num_days.days) || has_logs?(end_date - num_days.days))
+          @days.push (end_date - num_days.days).in_time_zone(TIMEZONE).beginning_of_day.to_time
+          num_work_days += 1
         end
+        num_days += 1
       end
 
       @days.reverse

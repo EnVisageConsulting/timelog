@@ -1,20 +1,4 @@
 module DashboardHelper
-  def hours_chart
-    @hours_chart ||= HoursChart.new(current_user)
-  end
-
-  def hours_chart_labels
-    hours_chart.labels.map do |sdate, edate|
-      label = readable_date_range(sdate, edate)
-      label = label.sub(/, \d{4}\z/, '')
-      label
-    end.join("|")
-  end
-
-  def hours_chart_values
-    hours_chart.values.join("|")
-  end
-
   def daily_hours_chart
     @daily_hours_chart ||= DailyHoursChart.new(current_user)
   end
@@ -25,6 +9,37 @@ module DashboardHelper
 
   def daily_hours_chart_values
     daily_hours_chart.values.join("|")
+  end
+
+  def weekly_hours_chart
+    @weekly_hours_chart ||= WeeklyHoursChart.new(current_user)
+  end
+
+  def weekly_hours_chart_labels
+    weekly_hours_chart.labels.map do |sdate, edate|
+      label = readable_date_range(sdate, edate)
+      label = label.sub(/, \d{4}\z/, '')
+      label
+    end.join("|")
+  end
+
+  def weekly_hours_chart_values
+    weekly_hours_chart.values.join("|")
+  end
+
+  def monthly_hours_chart
+    @monthly_hours_chart ||= MonthlyHoursChart.new(current_user)
+  end
+
+  def monthly_hours_chart_labels
+    monthly_hours_chart.labels.map do |sdate, edate|
+      label = sdate.strftime("%B")
+      label
+    end.join("|")
+  end
+
+  def monthly_hours_chart_values
+    monthly_hours_chart.values.join("|")
   end
 
   def current_week_hours

@@ -1,10 +1,10 @@
-class HoursChart
+class WeeklyHoursChart
   attr_accessor :start_date, :end_date, :user
 
   def initialize(user)
     @user       = user
     @end_date   = Time.now.in_time_zone(TIMEZONE).end_of_week.to_time
-    @start_date = (end_date - 3.weeks).beginning_of_week.to_time
+    @start_date = (end_date - 29.weeks).beginning_of_week.to_time
   end
 
   def labels
@@ -33,7 +33,7 @@ class HoursChart
       @weeks = []
       @weeks.push start_date
 
-      1.upto(3) do |x|
+      1.upto(29) do |x|
         @weeks.push (start_date + x.weeks).to_time
       end
 
