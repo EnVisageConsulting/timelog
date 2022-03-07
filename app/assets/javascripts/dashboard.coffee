@@ -110,9 +110,6 @@ ready= ->
     else
       $('#hours-chart-generate').attr('disabled', false)
 
-$(document).on 'dashboard_index.load', (e, obj) =>
-  ready()
-
-# $(document).on 'turbolinks:load', (e, obj) =>
-#   if window.location.pathname == '/' #dashboard
-#     ready()
+$(document).on 'turbolinks:load', (e, obj) =>
+  if window.location.pathname == '/' #dashboard
+    ready()
