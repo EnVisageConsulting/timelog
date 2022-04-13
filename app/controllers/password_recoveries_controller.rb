@@ -34,7 +34,7 @@ class PasswordRecoveriesController < ApplicationController
         @user.errors.add(:password, "is required")
 
         format.html { render :edit }
-      elsif @user.update_attributes(user_params)
+      elsif @user.update(user_params)
         @password_recovery.expire!
 
         format.html { redirect_to login_path, notice: "Successfully updated password!" }

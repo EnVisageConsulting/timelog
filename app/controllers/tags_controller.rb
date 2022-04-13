@@ -23,7 +23,7 @@ class TagsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @tag.update_attributes(tag_params)
+      if @tag.update(tag_params)
         format.html { redirect_to projects_path, notice: "Successfully updated project tag!" }
       else
         format.html { render :edit }

@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :require_admin, only: [:index, :edit, :update]
-  before_action :set_per_page
   load_and_authorize_resource param_method: :user_params
 
   def new
@@ -27,7 +26,7 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update_attributes(user_params)
+      if @user.update(user_params)
         format.html { redirect_to users_path, notice: "Successfully updated #{@user.name}!" }
       else
         format.html { render :edit }
@@ -37,7 +36,7 @@ class UsersController < ApplicationController
 
   def show
     @user ||= User.find(params[:id])
-    @logs = user_logs.page(params[:page]).per(@per_page)
+    @logs = user_logs.page(params[:page]).per(Kaminari.config.default_per_page)
   end
 
   private
@@ -74,10 +73,5 @@ class UsersController < ApplicationController
       else
         @user_logs ||= @user.logs.latest
       end
-    end
-
-    def set_per_page
-      # return @per_page = 3 # uncomment for testing with smaller groups
-      @per_page = Kaminari.config.default_per_page
     end
 end

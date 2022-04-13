@@ -5,6 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# disconnect from all the servers, then run 'rails db:drop && rails db:create && rails db:migrate', and then run 'rails db:seed'
+
 ActiveRecord::Base.transaction do
   projects = FactoryBot.create_list(:project, 3)
   users    = [FactoryBot.create(:admin_user)]

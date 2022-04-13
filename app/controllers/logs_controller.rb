@@ -25,7 +25,7 @@ class LogsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @log.update_attributes(log_params)
+      if @log.update(log_params)
         if params[:commit] == "Save and Start a New Log"
           if load_new_log
             if @log.save

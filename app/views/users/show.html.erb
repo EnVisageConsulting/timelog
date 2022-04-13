@@ -43,6 +43,6 @@
     <% else %>
       <%= render "user_log_table", logs: @logs, id: "user_logs" %>
     <% end %>
-    <%= paginate(@logs, {params: {date: nil}}) if @logs.present? %>
+    <%= paginate(@logs) if @logs.present? %>
   </div>
 </div>
