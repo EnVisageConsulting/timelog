@@ -5,18 +5,22 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-projects = FactoryBot.create_list(:project, 3)
-users    = FactoryBot.create_list(:active_user, 10)
+ActiveRecord::Base.transaction do
+  projects = FactoryBot.create_list(:project, 3)
+  users    = [FactoryBot.create(:admin_user)]
+  users    << FactoryBot.create_list(:active_user, 5)
+  users.flatten!
 
-users.each do |user|
-  now   = Time.now.in_time_zone(TIMEZONE)
-  edate = (now   - 1.week).end_of_week.to_date
-  sdate = (edate - 5.weeks).beginning_of_week.to_date
+  users.each do |user|
+    now   = Time.now.in_time_zone(TIMEZONE)
+    edate = (now - 1.day).to_date
+    sdate = (edate - 4.weeks).beginning_of_week.to_date
 
-  (sdate..edate).each do |date|
-    FactoryBot.create :active_log, user:         user,
-                                    start_at:     date.to_time + 8.hours,
-                                    end_at:       date.to_time + 14.hours,
-                                    project_logs: [ FactoryBot.build(:project_log, log: nil, project: projects.sample) ]
+    (sdate..edate).each do |date|
+      if date.wday > 0 && date.wday < 6 #weekdays
+        FactoryBot.create :active_log, user: user, start_at: date.to_time + 8.hours, end_at: date.to_time + 12.hours, project_logs: [ FactoryBot.build(:project_log, log: nil, project: projects.sample) ]
+        FactoryBot.create :active_log, user: user, start_at: date.to_time + 13.hours, end_at: date.to_time + 17.hours, project_logs: [ FactoryBot.build(:project_log, log: nil, project: projects.sample) ]
+      end
+    end
   end
 end

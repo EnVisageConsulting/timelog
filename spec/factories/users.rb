@@ -7,18 +7,30 @@ FactoryBot.define do
     "email#{index}@example.com"
   end
 
+  sequence :last do |x|
+    start = User.maximum(:id) || 1
+    index = start + x
+    "User #{index}"
+  end
+
 
   # factories
   factory :user, aliases: [:inactive_user] do
     first {"Example"}
-    last  {"User"}
+    last
     email
   end
 
   factory :active_user, parent: :user do
-    password              {"password10"}
-    password_confirmation {"password10"}
+    password              {"Password10"}
+    password_confirmation {"Password10"}
     activated_at          {1.second.ago}
+  end
+
+  factory :admin_user, parent: :active_user do
+    first {"Admin"}
+    last {"User"}
+    role {1}
   end
 
   factory :deactivated_user, parent: :active_user do
