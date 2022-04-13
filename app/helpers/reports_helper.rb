@@ -25,5 +25,15 @@ module ReportsHelper
     dates.map{ |d| d.strftime("%m/%d/%Y")}
   end
 
+  def deactivated_report_params(report, obj, include_deactivated)
+    report = report.class.to_s.gsub("Reports::", "reports_").underscore
+    if params[report.to_sym]&.dig(obj.to_sym).present?
+      query_string = request.query_string.gsub("#{obj}%5D=#{include_deactivated}", "#{obj}%5D=#{!include_deactivated}")
+      "?#{query_string}"
+    else
+      "?#{request.query_string}&#{report}%5B#{obj}%5D=#{!include_deactivated}"
+    end
+  end
+
   class InvalidDateRange < StandardError; end
 end

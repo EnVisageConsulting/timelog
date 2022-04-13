@@ -40,6 +40,6 @@ module LogsHelper
   end
 
   def project_select_list(project)
-    project&.deactivated ? Project.active.alphabetized + [project] : Project.active.alphabetized
+    project&.deactivated ? Project.active + [project] : Project.active
   end
 end

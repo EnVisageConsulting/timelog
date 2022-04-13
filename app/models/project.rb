@@ -8,8 +8,8 @@ class Project < ApplicationRecord
   validates :name, presence: true
 
   # --- Scopes --- #
-  scope :active, -> { where(deactivated_at: nil) }
-  scope :inactive,   -> { where.not(deactivated_at: nil) }
+  scope :active, -> { where(deactivated_at: nil).order(:name) }
+  scope :inactive,   -> { where.not(deactivated_at: nil).order(:name) }
   scope :alphabetized, -> { order('name ASC') }
 
   # --- Setters & Getters --- #
@@ -20,6 +20,10 @@ class Project < ApplicationRecord
     else
       self.deactivated_at = nil
     end
+  end
+
+  def deactivated_name
+    name + (active? ? "" : " *")
   end
 
   def active?

@@ -5,10 +5,12 @@ class Reports::ComprehensiveReportsController < ApplicationController
 
   def new
     @comprehensive_report = Reports::ComprehensiveReport.new
+    load_projects_and_users
   end
 
   def create
     @comprehensive_report = Reports::ComprehensiveReport.new(comprehensive_report_params)
+    load_projects_and_users
 
     respond_to do |format|
       if @comprehensive_report.valid?
@@ -21,6 +23,7 @@ class Reports::ComprehensiveReportsController < ApplicationController
 
   def index
     @comprehensive_report = Reports::ComprehensiveReport.new(comprehensive_report_params)
+    load_projects_and_users
     @date =
     if @comprehensive_report.start_at.present? && @comprehensive_report.end_at.present?
       "Period of: #{@comprehensive_report.start_date} - #{@comprehensive_report.end_date}"
@@ -52,10 +55,14 @@ class Reports::ComprehensiveReportsController < ApplicationController
   private
 
     def comprehensive_report_params
-      if params[:reports_comprehensive_report].nil?
-        redirect_to(new_reports_comprehensive_report_path, alert: "Incomplete report parameters")
-        return {}
-      end
-      params.require(:reports_comprehensive_report).permit(:start_date, :end_date, project_ids: [], user_ids: [])
+      return redirect_to(new_reports_comprehensive_report_path) if params[:reports_comprehensive_report].nil?
+      params.require(:reports_comprehensive_report).permit(:start_date, :end_date, :deactivated_projects, :deactivated_users, project_ids: [], user_ids: [])
+    end
+
+    def load_projects_and_users
+      @include_deactivated_projects = params[:reports_comprehensive_report]&.dig(:deactivated_projects) == "true" || false
+      @projects = @include_deactivated_projects ? Project.alphabetized : Project.active
+      @include_deactivated_users = params[:reports_comprehensive_report]&.dig(:deactivated_users) == "true" || false
+      @users = @include_deactivated_users ? User.alphabetized : User.undeactivated
     end
 end

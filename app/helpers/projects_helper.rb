@@ -1,17 +1,9 @@
 module ProjectsHelper
   def project_list
-    if viewing_deactivated?
-      Project.inactive.alphabetized
-    else
-      Project.active.alphabetized
-    end
+    viewing_deactivated? ? Project.inactive : Project.active
   end
 
   def tag_list
-    if viewing_deactivated?
-      Tag.inactive.alphabetized
-    else
-      Tag.active.alphabetized
-    end
+    viewing_deactivated? ? Tag.inactive : Tag.active
   end
 end

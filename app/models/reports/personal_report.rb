@@ -5,7 +5,7 @@ class Reports::PersonalReport < TablelessModel
   validates :start_at, presence: true
   validates :end_at, presence: true
 
-  attr_accessor :users, :start_at, :end_at, :sort_date
+  attr_accessor :users, :start_at, :end_at, :sort_date, :deactivated_users
 
   def initialize(attributes = {})
     set_default_attrs

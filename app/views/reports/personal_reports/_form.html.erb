@@ -1,10 +1,16 @@
 <%= form_for @personal_report, url: reports_personal_reports_path(@personal_report), html: { class: 'filters-form' } do |f| %>
+  <%= form_errors @personal_report %>
+
   <div class="row">
     <div class="columns">
       <%= f.label :user_ids, "Employees" %>
-      <%= f.select :user_ids, options_for_select(@users.map {|u| [u.name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report] && params[:reports_personal_report][:user_ids]), {}, {multiple: true, class: "multiselect multiselect-users"} %>
-      <a id="select-all-users"></a> | <a id="select-active-users">Select Only Active</a>
+      <%= f.select :user_ids, options_for_select(@users.map {|u| [u.deactivated_name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report]&.dig(:user_ids)), {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <% if current_user.admin? %>
+        <a id="select-active-users">Select All Active</a> | <%= link_to ((@include_deactivated_users ? "Ex" : "In")+"clude Deactivated"), deactivated_report_params(@personal_report, "deactivated_users", @include_deactivated_users) %>
+      <% end %>
     </div>
+
+    <%= f.hidden_field :deactivated_users, value: @include_deactivated_users %>
 
     <div class="columns medium-3">
       <%= f.label :start_date, "Start Date" %>
@@ -25,6 +31,7 @@
       <%= label_tag "", "&nbsp;".html_safe %>
       <%= f.submit "Filter", class: 'button expanded' %>
     </div>
+
 
     <div class="row">
       <div class="columns" style="padding-right: 0;">

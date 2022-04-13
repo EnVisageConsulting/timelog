@@ -4,8 +4,8 @@
   <div class="row">
     <div class="columns large-6 medium-6">
       <%= f.label :project_ids, "Projects" %>
-      <%= f.select :project_ids, options_for_select(Project.alphabetized.map {|p| [p.name, p.id, {data: {active: p.active?}}]}, params[:reports_project_report] && params[:reports_project_report][:project_ids]), {}, {multiple: true, class: "multiselect multiselect-projects"} %>
-      <a id="select-all-projects"></a> | <a id="select-active-projects">Select Only Active</a>
+      <%= f.select :project_ids, options_for_select(@projects.map {|p| [p.deactivated_name, p.id, {data: {active: p.active?}}]},params[:reports_project_report]&.dig(:project_ids)), {}, {multiple: true, class: "multiselect multiselect-projects"} %>
+      <a id="select-active-projects">Select All Active</a> | <%= link_to ((@include_deactivated_projects ? "Ex" : "In")+"clude Deactivated"), deactivated_report_params(@project_report, "deactivated_projects", @include_deactivated_projects) %>
     </div>
 
     <div class="columns large-6 medium-6">
@@ -13,6 +13,8 @@
       <%= f.collection_select :project_tag_ids, Tag.alphabetized, :id, :name, {}, {multiple: true, class: "multiselect"} %>
     </div>
   </div>
+
+  <%= f.hidden_field :deactivated_projects, value: @include_deactivated_projects %>
 
   <div class="row">
     <div class="columns large-3 medium-2 small-6">

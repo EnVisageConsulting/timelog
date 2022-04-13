@@ -4,10 +4,12 @@ class Reports::ProjectReportsController < ApplicationController
 
   def new
     @project_report = Reports::ProjectReport.new
+    load_projects
   end
 
   def create
     @project_report = Reports::ProjectReport.new(project_report_params)
+    load_projects
 
     respond_to do |format|
       if @project_report.valid?
@@ -20,6 +22,7 @@ class Reports::ProjectReportsController < ApplicationController
 
   def index
     @project_report = Reports::ProjectReport.new(project_report_params)
+    load_projects
     @date =
     if @project_report.start_at.present? && @project_report.end_at.present?
       "Period of: #{@project_report.start_date} - #{@project_report.end_date}"
@@ -44,10 +47,12 @@ class Reports::ProjectReportsController < ApplicationController
   private
 
     def project_report_params
-      if params[:reports_project_report].nil?
-        redirect_to(new_reports_project_report_path, alert: "Incomplete report parameters")
-        return {}
-      end
-      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, project_ids: [], project_tag_ids: [])
+      return redirect_to(new_reports_project_report_path) if params[:reports_project_report].nil?
+      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, project_ids: [], project_tag_ids: [])
+    end
+
+    def load_projects
+      @include_deactivated_projects = params[:reports_project_report]&.dig(:deactivated_projects) == "true" || false
+      @projects = @include_deactivated_projects ? Project.alphabetized : Project.active
     end
 end

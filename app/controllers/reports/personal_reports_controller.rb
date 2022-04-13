@@ -4,12 +4,12 @@ class Reports::PersonalReportsController < ApplicationController
 
   def new
     @personal_report = Reports::PersonalReport.new
-    @users = accessible_users
+    load_accessible_users
   end
 
   def create
     @personal_report = Reports::PersonalReport.new(personal_report_params)
-    @users = accessible_users
+    load_accessible_users
 
     respond_to do |format|
       if @personal_report.valid?
@@ -22,7 +22,7 @@ class Reports::PersonalReportsController < ApplicationController
 
   def index
     @personal_report = Reports::PersonalReport.new(personal_report_params)
-    @users = accessible_users
+    load_accessible_users
   end
 
   def csv
@@ -34,11 +34,12 @@ class Reports::PersonalReportsController < ApplicationController
   private
 
     def personal_report_params
-      return redirect_to(new_reports_personal_report_path, alert: "Incomplete report parameters") if params[:reports_personal_report].nil?
-      params.require(:reports_personal_report).permit(:start_date, :end_date, :sort_date, user_ids: [])
+      return redirect_to(new_reports_personal_report_path) if params[:reports_personal_report].nil?
+      params.require(:reports_personal_report).permit(:start_date, :end_date, :sort_date, :deactivated_users, user_ids: [])
     end
 
-    def accessible_users
-      current_user.admin? ? User.alphabetized : [current_user]
+    def load_accessible_users
+      @include_deactivated_users = params[:reports_personal_report]&.dig(:deactivated_users) == "true" || false
+      @users = current_user.admin? ? (@include_deactivated_users ? User.alphabetized : User.undeactivated) : [current_user]
     end
 end

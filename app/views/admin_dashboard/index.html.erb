@@ -24,14 +24,14 @@
 <div class="row">
   <div class="columns">
     <h5>Employees</h5>
-    <%= render "admin_log_table", obj: User.undeactivated.order(:last) %>
+    <%= render "admin_log_table", obj: User.undeactivated %>
   </div>
 </div>
 
 <div class="row">
   <div class="columns">
     <h5>Projects</h5>
-    <%= render "admin_log_table", obj: Project.active.alphabetized %>
+    <%= render "admin_log_table", obj: Project.active %>
   </div>
 </div>
 

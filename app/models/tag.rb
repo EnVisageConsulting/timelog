@@ -8,8 +8,8 @@ class Tag < ApplicationRecord
   validates :name, presence: true
 
   # --- Scopes --- #
-  scope :active, -> { where(deactivated_at: nil) }
-  scope :inactive,   -> { where.not(deactivated_at: nil) }
+  scope :active, -> { where(deactivated_at: nil).order(:name) }
+  scope :inactive,   -> { where.not(deactivated_at: nil).order(:name) }
   scope :alphabetized, -> { order('name ASC') }
 
   # --- Setters & Getters --- #

@@ -5,7 +5,7 @@ class Reports::ProjectReport < TablelessModel
   # validates :start_at, presence: true
   # validates :end_at, presence: true
 
-  attr_accessor :projects, :project_tags, :start_at, :end_at, :sort_date
+  attr_accessor :projects, :project_tags, :start_at, :end_at, :sort_date, :deactivated_projects
 
   def initialize(attributes = {})
     set_default_attrs
