@@ -49,25 +49,11 @@ class Dashboard
       event.preventDefault()
 
   generateHoursChart: ->
-    ctx             = document.getElementById 'hours-chart'
-    unit_amount     = document.getElementById('unit-amount').value
-    unit_type_id    = document.getElementById 'unit-type'
-    unit_type       = unit_type_id.options[unit_type_id.selectedIndex].text
-    title           = "Number of Hours - Last " + unit_amount + " " + unit_type
-
-    if unit_amount == ""
-      unit_amount = 0
-
-    chartData = unit_type_id.value
-    chartData = chartData.split('[').join ''
-    chartData = chartData.split(']').join ''
-    chartData = chartData.split('"').join ''
-    chartData = chartData.split(', ').join '|'
-
-    chartArray = chartData.split '|'
-    labels = chartArray.slice((((chartArray.length) / 2) - unit_amount), ((chartArray.length) / 2))
-    data = chartArray.slice(chartArray.length - unit_amount, chartArray.length)
-                     .map (v) -> (Math.round(v * 10) / 10).toFixed(1)
+    ctx = document.getElementById 'hours-chart'
+    labels = ctx.dataset.chartLabels.split "|"
+    values = ctx.dataset.chartValues.split "|"
+                                    .map (v) -> (Math.round(v * 10) / 10).toFixed(1)
+    title = "Number of Hours Over Time"
 
     window.hoursChart = new Chart ctx,
       type: 'bar',
@@ -75,7 +61,7 @@ class Dashboard
       data:
         labels: labels,
         datasets: [{
-          data: data,
+          data: values,
           backgroundColor: '#0EB1FF',
           borderColor: '#2199e8',
           borderWidth: 1
@@ -92,23 +78,101 @@ class Dashboard
               beginAtZero: true
           }]
 
+  disable_necessary_fields: (numerical_fields_shown) ->
+    $('#unit_amount').attr('disabled',  !numerical_fields_shown)
+    $('#unit_amount_null').attr('disabled', numerical_fields_shown)
+    $('#unit_type').attr('disabled', !numerical_fields_shown)
+    $('#unit_type_null').attr('disabled', numerical_fields_shown)
+
+    $('#start_date').attr('disabled', numerical_fields_shown)
+    $('#start_date_null').attr('disabled', !numerical_fields_shown)
+    $('#end_date').attr('disabled', numerical_fields_shown)
+    $('#end_date_null').attr('disabled', !numerical_fields_shown)
+
+  check_for_invalid_dates: ->
+    start = new Date($('#start_date').val())
+    end = new Date($('#end_date').val())
+    curr = new Date()
+
+    if !isNaN(start) && !isNaN(end)
+      if (start.getFullYear() >= 2016) && (end.getFullYear() >= 2010) && (start <= end) && (start <= curr) && (end <= curr)
+        $('#generate-button').attr('disabled', false)
+      else
+        $('#generate-button').attr('disabled', true)
+    else
+      $('#generate-button').attr('disabled', true)
+
 ready= ->
   dashboard = new Dashboard
   dashboard.generateHoursChart()
   dashboard.dayHoursCount()
   dashboard.weekHoursCount()
-  #dashboard.loadTableTabs()
 
-  $('#hours-chart-generate').on 'click', =>
-    if window.hoursChart isnt undefined
-      window.hoursChart.destroy()
-    dashboard.generateHoursChart()
+  if $('#numerical-filter').is(':visible')
+    $('#date-range-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+    $('#numerical-filter-arrow').removeClass('fa-caret-right').addClass 'fa-caret-down'
+    dashboard.disable_necessary_fields(true)
+  else
+    $('#numerical-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+    $('#date-range-filter-arrow').removeClass('fa-caret-right').addClass 'fa-caret-down'
+    dashboard.check_for_invalid_dates()
+    dashboard.disable_necessary_fields(false)
 
-  $('#unit-amount').on 'keyup', =>
-    if (document.getElementById('unit-amount').value > 30)
-      $('#hours-chart-generate').attr('disabled', true)
+  $('#unit_amount').on 'keyup', =>
+    if ($('#unit_amount').val() > 30) || ($('#unit_amount').val() == "") || ($('#unit_amount').val() < 1)
+      $('#generate-button').attr('disabled', true)
     else
-      $('#hours-chart-generate').attr('disabled', false)
+      $('#generate-button').attr('disabled', false)
+
+  $('#start_date').on 'keyup change', =>
+    dashboard.check_for_invalid_dates()
+
+  $('#end_date').on 'keyup change', =>
+    dashboard.check_for_invalid_dates()
+
+  $('#numerical-filter-header').on 'click', ->
+    $('#numerical-filter').toggle()
+
+    if $('#date-range-filter').is(':visible')
+      $('#date-range-filter').toggle()
+
+    if $('#numerical-filter-arrow').hasClass('fa-caret-right')
+      $('#numerical-filter-arrow').removeClass('fa-caret-right').addClass 'fa-caret-down'
+      $('#date-range-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+
+      dashboard.disable_necessary_fields(true)
+
+      if ($('#unit_amount').val() > 30) || ($('#unit_amount').val() == "") || ($('#unit_amount').val() < 1)
+        $('#generate-button').attr('disabled', true)
+      else
+        $('#generate-button').attr('disabled', false)
+    else
+      $('#numerical-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+
+      if $('#date-range-filter-arrow').hasClass('fa-caret-right')
+        $('#generate-button').attr('disabled', true)
+
+  $('#date-range-filter-header').on 'click', ->
+    $('#date-range-filter').toggle()
+
+    if $('#numerical-filter').is(':visible')
+      $('#numerical-filter').toggle()
+
+    if $('#date-range-filter-arrow').hasClass('fa-caret-right')
+      $('#date-range-filter-arrow').removeClass('fa-caret-right').addClass 'fa-caret-down'
+      $('#numerical-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+
+      dashboard.disable_necessary_fields(false)
+
+      if $('#generate-button').is(':disabled')
+        $('#generate-button').attr('disabled', false)
+
+      dashboard.check_for_invalid_dates()
+    else
+      $('#date-range-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
+
+      if $('#numerical-filter-arrow').hasClass('fa-caret-right')
+        $('#generate-button').attr('disabled', true)
 
 $(document).on 'turbolinks:load', (e, obj) =>
   if window.location.pathname == '/' #dashboard

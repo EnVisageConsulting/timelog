@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   patch 'settings' => 'settings#update'
   get 'admin_dashboard' => 'admin_dashboard#index'
   root 'dashboard#index'
+  post '/', to: 'dashboard#create'
   match '*a', to: 'application#not_found', via: :get
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

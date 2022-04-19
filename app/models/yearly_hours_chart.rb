@@ -1,4 +1,4 @@
-class MonthlyHoursChart
+class YearlyHoursChart
   attr_accessor :start_date, :end_date, :user
 
   def initialize(user, unit_amount, start_date, end_date)
@@ -9,15 +9,15 @@ class MonthlyHoursChart
   end
 
   def labels
-    @labels ||= months.map { |sdate| [sdate, sdate.end_of_month] }
+    @labels ||= years.map { |sdate| [sdate, sdate.end_of_year] }
     @labels.map do |sdate, edate|
-      label = sdate.strftime("%B")
+      label = sdate.strftime("%Y")
       label
     end
   end
 
   def values
-    @values ||= months.map do |sdate|
+    @values ||= years.map do |sdate|
       logs = grouped_logs[sdate.strftime("%m %d %Y")]
       logs.present? ? logs.map(&:hours).inject(:+) : 0.0
     end
@@ -30,18 +30,18 @@ class MonthlyHoursChart
     end
 
     def grouped_logs
-      @grouped_logs ||= logs.group_by { |log| log.start_at.in_time_zone(TIMEZONE).beginning_of_month.strftime("%m %d %Y") }
+      @grouped_logs ||= logs.group_by { |log| log.start_at.in_time_zone(TIMEZONE).beginning_of_year.strftime("%m %d %Y") }
     end
 
-    def months
-      return @months if defined?(@months)
-      @months = []
-      @months.push start_date
+    def years
+      return @years if defined?(@years)
+      @years = []
+      @years.push start_date
 
       1.upto(@unit_amount) do |x|
-        @months.push (start_date.beginning_of_month + x.months).to_time
+        @years.push (start_date.beginning_of_year + x.years).to_time
       end
 
-      @months
+      @years
     end
 end

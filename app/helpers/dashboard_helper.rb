@@ -1,45 +1,42 @@
 module DashboardHelper
-  def daily_hours_chart
-    @daily_hours_chart ||= DailyHoursChart.new(current_user)
+
+  def numerical_hours_chart(unit_amount, unit_type)
+    end_date   = Time.now.in_time_zone(TIMEZONE).end_of_day.to_time
+
+    if unit_type == "Days"
+      # +7 to include weekends on 30 days, increase if using more
+      start_date = (end_date - (unit_amount + 7).days).beginning_of_day.to_time
+      @chart ||= DailyHoursChart.new(current_user, unit_amount, start_date, end_date, "Numerical")
+    elsif unit_type == "Weeks"
+      unit_amount -= 1
+      start_date = (end_date - (unit_amount).weeks).beginning_of_week.to_time
+      @chart ||= WeeklyHoursChart.new(current_user, unit_amount, start_date, end_date)
+    else
+      unit_amount -= 1
+      start_date = (end_date - (unit_amount).months).beginning_of_month.to_time
+      @chart ||= MonthlyHoursChart.new(current_user, unit_amount, start_date, end_date)
+    end
   end
 
-  def daily_hours_chart_labels
-    daily_hours_chart.labels.join("|")
-  end
+  def date_range_hours_chart(start_date, end_date)
+    unit_amount = ((end_date - start_date).to_i) / (60 * 60 * 24)
 
-  def daily_hours_chart_values
-    daily_hours_chart.values.join("|")
-  end
-
-  def weekly_hours_chart
-    @weekly_hours_chart ||= WeeklyHoursChart.new(current_user)
-  end
-
-  def weekly_hours_chart_labels
-    weekly_hours_chart.labels.map do |sdate, edate|
-      label = readable_date_range(sdate, edate)
-      label = label.sub(/, \d{4}\z/, '')
-      label
-    end.join("|")
-  end
-
-  def weekly_hours_chart_values
-    weekly_hours_chart.values.join("|")
-  end
-
-  def monthly_hours_chart
-    @monthly_hours_chart ||= MonthlyHoursChart.new(current_user)
-  end
-
-  def monthly_hours_chart_labels
-    monthly_hours_chart.labels.map do |sdate, edate|
-      label = sdate.strftime("%B")
-      label
-    end.join("|")
-  end
-
-  def monthly_hours_chart_values
-    monthly_hours_chart.values.join("|")
+    if unit_amount < 31
+      unit_type = "Days"
+      @chart ||= DailyHoursChart.new(current_user, unit_amount, start_date, end_date, "Date Range")
+    elsif unit_amount < 122
+      unit_type = "Weeks"
+      unit_amount /= 7
+      @chart ||= WeeklyHoursChart.new(current_user, unit_amount, start_date, end_date)
+    elsif unit_amount < 730
+      unit_type = "Months"
+      unit_amount /= 30
+      @chart ||= MonthlyHoursChart.new(current_user, unit_amount, start_date, end_date)
+    else
+      unit_type = "Years"
+      unit_amount /= 365
+      @chart ||= YearlyHoursChart.new(current_user, unit_amount, start_date, end_date)
+    end
   end
 
   def current_week_hours
@@ -66,19 +63,7 @@ module DashboardHelper
     @recent_logs = current_user.logs.latest.includes(project_logs: :project).limit(Kaminari.config.default_per_page)
   end
 
-  # def logs_last_week
-  #   current_user.logs.within(1.week.ago.in_time_zone(TIMEZONE).beginning_of_week, 1.week.ago.in_time_zone(TIMEZONE).end_of_week).active.latest
-  # end
-
-  # def logs_this_week
-  #   current_user.logs.within(Time.now.in_time_zone(TIMEZONE).beginning_of_week, Time.now.in_time_zone(TIMEZONE).end_of_week).active.latest
-  # end
-
-  # def logs_last_month
-  #   current_user.logs.within(1.month.ago.in_time_zone(TIMEZONE).beginning_of_month, 1.month.ago.in_time_zone(TIMEZONE).end_of_month).active.latest
-  # end
-
-  # def logs_this_month
-  #   current_user.logs.within(Time.now.in_time_zone(TIMEZONE).beginning_of_month, Time.now.in_time_zone(TIMEZONE).end_of_month).active.latest
-  # end
+  def is_datetime(date)
+    date.methods.include? :strftime
+  end
 end
