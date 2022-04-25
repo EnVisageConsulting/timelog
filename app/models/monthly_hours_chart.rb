@@ -17,6 +17,7 @@ class MonthlyHoursChart
   end
 
   def values
+    first_month = months.first
     @values ||= months.map do |sdate|
       logs = grouped_logs[sdate.strftime("%m %d %Y")]
       logs.present? ? logs.map(&:hours).inject(:+) : 0.0
@@ -26,7 +27,7 @@ class MonthlyHoursChart
   private
 
     def logs
-      @logs ||= user.logs.active.within(start_date, end_date)
+      @logs ||= user.logs.active.within(@start_date, @end_date)
     end
 
     def grouped_logs
@@ -36,10 +37,10 @@ class MonthlyHoursChart
     def months
       return @months if defined?(@months)
       @months = []
-      @months.push start_date
+      @months.push @start_date.beginning_of_month
 
       1.upto(@unit_amount) do |x|
-        @months.push (start_date.beginning_of_month + x.months).to_time
+        @months.push (@start_date.beginning_of_month + x.months).to_time
       end
 
       @months

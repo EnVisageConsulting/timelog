@@ -26,7 +26,7 @@ class YearlyHoursChart
   private
 
     def logs
-      @logs ||= user.logs.active.within(start_date, end_date)
+      @logs ||= user.logs.active.within(@start_date, @end_date)
     end
 
     def grouped_logs
@@ -36,10 +36,10 @@ class YearlyHoursChart
     def years
       return @years if defined?(@years)
       @years = []
-      @years.push start_date
+      @years.push @start_date.beginning_of_year
 
       1.upto(@unit_amount) do |x|
-        @years.push (start_date.beginning_of_year + x.years).to_time
+        @years.push (@start_date.beginning_of_year + x.years).to_time
       end
 
       @years

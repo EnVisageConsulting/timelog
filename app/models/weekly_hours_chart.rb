@@ -9,8 +9,10 @@ class WeeklyHoursChart
   end
 
   def labels
+    first_week = weeks.first
     @labels ||= weeks.map { |sdate| [sdate, sdate.end_of_week] }
     @labels.map do |sdate, edate|
+      sdate = @start_date if first_week == sdate
       label = readable_date_range(sdate, edate)
       label = label.sub(/, \d{4}\z/, '')
       label
@@ -27,7 +29,7 @@ class WeeklyHoursChart
   private
 
     def logs
-      @logs ||= user.logs.active.within(start_date, end_date)
+      @logs ||= user.logs.active.within(@start_date, @end_date)
     end
 
     def grouped_logs
@@ -37,10 +39,10 @@ class WeeklyHoursChart
     def weeks
       return @weeks if defined?(@weeks)
       @weeks = []
-      @weeks.push start_date
+      @weeks.push @start_date.beginning_of_week
 
       1.upto(@unit_amount) do |x|
-        @weeks.push (start_date.beginning_of_week + x.weeks).to_time
+        @weeks.push (@start_date.beginning_of_week + x.weeks).to_time
       end
 
       @weeks

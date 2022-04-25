@@ -23,7 +23,7 @@ class DailyHoursChart
   private
 
     def logs
-      @logs ||= user.logs.active.within(start_date, end_date)
+      @logs ||= user.logs.active.within(@start_date, @end_date)
     end
 
     def grouped_logs

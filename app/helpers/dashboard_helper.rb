@@ -26,15 +26,15 @@ module DashboardHelper
       @chart ||= DailyHoursChart.new(current_user, unit_amount, start_date, end_date, "Date Range")
     elsif unit_amount < 122
       unit_type = "Weeks"
-      unit_amount /= 7
+      unit_amount = ((unit_amount - 1) / 7.to_f).ceil
       @chart ||= WeeklyHoursChart.new(current_user, unit_amount, start_date, end_date)
     elsif unit_amount < 730
       unit_type = "Months"
-      unit_amount /= 30
+      unit_amount = (((end_date.strftime("%Y").to_i - start_date.strftime("%Y").to_i) * 12) + end_date.strftime("%m").to_i) - start_date.strftime("%m").to_i
       @chart ||= MonthlyHoursChart.new(current_user, unit_amount, start_date, end_date)
     else
       unit_type = "Years"
-      unit_amount /= 365
+      unit_amount = end_date.strftime("%Y").to_i - start_date.strftime("%Y").to_i
       @chart ||= YearlyHoursChart.new(current_user, unit_amount, start_date, end_date)
     end
   end
