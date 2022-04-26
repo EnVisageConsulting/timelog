@@ -1,21 +1,36 @@
+<% chart = nil %>
+<% display_numerical = nil %>
+<% if (current_user.unit_amount.present? && current_user.unit_type.present?) %>
+  <% chart = numerical_hours_chart(current_user.unit_amount, current_user.unit_type) %>
+  <% display_numerical = true %>
+<% elsif (current_user.start_date.present? && current_user.end_date.present?) %>
+  <% chart = date_range_hours_chart(current_user.start_date, current_user.end_date.end_of_day.to_time) %>
+  <% display_numerical = false %>
+<% else %>
+  <% chart = numerical_hours_chart(5, "Days") %>
+  <% display_numerical = true %>
+<% end %>
+
+<% chart_labels = chart.labels.join("|")
+   chart_values = chart.values.join("|") %>
+
 <div class="row show-for-medium">
-  <% chart = nil %>
+  <div class="columns text-center">
+    <div class="callout primary dashboard-hours-div">
+      <div id="day_hours_count" class="dashboard-today-count">
+        <h5>Today: <strong class="stat monospaced primary-text" data-hours="<%= current_day_hours %>"></strong></h5>
+      </div>
+      <div id="week_hours_count" class="dashboard-this-week-count">
+        <h5>This Week: <strong class="stat monospaced primary-text" data-hours="<%= current_week_hours %>"></strong></h5>
+      </div>
+      <div id="chart_total_hours" class="dashboard-chart-total-hours">
+        <h5>Chart Hours: <strong class="stat monospaced primary-text" data-hours="<%= chart_total_hours(chart.values) %>"></strong></h5>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <% display_numerical = nil %>
-  <% if (current_user.unit_amount.present? && current_user.unit_type.present?) %>
-    <% chart = numerical_hours_chart(current_user.unit_amount, current_user.unit_type) %>
-    <% display_numerical = true %>
-  <% elsif (current_user.start_date.present? && current_user.end_date.present?) %>
-    <% chart = date_range_hours_chart(current_user.start_date, current_user.end_date.end_of_day.to_time) %>
-    <% display_numerical = false %>
-  <% else %>
-    <% chart = numerical_hours_chart(5, "Days") %>
-    <% display_numerical = true %>
-  <% end %>
-
-  <% chart_labels = chart.labels.join("|")
-     chart_values = chart.values.join("|") %>
-
+<div class="row show-for-medium">
   <div class="columns small-9">
     <canvas id="hours-chart"
             style="margin-bottom: 1rem"

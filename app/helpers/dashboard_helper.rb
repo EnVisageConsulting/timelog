@@ -30,13 +30,18 @@ module DashboardHelper
       @chart ||= WeeklyHoursChart.new(current_user, unit_amount, start_date, end_date)
     elsif unit_amount < 730
       unit_type = "Months"
-      unit_amount = (((end_date.strftime("%Y").to_i - start_date.strftime("%Y").to_i) * 12) + end_date.strftime("%m").to_i) - start_date.strftime("%m").to_i
+      unit_amount = (((end_date.year - start_date.year) * 12) + end_date.month) - start_date.month
       @chart ||= MonthlyHoursChart.new(current_user, unit_amount, start_date, end_date)
     else
       unit_type = "Years"
-      unit_amount = end_date.strftime("%Y").to_i - start_date.strftime("%Y").to_i
+      unit_amount = end_date.year - start_date.year
       @chart ||= YearlyHoursChart.new(current_user, unit_amount, start_date, end_date)
     end
+  end
+
+  def chart_total_hours(values)
+    hours = values.inject(0, :+) || 0
+    strip_insignificant_zeros hours
   end
 
   def current_week_hours

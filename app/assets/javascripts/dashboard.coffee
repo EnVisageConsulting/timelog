@@ -1,15 +1,6 @@
 class Dashboard
-  dayHoursCount: ->
-    stat     = $("#day_hours_count").find(".stat")[ 0 ]
-    endVal   = parseFloat stat.dataset.hours
-    startVal = 0
-    decimals = if endVal > 0 then 1 else 0
-
-    numAnim = new CountUp stat, startVal, endVal, decimals
-    numAnim.start()
-
-  weekHoursCount: ->
-    stat     = $("#week_hours_count").find(".stat")[ 0 ]
+  hoursCounter: (id) ->
+    stat     = $("##{id}").find(".stat")[ 0 ]
     endVal   = parseFloat stat.dataset.hours
     startVal = 0
     decimals = if endVal > 0 then 1 else 0
@@ -105,8 +96,9 @@ class Dashboard
 ready= ->
   dashboard = new Dashboard
   dashboard.generateHoursChart()
-  dashboard.dayHoursCount()
-  dashboard.weekHoursCount()
+  dashboard.hoursCounter("day_hours_count")
+  dashboard.hoursCounter("week_hours_count")
+  dashboard.hoursCounter("chart_total_hours")
 
   if $('#numerical-filter').is(':visible')
     $('#date-range-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'

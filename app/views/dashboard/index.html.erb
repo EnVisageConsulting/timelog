@@ -26,20 +26,6 @@
 </div>
 
 <div class="row show-for-medium">
-  <div class="columns text-center">
-    <div class="callout primary dashboard-hours-div">
-      <div id="day_hours_count" class="dashboard-today-count">
-        <h5>Today: <strong class="stat monospaced primary-text" data-hours="<%= current_day_hours %>"></strong></h5>
-      </div>
-      <div class="text-center <%= hours_completed_class %>"><h5>Hours Completed</h5></div>
-      <div id="week_hours_count" class="dashboard-this-week-count">
-        <h5>This Week: <strong class="stat monospaced primary-text" data-hours="<%= current_week_hours %>"></strong></h5>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row show-for-medium">
   <%= render "hours_chart", dashboard: @dashboard %>
 </div>
 
