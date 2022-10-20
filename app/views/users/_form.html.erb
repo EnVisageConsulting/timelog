@@ -1,11 +1,25 @@
-<%= form_for @user do |f| %>
+<%= form_for @user, html: {class: "user-form"} do |f| %>
   <%= form_errors @user %>
 
   <% if current_user.admin? %>
     <div class="row">
       <div class="columns">
         <%= f.label :role, "User Type" %>
-        <%= f.select :role, options_for_select(User.roles.keys, @user.role), prompt: "Please select one" %>
+        <%= f.select :role, options_for_select(User.roles.keys.map { |r| [r.titleize, r] }, @user.role), prompt: "Please select one" %>
+      </div>
+    </div>
+
+    <div class="row" style="display: none;">
+      <div class="columns">
+        <%= f.label :partner_project_ids, "Partner Projects" %>
+        <%= f.select :partner_project_ids, partner_project_options_for(@user), {}, multiple: true %>
+      </div>
+    </div>
+
+    <div class="row" style="display: none;">
+      <div class="columns">
+        <%= f.label :partner_tag_ids, "Partner Tags" %>
+        <%= f.select :partner_tag_ids, partner_tag_options_for(@user), {}, multiple: true %>
       </div>
     </div>
   <% end %>

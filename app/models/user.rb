@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:employee, :admin]
+  enum role: [:employee, :admin, :partner]
 
   has_secure_password validations: false
 
@@ -11,7 +11,10 @@ class User < ApplicationRecord
   # --- Associations --- #
   has_many :logs
   has_many :password_recoveries, dependent: :destroy
-
+  has_many :partner_project_links
+  has_many :partner_projects, through: :partner_project_links, source: :project
+  has_many :partner_tag_links
+  has_many :partner_tags, through: :partner_tag_links, source: :tag
 
   # --- Validations --- #
   validates :first, presence: true
@@ -30,7 +33,7 @@ class User < ApplicationRecord
       message:     'must contain at least one alphabet letter and one number (also allowed: @$!%*#?&_-)',
       allow_blank: true
     }
-
+  validates :partner_projects, presence: {if: :partner?}
 
   # --- Scopes --- #
   scope :activated, -> { where('activated_at IS NOT NULL').order(:last) }

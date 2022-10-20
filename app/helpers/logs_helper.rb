@@ -39,7 +39,17 @@ module LogsHelper
     value
   end
 
-  def project_select_list(project)
-    project&.deactivated ? Project.active + [project] : Project.active
+  def project_select_list(project_log)
+    projects = Project.active
+    projects = projects.where(id: current_user.partner_project_ids) if current_user.partner?
+    projects = projects.to_a << project_log.project if project_log.project.present? # add specifically in case deactivated
+    projects.uniq
+  end
+
+  def tag_select_list(project_log)
+    tags = Tag.active
+    tags = tags.where(id: current_user.partner_tag_ids) if current_user.partner?
+    tags |= project_log.tags if project_log.tags.present? # add specifically in case deactivated
+    tags.uniq
   end
 end

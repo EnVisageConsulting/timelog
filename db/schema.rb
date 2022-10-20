@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_14_145051) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_141934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_145051) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["activated"], name: "index_logs_on_activated"
     t.index ["user_id"], name: "index_logs_on_user_id"
+  end
+
+  create_table "partner_project_links", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "project_id"], name: "index_partner_project_links_on_user_id_and_project_id", unique: true
+  end
+
+  create_table "partner_tag_links", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_partner_tag_links_on_tag_id"
+    t.index ["user_id", "tag_id"], name: "index_partner_tag_links_on_user_id_and_tag_id", unique: true
   end
 
   create_table "password_recoveries", id: :serial, force: :cascade do |t|
@@ -90,4 +107,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_145051) do
     t.datetime "end_date"
   end
 
+  add_foreign_key "partner_project_links", "projects"
+  add_foreign_key "partner_project_links", "users"
+  add_foreign_key "partner_tag_links", "tags"
+  add_foreign_key "partner_tag_links", "users"
 end

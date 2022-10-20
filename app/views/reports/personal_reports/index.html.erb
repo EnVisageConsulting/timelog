@@ -103,7 +103,7 @@
           <thead>
             <tr>
               <% month_hours = {} %>
-              <th class="text-left">Employee</th>
+              <th class="text-left"><%= current_user.partner? ? 'Partner' : 'Employee' %></th>
               <% months = get_months(@personal_report.start_date, @personal_report.end_date) %>
               <% months.each_with_index do |m, i| %>
                 <% asterisk = i == 0 || i == months.length - 1 ? "*" : "" %>

@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  subject { FactoryBot.create :user }
+
   describe "Associations" do
     it { is_expected.to have_many :logs }
     it { is_expected.to have_many :password_recoveries }
   end
 
   describe "Validations" do
-    subject { FactoryBot.create :user }
     it { is_expected.to validate_presence_of :first }
     it { is_expected.to validate_presence_of :last }
     it { is_expected.to validate_presence_of :role }
@@ -22,6 +23,13 @@ RSpec.describe User, type: :model do
     it { is_expected.to allow_value("Pass10Word").for(:password) }
     it { is_expected.to_not allow_value("password").for(:password) }
     it { is_expected.to_not allow_value("10000000").for(:password) }
+    it { is_expected.to_not validate_presence_of(:partner_projects) }
+
+    context "for partner user" do
+      subject { FactoryBot.create :partner_user }
+
+      it { is_expected.to validate_presence_of(:partner_projects) }
+    end
   end
 
   describe "Class Methods" do

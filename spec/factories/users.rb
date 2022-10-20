@@ -28,9 +28,15 @@ FactoryBot.define do
   end
 
   factory :admin_user, parent: :active_user do
-    first {"Admin"}
-    last {"User"}
-    role {1}
+    first { "Admin" }
+    last { "User" }
+    role { :admin }
+  end
+
+  factory :partner_user, parent: :active_user do
+    first { "Partner" }
+    role { :partner }
+    partner_projects { [create(:project)] }
   end
 
   factory :deactivated_user, parent: :active_user do

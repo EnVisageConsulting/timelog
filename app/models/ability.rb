@@ -8,10 +8,17 @@ class Ability
     if user
       if user.admin?
         can :manage, :all
-      elsif user.employee?
+      else
         can [:read, :update], User, id: user.id
         can :manage, Log, user_id: user.id
-        can :read, Project
+
+        if user.employee?
+          can :read, Project
+          can :read, Tag
+        elsif user.partner?
+          can :read, Project, id: user.partner_project_ids
+          can :read, Tag, id: user.partner_tag_ids
+        end
       end
     end
     #
