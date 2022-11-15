@@ -85,8 +85,12 @@ class User < ApplicationRecord
     save
   end
 
+  def activated?
+    activated_at?
+  end
+
   def active?
-    self.activated_at.present? && self.deactivated_at.nil?
+    activated? && self.deactivated_at.nil?
   end
 
   def update_password(password_hash, current_user)

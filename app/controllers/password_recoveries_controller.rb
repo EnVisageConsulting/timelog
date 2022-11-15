@@ -36,6 +36,7 @@ class PasswordRecoveriesController < ApplicationController
         format.html { render :edit }
       elsif @user.update(user_params)
         @password_recovery.expire!
+        @user.activate! unless @user.activated?
 
         format.html { redirect_to login_path, notice: "Successfully updated password!" }
       else
