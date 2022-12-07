@@ -244,7 +244,7 @@ RSpec.describe Log, type: :model do
       end
 
       it "returns date range (as string) if log spans multiple days" do
-        middle   = Time.now.in_time_zone(Time.zone.name).beginning_of_day
+        middle   = Time.now.beginning_of_day
         start_at = middle + 5.minutes
         end_at   = middle - 5.minutes
 
