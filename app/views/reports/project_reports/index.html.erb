@@ -1,12 +1,14 @@
 <%= back_link "Run Personal Report", new_reports_personal_report_path, icon: "line-chart" %>
 <%= back_link "Run Comprehensive Report", new_reports_comprehensive_report_path, icon: "line-chart" %>
 
-<div class="row">
-  <div class="columns">
-    <img width="150px;" src="<%= image_url("EnVisage_Logo.png") %>">
-    <p style="padding-left: 2px; margin-top: 5px; font-size: .8em">EnVisage Consulting, Inc.</p>
+<% unless current_user.partner? %>
+  <div class="row">
+    <div class="columns">
+      <%= image_tag "EnVisage_Logo.png", width: "150px" %>
+      <p style="padding-left: 2px; margin-top: 5px; font-size: .8em">EnVisage Consulting, Inc.</p>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="row">
   <div class="columns">

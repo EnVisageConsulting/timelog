@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="columns">
-      <%= f.label :user_ids, "Employees" %>
+      <%= f.label :user_ids, "Team Members" %>
       <%= f.select :user_ids, options_for_select(@users.map {|u| [u.deactivated_name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report]&.dig(:user_ids)), {}, {multiple: true, class: "multiselect multiselect-users"} %>
       <% if current_user.admin? %>
         <a id="select-active-users">Select All Active</a> | <%= link_to ((@include_deactivated_users ? "Ex" : "In")+"clude Deactivated"), deactivated_report_params(@personal_report, "deactivated_users", @include_deactivated_users) %>
