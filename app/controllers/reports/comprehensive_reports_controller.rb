@@ -4,7 +4,7 @@ class Reports::ComprehensiveReportsController < ApplicationController
   require 'csv_export/matrix_report_csv_export'
 
   def new
-    @comprehensive_report = Reports::ComprehensiveReport.new
+    @comprehensive_report = Reports::ComprehensiveReport.new(comprehensive_report_params)
     load_projects_and_users
   end
 
@@ -55,14 +55,13 @@ class Reports::ComprehensiveReportsController < ApplicationController
   private
 
     def comprehensive_report_params
-      return redirect_to(new_reports_comprehensive_report_path) if params[:reports_comprehensive_report].nil?
-      params.require(:reports_comprehensive_report).permit(:start_date, :end_date, :deactivated_projects, :deactivated_users, project_ids: [], user_ids: [])
+      return {} if params[:reports_comprehensive_report].nil?
+      params.require(:reports_comprehensive_report).permit(:start_date, :end_date, :deactivated_projects, :deactivated_users, :partner_users, project_ids: [], user_ids: [])
     end
 
     def load_projects_and_users
-      @include_deactivated_projects = params[:reports_comprehensive_report]&.dig(:deactivated_projects) == "true" || false
-      @projects = @include_deactivated_projects ? Project.alphabetized : Project.active
-      @include_deactivated_users = params[:reports_comprehensive_report]&.dig(:deactivated_users) == "true" || false
-      @users = @include_deactivated_users ? User.alphabetized : User.undeactivated
+      @projects = ToBoolean(@comprehensive_report.deactivated_projects) ? Project.alphabetized : Project.active
+      @users = ToBoolean(@comprehensive_report.deactivated_users) ? User.alphabetized : User.undeactivated
+      @users = @users.where.not(role: :partner) unless ToBoolean(@comprehensive_report.partner_users)
     end
 end

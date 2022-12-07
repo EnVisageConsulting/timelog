@@ -6,7 +6,7 @@ class Reports::ComprehensiveReport < TablelessModel
   # validates :start_at, presence: true
   # validates :end_at, presence: true
 
-  attr_accessor :projects, :users, :start_at, :end_at, :deactivated_users, :deactivated_projects
+  attr_accessor :projects, :users, :start_at, :end_at, :deactivated_users, :deactivated_projects, :partner_users
 
   def initialize(attributes = {})
     set_default_attrs

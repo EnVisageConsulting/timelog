@@ -1,15 +1,6 @@
 <%= back_link "Run Personal Report", new_reports_personal_report_path, icon: "line-chart" %>
 <%= back_link "Run Project Report", new_reports_project_report_path, icon: "line-chart" %>
 
-<% unless current_user.partner? %>
-  <div class="row">
-    <div class="columns">
-      <%= image_tag "EnVisage_Logo.png", width: "150px" %>
-      <p style="padding-left: 2px; margin-top: 5px; font-size: .8em">EnVisage Consulting, Inc.</p>
-    </div>
-  </div>
-<% end %>
-
 <div class="row">
   <div class="columns">
     <h2>Comprehensive Report</h2>

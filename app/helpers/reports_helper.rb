@@ -25,14 +25,16 @@ module ReportsHelper
     dates.map{ |d| d.strftime("%m/%d/%Y")}
   end
 
-  def deactivated_report_params(report, obj, include_deactivated)
-    report = report.class.to_s.gsub("Reports::", "reports_").underscore
-    if params[report.to_sym]&.dig(obj.to_sym).present?
-      query_string = request.query_string.gsub("#{obj}%5D=#{include_deactivated}", "#{obj}%5D=#{!include_deactivated}")
-      "?#{query_string}"
-    else
-      "?#{request.query_string}&#{report}%5B#{obj}%5D=#{!include_deactivated}"
-    end
+  def report_toggle_link(form_obj, name)
+    report_name = form_obj.object.model_name.param_key
+    report_params = params[report_name]&.permit! || {}
+
+    value = ToBoolean(report_params[name])
+    text = "#{value ? 'Ex' : 'In'}clude " + name.to_s.titleize
+
+    url = url_for({controller: params[:controller], action: params[:action]}.merge(report_name => report_params.merge(name => !value)))
+
+    link_to(text, url) + form_obj.hidden_field(name, value: value)
   end
 
   class InvalidDateRange < StandardError; end

@@ -3,7 +3,7 @@ class Reports::ProjectReportsController < ApplicationController
   require 'csv_export/project_report_csv_export'
 
   def new
-    @project_report = Reports::ProjectReport.new
+    @project_report = Reports::ProjectReport.new(project_report_params)
     load_projects
   end
 
@@ -47,12 +47,11 @@ class Reports::ProjectReportsController < ApplicationController
   private
 
     def project_report_params
-      return redirect_to(new_reports_project_report_path) if params[:reports_project_report].nil?
-      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, project_ids: [], project_tag_ids: [])
+      return {} if params[:reports_project_report].nil?
+      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, :include_partners, project_ids: [], project_tag_ids: [])
     end
 
     def load_projects
-      @include_deactivated_projects = params[:reports_project_report]&.dig(:deactivated_projects) == "true" || false
-      @projects = @include_deactivated_projects ? Project.alphabetized : Project.active
+      @projects = ToBoolean(@project_report.deactivated_projects) ? Project.alphabetized : Project.active
     end
 end

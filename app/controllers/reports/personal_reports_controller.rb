@@ -3,7 +3,7 @@ class Reports::PersonalReportsController < ApplicationController
   require 'csv_export/personal_report_csv_export'
 
   def new
-    @personal_report = Reports::PersonalReport.new
+    @personal_report = Reports::PersonalReport.new(personal_report_params)
     load_accessible_users
   end
 
@@ -34,12 +34,18 @@ class Reports::PersonalReportsController < ApplicationController
   private
 
     def personal_report_params
-      return redirect_to(new_reports_personal_report_path) if params[:reports_personal_report].nil?
-      params.require(:reports_personal_report).permit(:start_date, :end_date, :sort_date, :deactivated_users, user_ids: [])
+      return {} if params[:reports_personal_report].nil?
+      params.require(:reports_personal_report).permit(:start_date, :end_date, :sort_date, :deactivated_users, :partner_users, user_ids: [])
     end
 
     def load_accessible_users
-      @include_deactivated_users = params[:reports_personal_report]&.dig(:deactivated_users) == "true" || false
-      @users = current_user.admin? ? (@include_deactivated_users ? User.alphabetized : User.undeactivated) : [current_user]
+      @users =
+        if current_user.admin?
+          list = ToBoolean(@personal_report.deactivated_users) ? User.alphabetized : User.undeactivated
+          list = list.where.not(role: :partner) unless ToBoolean(@personal_report.partner_users)
+          list
+        else
+          [current_user]
+        end
     end
 end
