@@ -25,5 +25,6 @@ module Timelog
     config.autoload_paths << "#{Rails.root}/lib/modules"
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.beginning_of_week = :sunday
+    config.timezone = "Central Time (US & Canada)"
   end
 end
