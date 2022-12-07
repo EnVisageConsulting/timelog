@@ -62,8 +62,15 @@ class User < ApplicationRecord
     "#{self.first} #{self.last}"
   end
 
-  def deactivated_name
-    name + (self.active? ? "" : " *")
+  # def deactivated_name
+  #   name + (self.active? ? "" : " *")
+  # end
+
+  def status_name
+    n = name
+    n += " *" unless self.active?
+    n += " ᵖ" if self.partner?
+    n
   end
 
   def reverse_name

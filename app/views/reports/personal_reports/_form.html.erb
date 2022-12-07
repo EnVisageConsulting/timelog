@@ -4,7 +4,7 @@
   <div class="row">
     <div class="columns">
       <%= f.label :user_ids, "Team Members" %>
-      <%= f.select :user_ids, options_for_select(@users.map {|u| [u.deactivated_name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report]&.dig(:user_ids)), {}, {multiple: true, class: "multiselect multiselect-users"} %>
+      <%= f.select :user_ids, options_for_select(@users.map {|u| [u.status_name, u.id, {data: {active: u.active?}}]}, params[:reports_personal_report]&.dig(:user_ids)), {}, {multiple: true, class: "multiselect multiselect-users"} %>
       <% if current_user.admin? %>
         <a id="select-active-users">Select All Active</a> | <%= report_toggle_link(f, :deactivated_users) %> | <%= report_toggle_link(f, :partner_users) %><br><br>
       <% end %>
