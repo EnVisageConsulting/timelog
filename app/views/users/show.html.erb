@@ -10,7 +10,7 @@
         <div class="row">
           <div class="columns medium-4">
             <%= label_tag :project_ids, "Projects" %>
-            <%= select_tag :project_ids, options_from_collection_for_select(Project.active, :id, :name, params[:project_ids]), {multiple: true, class: "multiselect"} %>
+            <%= select_tag :project_ids, options_from_collection_for_select(accessible_projects, :id, :name, params[:project_ids]), {multiple: true, class: "multiselect"} %>
           </div>
           <div class="columns medium-3 small-6">
             <%= label_tag :start_date, "Start Date" %>

@@ -40,10 +40,15 @@ module LogsHelper
   end
 
   def project_select_list(project_log)
-    projects = Project.active
-    projects = projects.where(id: current_user.partner_project_ids) if current_user.partner?
+    projects = accessible_projects
     projects = projects.to_a << project_log.project if project_log.project.present? # add specifically in case deactivated
     projects.uniq
+  end
+
+  def accessible_projects
+    projects = Project.active
+    projects = projects.where(id: current_user.partner_project_ids) if current_user.partner?
+    projects
   end
 
   def tag_select_list(project_log)
