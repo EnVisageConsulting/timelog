@@ -61,7 +61,7 @@
                       <td><%= project_log.project.name %></td>
                       <td><%= project_log.project_tags.map(&:tag).pluck(:name).to_sentence %></td>
                       <td><%= simple_format project_log.description %></td>
-                      <td class="text-right"><%= link_to fa_icon("search"), log_path(project_log.log) %></td>
+                      <td class="text-right"><%= link_to fa_icon("search"), log_path(project_log.log), target: :blank %></td>
                     </tr>
                   <% end %>
                 <% end %>
