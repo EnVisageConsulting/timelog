@@ -1,15 +1,15 @@
 class Reports::ProjectReportsController < ApplicationController
-  before_action :require_admin
+  before_action :require_admin_or_partner
   require 'csv_export/project_report_csv_export'
 
   def new
     @project_report = Reports::ProjectReport.new(project_report_params)
-    load_projects
+    load_accessible_projects_and_tags
   end
 
   def create
     @project_report = Reports::ProjectReport.new(project_report_params)
-    load_projects
+    load_accessible_projects_and_tags
 
     respond_to do |format|
       if @project_report.valid?
@@ -22,7 +22,7 @@ class Reports::ProjectReportsController < ApplicationController
 
   def index
     @project_report = Reports::ProjectReport.new(project_report_params)
-    load_projects
+    load_accessible_projects_and_tags
     @date =
     if @project_report.start_at.present? && @project_report.end_at.present?
       "Period of: #{@project_report.start_date} - #{@project_report.end_date}"
@@ -51,7 +51,19 @@ class Reports::ProjectReportsController < ApplicationController
       params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, :include_partners, project_ids: [], project_tag_ids: [])
     end
 
-    def load_projects
-      @projects = ToBoolean(@project_report.deactivated_projects) ? Project.alphabetized : Project.active
+    def load_accessible_projects_and_tags
+      @projects =
+        if current_user.admin?
+          ToBoolean(@project_report.deactivated_projects) ? Project.alphabetized : Project.active
+        elsif current_user.partner?
+          ToBoolean(@project_report.deactivated_projects) ? current_user.partner_projects.alphabetized : current_user.partner_projects.active
+        end
+
+      @tags =
+        if current_user.admin?
+          Tag.alphabetized
+        else
+          current_user.partner_tags
+        end
     end
 end

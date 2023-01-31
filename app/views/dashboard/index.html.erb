@@ -7,6 +7,8 @@
           <li><%= link_to fa_icon("plus-circle", text: "Add User"), new_user_path %></li>
           <li><%= link_to fa_icon("group", text: "Manage Users"), users_path %></li>
           <li><%= link_to fa_icon("book", text: "View Projects"), projects_path %></li>
+        <% end %>
+        <% if current_user.admin? || current_user.partner? %>
           <li><%= link_to fa_icon("line-chart", text: "Reports"), reports_path %></li>
         <% end %>
       </ul>

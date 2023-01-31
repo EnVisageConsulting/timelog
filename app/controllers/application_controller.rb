@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
     no_access if !current_user.try(:admin?)
   end
 
+   def require_admin_or_partner
+    no_access unless current_user&.admin? || current_user&.partner?
+   end
+
   def not_found
     respond_to do |format|
       format.json { head :not_found }
