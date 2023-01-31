@@ -38,7 +38,7 @@ class Reports::ComprehensiveReportsController < ApplicationController
 
   def csv
     comprehensive_report = Reports::ComprehensiveReport.new(start_date: params[:start_date], end_date: params[:end_date],
-      projects: Project.find(params[:projects].split("/").map(&:to_i)), users: User.find(params[:users].split("/").map(&:to_i))
+      projects: Project.find(params[:projects].split("/").map(&:to_i)), users: User.alphabetized.find(params[:users].split("/").map(&:to_i))
     )
     csv = ComprehensiveReportCsvExport.new(comprehensive_report)
     send_data csv.render, filename: "Comprehensive Report - #{Date.today}.csv"
@@ -46,7 +46,7 @@ class Reports::ComprehensiveReportsController < ApplicationController
 
   def csv_matrix
     matrix_report = Reports::ComprehensiveReport.new(start_date: params[:start_date], end_date: params[:end_date],
-      projects: Project.find(params[:projects].split("/").map(&:to_i)), users: User.find(params[:users].split("/").map(&:to_i))
+      projects: Project.find(params[:projects].split("/").map(&:to_i)), users: User.alphabetized.find(params[:users].split("/").map(&:to_i))
     )
     csv = MatrixReportCsvExport.new(matrix_report)
     send_data csv.render, filename: "Matrix Report - #{Date.today}.csv"
