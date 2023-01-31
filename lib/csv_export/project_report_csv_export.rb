@@ -14,7 +14,7 @@ class ProjectReportCsvExport < ApplicationCsvExport
     rows << []
 
     @report.projects.each do |project|
-      total = 0;
+      total = 0
       rows << [project.name] if @report.projects.count > 1
       rows << headers
 

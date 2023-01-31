@@ -18,7 +18,7 @@
     <ul class="tabs-nav">
       <li class="table-title active-tab" id="full-view-li" style="margin-left: 0;"><a id="full-view-button">Full View</a></li>
       <li class="table-title" id="summary-view-li"><a id="summary-view-button">Summary View</a></li>
-      <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_project_reports_csv_path(start_date: @project_report.start_date, end_date: @project_report.end_date, projects: @project_report.projects, project_tags: @project_report.project_tags), class: "button", style: "float: right;") %>
+      <%= link_to(fa_icon("download", text: "Export CSV Report"), reports_project_reports_csv_path(include_partners: @project_report.include_partners, start_date: @project_report.start_date, end_date: @project_report.end_date, projects: @project_report.projects, project_tags: @project_report.project_tags), class: "button", style: "float: right;") %>
 
     </ul>
   </div>

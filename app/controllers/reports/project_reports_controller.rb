@@ -39,6 +39,7 @@ class Reports::ProjectReportsController < ApplicationController
     project_report = Reports::ProjectReport.new(start_date: params[:start_date], end_date: params[:end_date],
       projects: Project.find(params[:projects].split("/").map(&:to_i)),
       project_tags: params[:project_tags] && Tag.find(params[:project_tags]&.join("/")&.split("/")&.map(&:to_i)),
+      include_partners: params[:include_partners],
       user_ids: current_user.admin? ? User.active.ids : [current_user.id]
     )
     csv = ProjectReportCsvExport.new(project_report)
