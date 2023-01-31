@@ -90,9 +90,9 @@ class Reports::ProjectReport < TablelessModel
 
   def grouped_project_logs(project)
     if sort_date == "desc"
-      project_logs(project).reverse.group_by { |project_log| project_log.log.user }
+      project_logs(project).reverse.sort_by { |project_log| project_log.log.user.last }.group_by { |project_log| project_log.log.user }
     else
-      project_logs(project).group_by { |project_log| project_log.log.user }
+      project_logs(project).sort_by { |project_log| project_log.log.user.last }.group_by { |project_log| project_log.log.user }
     end
   end
 
