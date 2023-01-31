@@ -38,7 +38,8 @@ class Reports::ProjectReportsController < ApplicationController
   def csv
     project_report = Reports::ProjectReport.new(start_date: params[:start_date], end_date: params[:end_date],
       projects: Project.find(params[:projects].split("/").map(&:to_i)),
-      project_tags: params[:project_tags] && Tag.find(params[:project_tags]&.join("/")&.split("/")&.map(&:to_i))
+      project_tags: params[:project_tags] && Tag.find(params[:project_tags]&.join("/")&.split("/")&.map(&:to_i)),
+      user_ids: current_user.admin? ? User.active.ids : [current_user.id]
     )
     csv = ProjectReportCsvExport.new(project_report)
     send_data csv.render, filename: "Project Report - #{Date.today}.csv"
@@ -48,7 +49,8 @@ class Reports::ProjectReportsController < ApplicationController
 
     def project_report_params
       return {} if params[:reports_project_report].nil?
-      params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, :include_partners, project_ids: [], project_tag_ids: [])
+      report_params = params.require(:reports_project_report).permit(:start_date, :end_date, :sort_date, :deactivated_projects, :include_partners, project_ids: [], project_tag_ids: [])
+      report_params.merge(user_ids: current_user.admin? ? User.active.ids : [current_user.id])
     end
 
     def load_accessible_projects_and_tags

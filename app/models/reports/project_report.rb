@@ -5,15 +5,24 @@ class Reports::ProjectReport < TablelessModel
   # validates :start_at, presence: true
   # validates :end_at, presence: true
 
-  attr_accessor :projects, :project_tags, :start_at, :end_at, :sort_date, :deactivated_projects, :include_partners
+  attr_accessor :projects, :users, :project_tags, :start_at, :end_at, :sort_date, :deactivated_projects, :include_partners
 
   def initialize(attributes = {})
     set_default_attrs
     super attributes
   end
 
+  def user_ids
+    self.users&.map(&:id)
+  end
+
+  def user_ids= value
+    value.reject!(&:blank?)
+    self.users = User.find(value)
+  end
+
   def project_ids
-    self.projects&.map{|p| p.id}
+    self.projects&.map(&:id)
   end
 
   def project_ids= value
@@ -73,7 +82,8 @@ class Reports::ProjectReport < TablelessModel
     project_tags_ids = project_tags&.map(&:id)
 
     project_logs = ProjectLog.joins(:log).where(log_id: log_ids).where(project: project).where(non_billable: false).order(:start_at).includes(:log => :user)
-    project_logs = project_logs.joins(log: :user).where.not(users: {role: :partner}) unless ToBoolean(include_partners)
+    project_logs = project_logs.joins(log: :user).where(users: {id: user_ids})
+    project_logs = project_logs.where.not(users: {role: :partner}) unless ToBoolean(include_partners)
     project_logs = project_logs.reject{|proj_log| proj_log.project_tags.map(&:tag_id).flat_map{|tag_id| project_tags_ids.include?(tag_id)}.all?(false)} if project_tags.present?
     project_logs
   end
