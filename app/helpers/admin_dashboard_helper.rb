@@ -83,12 +83,13 @@ module AdminDashboardHelper
 
 
   def get_hours(obj, sdate, edate)
+    accessible_user_ids = current_user.admin? ? User.pluck(:id) : [current_user.id]
     hours =
     case obj
       when User
-        Log.includes(:user, :project_logs).where('start_at >= ? AND end_at <= ?', sdate.to_datetime, edate.to_datetime.end_of_day)&.reject{|l| l.user_id != obj.id}&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
+        Log.includes(:user, :project_logs).where(user_id: accessible_user_ids).where('start_at >= ? AND end_at <= ?', sdate.to_datetime, edate.to_datetime.end_of_day)&.reject { |l| l.user_id != obj.id }&.flat_map(&:project_logs)&.map(&:hours)&.inject(:+) || 0
       when Project
-        Log.includes(:project_logs).where('start_at >= ? AND end_at <= ?', sdate.to_datetime, edate.to_datetime.end_of_day)&.flat_map(&:project_logs)&.reject{|pl| pl.project_id != obj.id}&.map(&:hours)&.inject(:+) || 0
+        Log.includes(:project_logs).where(user_id: accessible_user_ids).where('start_at >= ? AND end_at <= ?', sdate.to_datetime, edate.to_datetime.end_of_day)&.flat_map(&:project_logs)&.reject { |pl| pl.project_id != obj.id }&.map(&:hours)&.inject(:+) || 0
       else
         raise InvalidObject
     end
