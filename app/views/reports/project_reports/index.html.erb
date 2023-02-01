@@ -1,5 +1,7 @@
 <%= back_link "Run Personal Report", new_reports_personal_report_path, icon: "line-chart" %>
-<%= back_link "Run Comprehensive Report", new_reports_comprehensive_report_path, icon: "line-chart" %>
+<% if current_user.admin? %>
+  <%= back_link "Run Comprehensive Report", new_reports_comprehensive_report_path, icon: "line-chart" %>
+<% end %>
 
 <div class="row">
   <div class="columns">

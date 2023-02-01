@@ -1,5 +1,5 @@
 class Reports::ComprehensiveReportsController < ApplicationController
-  before_action :require_admin_or_partner
+  before_action :require_admin
   require 'csv_export/comprehensive_report_csv_export'
   require 'csv_export/matrix_report_csv_export'
 
