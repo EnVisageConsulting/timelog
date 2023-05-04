@@ -65,7 +65,7 @@ class Reports::ProjectReport < TablelessModel
     self.end_at = value
   end
 
-  def project_logs(project, reload=false)
+  def project_logs(project)
     return ProjectLog.none if projects.blank?
 
     log_ids =
@@ -80,7 +80,6 @@ class Reports::ProjectReport < TablelessModel
     end
 
     project_tags_ids = project_tags&.map(&:id)
-
     project_logs = ProjectLog.joins(:log).where(log_id: log_ids).where(project: project).where(non_billable: false).order(:start_at).includes(:log => :user)
     project_logs = project_logs.joins(log: :user).where(users: {id: user_ids})
     project_logs = project_logs.where.not(users: {role: :partner}) unless ToBoolean(include_partners)
