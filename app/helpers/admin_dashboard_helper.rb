@@ -82,8 +82,14 @@ module AdminDashboardHelper
   class InvalidObject < StandardError; end
 
 
-  def get_hours(obj, sdate, edate)
-    accessible_user_ids = current_user.admin? ? User.pluck(:id) : [current_user.id]
+  def get_hours(obj, sdate, edate, include_partner_hours=false)
+    accessible_user_ids =
+      if current_user.admin?
+        (include_partner_hours ? User : User.where.not(role: :partner)).pluck(:id)
+      else
+        [current_user.id]
+      end
+
     stime = sdate.in_time_zone(TIMEZONE).beginning_of_day
     etime = edate.in_time_zone(TIMEZONE).end_of_day
     hours =
@@ -112,14 +118,14 @@ module AdminDashboardHelper
     months
   end
 
-  def get_month_hours(month, obj, sdate, edate)
+  def get_month_hours(month, obj, sdate, edate, include_partner_hours=false)
     month = Date.strptime(month[0].to_s + "/01/" + month[1].to_s, "%m/%d/%Y")
     sdate = Date.strptime(sdate, "%m/%d/%Y")
     edate = Date.strptime(edate, "%m/%d/%Y")
     start_date = month < sdate ? sdate : month
     end_date = month.end_of_month > edate ? edate : month.end_of_month
 
-    get_hours(obj, start_date, end_date)
+    get_hours(obj, start_date, end_date, include_partner_hours)
   end
 
   def format_hours(hours)
