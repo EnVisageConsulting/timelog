@@ -10,7 +10,7 @@ class DailyHoursChart
   end
 
   def labels
-    @labels ||= days.map { |sdate| sdate.strftime("%a") }
+    @labels ||= days.map { |sdate| [ sdate.strftime('%a %-m-%d') ] }
   end
 
   def values
