@@ -29,8 +29,8 @@ class AdminDashboard
 
 admin_dashboard_ready= ->
   dashboard = new AdminDashboard
-  dashboard.employeeChart("employee_week_chart", "Total Employee Hours by Week")
-  dashboard.employeeChart("employee_month_chart", "Total Employee Hours by Month")
+  dashboard.employeeChart("employee_week_chart", "Total Team Member Hours by Week")
+  dashboard.employeeChart("employee_month_chart", "Total Team Member Hours by Month")
 
 $(document).on 'admin_dashboard_index.load', (e, obj) =>
   admin_dashboard_ready()
