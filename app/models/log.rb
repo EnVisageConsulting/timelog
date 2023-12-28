@@ -30,8 +30,10 @@ class Log < ApplicationRecord
   end
 
   def project_log_allocation
-    return unless project_logs.present?
-    allocation = project_logs.map(&:total_allocation).inject(:+)
+    logs = project_logs.reject(&:marked_for_destruction?)
+    return unless logs.present?
+
+    allocation = logs.map(&:total_allocation).inject(:+)
 
     if end_at.present? && allocation != 1.0
       errors.add(:project_logs, "%s must add up to 100%")
