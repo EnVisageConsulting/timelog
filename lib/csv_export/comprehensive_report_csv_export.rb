@@ -33,7 +33,7 @@ class ComprehensiveReportCsvExport < ApplicationCsvExport
             report_row << project_log.hours_two_decimals
             report_row << project_log.project.name
             report_row << project_log.project_tags.map(&:tag).pluck(:name).to_sentence
-            report_row << project_log.description
+            report_row << strip_invalid_chars(project_log.description)
             rows << report_row
           end
 

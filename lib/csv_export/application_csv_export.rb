@@ -27,7 +27,7 @@ class ApplicationCsvExport
   end
 
   def self.content_type
-    "text/csv"
+    "text/csv; charset=iso-8859-1; header=present"
   end
 
   protected
@@ -44,8 +44,9 @@ class ApplicationCsvExport
     def generate
       # headers = self.class.get_headers
 
-      CSV.generate() do |csv| #headers: headers.present?
+      CSV.generate(nil, encoding: "utf-8") do |csv| #headers: headers.present?
         # csv << headers if headers.present?
+        # raise csv.encoding.inspect
         rows.each { |row| csv << row }
       end
     end
@@ -57,5 +58,32 @@ class ApplicationCsvExport
 
     def self.get_headers
       @headers
+    end
+
+    def strip_invalid_chars(text)
+      text.force_encoding("ASCII")
+
+      text = text.scrub do |char|
+        case char
+        when "\xE2".force_encoding("ASCII")
+          "E2"
+        when "\x80".force_encoding("ASCII")
+          "80"
+        when "\x98".force_encoding("ASCII")
+          "90"
+        when "\x9C".force_encoding("ASCII")
+          "9C"
+        when "\x94".force_encoding("ASCII")
+          "94"
+        else
+          "[?]"
+        end
+      end
+
+      text = text.gsub("E28090", "'")
+      text = text.gsub("E2809C", "\"")
+      text = text.gsub("E28094", "--")
+
+      text
     end
 end
