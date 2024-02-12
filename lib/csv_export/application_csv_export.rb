@@ -75,6 +75,12 @@ class ApplicationCsvExport
           "9C"
         when "\x94".force_encoding("ASCII")
           "94"
+        when "\x99".force_encoding("ASCII")
+          "99"
+        when "\x9D".force_encoding("ASCII")
+          "9D"
+        when "\x93".force_encoding("ASCII")
+          "93"
         else
           "[?]"
         end
@@ -83,6 +89,9 @@ class ApplicationCsvExport
       text = text.gsub("E28090", "'")
       text = text.gsub("E2809C", "\"")
       text = text.gsub("E28094", "--")
+      text = text.gsub("E28099", "'")
+      text = text.gsub("E2809D", '"')
+      text = text.gsub("E28093", "--")
 
       text
     end
