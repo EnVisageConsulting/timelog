@@ -11,4 +11,8 @@ class UserMailer < ApplicationMailer
     attachments.inline["EnVisage_Logo.png"] = File.read("#{Rails.root}/app/assets/images/EnVisage_Logo.png")
     mail(to: @new_user.email, subject: "Activate your account on EnVisage Timelog")
   end
+
+  def test_email(email)
+    mail(to: email, subject: "Test email (IGNORE)")
+  end
 end
