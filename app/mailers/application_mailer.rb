@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'timelog@envisageconsulting.org'
+  default from: 'infotech@envisageconsult.com'
   layout 'mailer'
 end
