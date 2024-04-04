@@ -72,11 +72,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: "ectimelog.herokuapp.com", protocol: "https" }
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.envisageconsulting.org",
-    :port                 => 25,
-    :user_name            => ENV["EMAIL_USERNAME"],
-    :password             => ENV["EMAIL_PASSWORD"],
-    :authentication       => "plain"
+    :address              => "smtp.sendgrid.net",
+    :user_name            => "apikey",
+    :password             => ENV["SENDGRID_API_KEY"],
+    :domain               => "ectimelog.herokuapp.com",
+    :authentication       => "plain",
+    :port                 => 587,
+    :enable_starttls_auto => true
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
