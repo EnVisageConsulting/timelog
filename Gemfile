@@ -63,6 +63,8 @@ gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'
 
+gem "net-pop", github: "ruby/net-pop" # temporary ruby 3.3.3 fix
+
 group :test do
   # command line tool to easily handle events on file system modifications
   gem 'guard'
