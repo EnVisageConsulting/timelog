@@ -70,7 +70,7 @@ class Log < ApplicationRecord
   scope :within,   -> (sdate, edate) { where("(start_at <= ?) AND (end_at >= ?)", edate, sdate) }
 
   # --- Callbacks --- #
-  before_save :set_activation
+  # before_save :set_activation
   before_validation :set_project_log_hours
 
   def set_activation

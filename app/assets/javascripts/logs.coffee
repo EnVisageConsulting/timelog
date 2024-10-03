@@ -1,6 +1,16 @@
 class Log
   logForm: ->
     enableMultiselect({placeholder: "Project Tags"})
+    
+    #Ajax Post to save page
+    form = $("form.autosave")
+    indicator = $(".auto-save-indicator")
+    form.on "change", ":input", ->
+      data = form.serialize()
+      indicator.show()
+      $.post form.attr("action"), data, () ->
+        indicator.hide()
+      , "json"
 
     #load existing project tags
     $(".project-tags").each (id, select) ->

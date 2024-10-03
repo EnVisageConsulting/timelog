@@ -24,23 +24,29 @@ class LogsController < ApplicationController
   end
 
   def update
+    @log.set_activation if request.format == 'html'
+    sleep(5)
     respond_to do |format|
       if @log.update(log_params)
         if params[:commit] == "Save and Start a New Log"
           if load_new_log
             if @log.save
               format.html { redirect_to edit_log_path(@log), notice: "Successfully updated log" }
+              format.json { render json: {status: :ok} }
             end
           else
             format.html { redirect_to @log, alert: "Cannot start a new log until this log is finished" }
+            format.json { render json: {status: :bad_request} }
           end
         else
           format.html { redirect_to @log, notice: "Successfully updated log" }
+          format.json { render json: {status: :ok} }
         end
       else
         @log.project_logs.build if @log.project_logs.blank?
 
         format.html { render :edit }
+        format.json { render json: {status: :unprocessable_entity }}
       end
     end
   end
