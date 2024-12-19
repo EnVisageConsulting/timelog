@@ -64,10 +64,11 @@
 
 <% unless @log.activated? %>
   <div class="row">
-    <div class="columns">
-      <span class="auto-save-indicator" style="float: right; display: none;"> Auto-Saving... </span>
+    <div class="columns" style="position: relative;">
       <%= link_to fa_icon("ban", text: "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
-    </div>
+      <%= link_to "Save Draft for Later", autosave_log_path(@log), class: "autosave_link", method: :post, remote: true, style: "float: right;" %>
+      <span class="auto-save-indicator" style="position: absolute; right: 15px; top: 100%; display: none;"> Auto-Saving... </span>
+      </div>
   </div>
 <% end %>
 

@@ -72,6 +72,20 @@ class LogsController < ApplicationController
 
   end
 
+  def autosave
+    if @log.update(log_params)
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path }
+        format.json { render json: { status: :ok } }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_back fallback_location: root_path }
+        format.json {render json: {status: :unprocessable_entity } }
+      end
+    end
+  end
+
   private
 
     def load_new_log
