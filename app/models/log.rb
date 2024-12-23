@@ -12,7 +12,7 @@ class Log < ApplicationRecord
   # --- Validations --- #
   validates :start_at, presence: true
   validates :end_at, presence: { if: :activated? }
-  validates :project_logs, presence: { if: :end_at? }
+  validates :project_logs, presence: { if: :end_at? } #How should validation be changed, AJAX, JS Request, Logic in Controller?
   validate  :start_at_comes_before_end_at
   validate  :end_at_in_the_past
   validate  :project_log_allocation
