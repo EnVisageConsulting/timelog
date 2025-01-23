@@ -4,8 +4,8 @@ class Log
     
     # Ajax Post to save page
     form = $("form.autosave")
-    indicator = $(".auto-save-indicator")
-    $('.autosave_link').on 'click', (event) ->
+    indicator = $(".save-draft-indicator")
+    $('.save-draft-link').on 'click', (event) ->
       data = form.serialize()
       indicator.show()
       $.post $(this).data('draft-url'), data, () ->

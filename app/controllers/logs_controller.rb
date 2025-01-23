@@ -77,12 +77,10 @@ class LogsController < ApplicationController
 
     if @log.update(log_params)
       respond_to do |format|
-        format.html { redirect_to root_path, notice: "Draft saved for later." }
         format.json { render json: { status: :ok, redirect_url: root_path } }
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_path, notice: "Failed to save draft." }
         format.json { render json: { status: :unprocessable_entity, redirect_url: root_path } }
       end
     end

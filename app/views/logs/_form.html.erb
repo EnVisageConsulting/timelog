@@ -66,8 +66,8 @@
   <div class="row">
     <div class="columns" style="position: relative;">
       <%= link_to fa_icon("ban", text: "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
-      <%= button_tag "Save Draft for Later", class: 'autosave_link', data: { draft_url: save_draft_log_path(@log) }, style: "float: right; color: #fefefe; background-color: #2199e8; padding: 10px 20px; font-size: 0.9rem;", onmouseover: "this.style.backgroundColor='#1a7ec8'", onmouseout: "this.style.backgroundColor='#2199e8'" %>
-      <span class="auto-save-indicator" style="color: green; position: absolute; right: 15px; top: 100%; display: none;"> Changes Saved! </span>
+      <%= button_tag "Save Draft for Later", class: 'save-draft-link save-draft-button', data: { draft_url: save_draft_log_path(@log) }, style: "float: right;" %>
+      <span class="save-draft-indicator" style="color: green; position: absolute; right: 15px; top: 100%; display: none;"> Changes Saved! </span>
     </div>
   </div>
 <% end %>
