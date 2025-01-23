@@ -72,16 +72,18 @@ class LogsController < ApplicationController
 
   end
 
-  def autosave
+  def save_draft
+      @log.skip_activation = true
+
     if @log.update(log_params)
       respond_to do |format|
-        format.html { redirect_back fallback_location: root_path }
-        format.json { render json: { status: :ok } }
+        format.html { redirect_to root_path, notice: "Draft saved for later." }
+        format.json { render json: { status: :ok, redirect_url: root_path } }
       end
     else
       respond_to do |format|
-        format.html { redirect_back fallback_location: root_path }
-        format.json {render json: {status: :unprocessable_entity } }
+        format.html { redirect_to root_path, notice: "Failed to save draft." }
+        format.json { render json: { status: :unprocessable_entity, redirect_url: root_path } }
       end
     end
   end
@@ -113,6 +115,7 @@ class LogsController < ApplicationController
     end
 
     def log_params
+      return {} if params[:log].blank?
       params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy, project_tags: []])
     end
 

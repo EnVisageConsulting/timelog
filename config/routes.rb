@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create]
   resources :password_recoveries, only: [:index, :new, :create, :edit, :update]
   resources :logs, only: [:create, :edit, :update, :show, :destroy] do
-    post :autosave, on: :member
+    patch :save_draft, on: :member
   end
   resources :projects, only: [:index, :new, :create, :edit, :update]
   resources :tags, only: [:new, :create, :edit, :update]
