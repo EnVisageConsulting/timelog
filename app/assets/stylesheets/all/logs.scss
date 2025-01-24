@@ -1,2 +1,21 @@
 .project-log-fields:not(:first-child) label { display: none; }
 .project-log-fields:first-child .remove-project-link { display: none; }
+
+.custom-button-class {
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0.85em 1em;
+  font-size: 0.9rem;
+  background-color: #2199e8;
+  color: #fefefe;
+}
+
+.custom-button-class:hover {
+  background-color: #1a7bb8;
+  color: #fefefe;
+  border-color: #1a7bb8;
+}
