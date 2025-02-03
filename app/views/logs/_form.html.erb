@@ -64,9 +64,10 @@
 
 <% unless @log.activated? %>
   <div class="row">
-    <div class="columns">
-      <span class="auto-save-indicator" style="float: right; display: none;"> Auto-Saving... </span>
+    <div class="columns" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
       <%= link_to fa_icon("ban", text: "Cancel Log"), log_path(@log), method: :delete, data: { confirm: "Are you sure?" }, class: 'alert-link' %>
+      <%= button_tag "Save Draft for Later", class: 'save-draft-link', data: { draft_url: save_draft_log_path(@log) }, style: "float: right;" %>
+      <span class="save-draft-indicator"> Changes Saved! </span>
     </div>
   </div>
 <% end %>

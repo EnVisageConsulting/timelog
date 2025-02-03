@@ -1,2 +1,29 @@
 .project-log-fields:not(:first-child) label { display: none; }
 .project-log-fields:first-child .remove-project-link { display: none; }
+
+.save-draft-link {
+  text-align: center;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  background-color: #2199e8;
+  color: #fefefe;
+}
+
+.save-draft-link:hover {
+  background-color: #1a7bb8;
+  color: #fefefe;
+  border-color: #1a7bb8;
+}
+
+.save-draft-indicator {
+  color: green;
+  position: absolute;
+  right: 15px;
+  top: 100%;
+  display: none;
+}

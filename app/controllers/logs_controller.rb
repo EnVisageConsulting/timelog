@@ -72,6 +72,20 @@ class LogsController < ApplicationController
 
   end
 
+  def save_draft
+      @log.skip_activation = true
+
+    if @log.update(log_params)
+      respond_to do |format|
+        format.json { render json: { status: :ok, redirect_url: root_path } }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { status: :unprocessable_entity, redirect_url: root_path } }
+      end
+    end
+  end
+
   private
 
     def load_new_log
@@ -99,6 +113,7 @@ class LogsController < ApplicationController
     end
 
     def log_params
+      return {} if params[:log].blank?
       params.require(:log).permit(:start_at, :end_at, project_logs_attributes: [:id, :project_id, :percent, :description, :non_billable, :_destroy, project_tags: []])
     end
 

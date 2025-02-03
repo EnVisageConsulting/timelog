@@ -2,19 +2,21 @@ class Log
   logForm: ->
     enableMultiselect({placeholder: "Project Tags"})
     
-    #Ajax Post to save page
+    # Ajax Post to save page
     form = $("form.autosave")
-    indicator = $(".auto-save-indicator")
-    form.on "change", ":input", ->
+    indicator = $(".save-draft-indicator")
+    $('.save-draft-link').on 'click', (event) ->
       data = form.serialize()
       indicator.show()
-      $.post form.attr("action"), data, () ->
-        indicator.hide()
+      $.post $(this).data('draft-url'), data, () ->
+        setTimeout ->
+          indicator.hide()
+        , 3000
       , "json"
 
-    #load existing project tags
+    # Load existing project tags
     $(".project-tags").each (id, select) ->
-      $(select).val($(select).data("selected")).trigger('change');
+      $(select).val($(select).data("selected")).trigger('change')
 
     $(".datetime-setter").on "click", (e) ->
       e.preventDefault()
