@@ -1,7 +1,7 @@
 .project-log-fields:not(:first-child) label { display: none; }
 .project-log-fields:first-child .remove-project-link { display: none; }
 
-.custom-button-class {
+.save-draft-link {
   text-align: center;
   line-height: 1;
   cursor: pointer;
@@ -14,7 +14,7 @@
   color: #fefefe;
 }
 
-.custom-button-class:hover {
+.save-draft-link:hover {
   background-color: #1a7bb8;
   color: #fefefe;
   border-color: #1a7bb8;
