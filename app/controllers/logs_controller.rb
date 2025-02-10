@@ -25,7 +25,6 @@ class LogsController < ApplicationController
 
   def update
     @log.set_activation if request.format == 'html'
-    sleep(5)
     respond_to do |format|
       if @log.update(log_params)
         if params[:commit] == "Save and Start a New Log"
