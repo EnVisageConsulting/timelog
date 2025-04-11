@@ -55,7 +55,11 @@ class Reports::PersonalReport < TablelessModel
   def grouped_logs(user)
     return logs unless logs.present?
     group_logs = logs.reject{|l| l.user != user}.group_by(&:date)
-    group_logs = group_logs.to_a.reverse.to_h if sort_date == "desc"
+    
+    if sort_date.nil? || sort_date == "desc"
+      group_logs = group_logs.to_a.reverse.to_h
+    end
+
     group_logs
   end
 
