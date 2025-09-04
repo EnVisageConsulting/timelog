@@ -2,9 +2,22 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :require_user
+  before_action :set_error_user_context
 
   helper_method :current_user
   helper_method :current_log
+
+  def set_error_user_context
+    if current_user
+      Sentry.set_user(
+        # a unique ID which represents this user
+        id: current_user.id, # 1
+
+        # the actor's email address, if available
+        email: current_user.email, # "example@example.org"
+      )
+    end
+  end
 
   def current_user=(user)
     session[:current_user] = user.is_a?(User) ? user.id : nil

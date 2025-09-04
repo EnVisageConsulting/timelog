@@ -23,3 +23,5 @@ config/database.yml
 documentation/report_screenshots/~$reen shots.docx
 sendgrid.env
 .DS_Store
+
+/config/master.key
