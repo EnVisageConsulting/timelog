@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :require_user
   before_action :set_error_user_context
+  before_action :test_sentry_error
 
   helper_method :current_user
   helper_method :current_log
@@ -17,6 +18,16 @@ class ApplicationController < ActionController::Base
         email: current_user.email, # "example@example.org"
       )
     end
+  end
+
+  def test_sentry_error
+    begin
+      1 / 0
+    rescue ZeroDivisionError => exception
+      Sentry.capture_exception(exception)
+    end
+
+    Sentry.capture_message("test message")
   end
 
   def current_user=(user)
