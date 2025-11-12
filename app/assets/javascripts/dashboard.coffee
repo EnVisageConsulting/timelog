@@ -86,7 +86,7 @@ class Dashboard
     curr = new Date()
 
     if !isNaN(start) && !isNaN(end)
-      if (start.getFullYear() >= 2016) && (end.getFullYear() >= 2010) && (start <= end) && (start <= curr) && (end <= curr)
+      if (start.getFullYear() >= 2016) && (end.getFullYear() >= 2010) && (start <= end) && (start <= curr) # && (end <= curr)
         $('#generate-button').attr('disabled', false)
       else
         $('#generate-button').attr('disabled', true)
