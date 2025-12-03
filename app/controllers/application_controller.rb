@@ -17,6 +17,11 @@ class ApplicationController < ActionController::Base
         email: current_user.email, # "example@example.org"
       )
     end
+
+    filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
+    context_params = filter.filter params.to_unsafe_h
+
+    Sentry.set_extras(params: context_params, url: request.url)
   end
 
   def current_user=(user)
