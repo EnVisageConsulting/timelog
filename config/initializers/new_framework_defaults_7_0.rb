@@ -32,7 +32,7 @@
 
 # Don't override ActiveSupport::TimeWithZone.name and use the default Ruby
 # implementation.
-# Rails.application.config.active_support.remove_deprecated_time_with_zone_name = true
+Rails.application.config.active_support.remove_deprecated_time_with_zone_name = true
 
 # Calls `Rails.application.executor.wrap` around test cases.
 # This makes test cases behave closer to an actual request or job.
@@ -43,10 +43,10 @@
 # Define the isolation level of most of Rails internal state.
 # If you use a fiber based server or job processor, you should set it to `:fiber`.
 # Otherwise the default of `:thread` if preferable.
-# Rails.application.config.active_support.isolation_level = :thread
+Rails.application.config.active_support.isolation_level = :thread
 
 # Set both the `:open_timeout` and `:read_timeout` values for `:smtp` delivery method.
-# Rails.application.config.action_mailer.smtp_timeout = 5
+Rails.application.config.action_mailer.smtp_timeout = 5
 
 # The ActiveStorage video previewer will now use scene change detection to generate
 # better preview images (rather than the previous default of using the first frame
@@ -66,7 +66,7 @@
 # Rails.application.config.active_record.partial_inserts = false
 
 # Protect from open redirect attacks in `redirect_back_or_to` and `redirect_to`.
-# Rails.application.config.action_controller.raise_on_open_redirects = true
+Rails.application.config.action_controller.raise_on_open_redirects = true
 
 # Change the variant processor for Active Storage.
 # Changing this default means updating all places in your code that
@@ -85,7 +85,7 @@
 #
 # See https://guides.rubyonrails.org/configuring.html#config-active-support-use-rfc4122-namespaced-uuids for
 # more information.
-# Rails.application.config.active_support.use_rfc4122_namespaced_uuids = true
+Rails.application.config.active_support.use_rfc4122_namespaced_uuids = true
 
 # Change the default headers to disable browsers' flawed legacy XSS protection.
 # Rails.application.config.action_dispatch.default_headers = {

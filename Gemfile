@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '3.3.3'
+ruby '3.4.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.1.2'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.3'
 # Use Puma as the app server
@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'csv'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -65,8 +66,6 @@ gem 'font-awesome-rails'
 gem 'cancancan'
 gem 'googlecharts'
 gem 'kaminari'
-
-gem "net-pop", github: "ruby/net-pop" # temporary ruby 3.3.3 fix
 
 group :test do
   # command line tool to easily handle events on file system modifications

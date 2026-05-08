@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: [:employee, :admin, :partner]
+  enum :role, [:employee, :admin, :partner]
 
   has_secure_password validations: false
 
