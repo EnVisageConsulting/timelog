@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
 
   def no_access
     respond_to do |format|
-      format.json { head :no_access }
+      format.json { head :forbidden }
       format.html { redirect_to root_url, :alert => "You are not authorized to access this page." }
     end
   end
