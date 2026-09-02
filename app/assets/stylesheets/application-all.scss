@@ -15,6 +15,7 @@
  *= require_directory ./all
  */
 
+@use "sass:color";
 
 @import "foundation_and_overrides";
 @import "font-awesome";
@@ -71,3 +72,7 @@
 }
 
 #numerical-filter-header, #date-range-filter-header {cursor: pointer;}
+
+.nsewdrag {
+  cursor: default !important;
+}

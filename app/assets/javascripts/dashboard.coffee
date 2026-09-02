@@ -69,6 +69,65 @@ class Dashboard
               beginAtZero: true
           }]
 
+  generateProjectsChart: ->
+    container = document.getElementById("projects-chart")
+
+    dataX = container.dataset.xValues.split("|").map (v) -> parseFloat(v)
+    dataY = container.dataset.yValues.split("|")
+
+    data = [{
+      type: "bar",
+      x: dataX,
+      y: dataY,
+      orientation: "h",
+      marker: {
+        color: "#0EB1FF",
+        line: {
+          color: "#2199E8"
+          width: 1
+        }
+      },
+      name: "",
+      hovertemplate: "%{y}:<br>%{x} Hours"
+    }]
+
+    maxVal = Math.max(dataX...)
+
+    layout = {
+      title: {text: "Number of Hours by Project"},
+      showlegend: false,
+      xaxis: {
+        ticks: "outside",
+        tickcolor: "#bbb",
+        ticklen: 10,
+
+        showline: true,
+        linecolor: "#bbb",
+
+        zerolinecolor: "#bbb",
+
+        autorange: "false",
+        range: [0, maxVal * 1.01],
+        fixedrange: "true",
+      }
+      yaxis: {
+        ticks: "outside",
+        tickcolor: "#bbb",
+        ticklen: 10,
+
+        showgrid: true,
+        fixedrange: "true",
+      },
+      dragmode: false,
+    }
+
+    config = {
+      displayModeBar: false,
+      responsive: true,
+    }
+    
+    Plotly.newPlot(container, data, layout, config)
+
   disable_necessary_fields: (numerical_fields_shown) ->
     $('#unit_amount').attr('disabled',  !numerical_fields_shown)
     $('#unit_amount_null').attr('disabled', numerical_fields_shown)
@@ -96,6 +155,7 @@ class Dashboard
 ready= ->
   dashboard = new Dashboard
   dashboard.generateHoursChart()
+  dashboard.generateProjectsChart()
   dashboard.hoursCounter("day_hours_count")
   dashboard.hoursCounter("week_hours_count")
   dashboard.hoursCounter("chart_total_hours")

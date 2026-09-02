@@ -1,0 +1,11 @@
+<%
+  sdate     = Date.today - 1.month
+  edate     = Date.today
+  chartData = ProjectHoursChart.new(current_user, sdate, edate)
+%>
+
+<div class="columns">
+  <h3>Hours by Project</h3>
+
+  <div id="projects-chart" data-x-values="<%= chartData.values %>" data-y-values="<%= chartData.labels %>"></div>
+</div>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnVisage Timelog<%= " - " + yield(:title) if content_for?(:title) %></title>
 
     <%= stylesheet_link_tag    'application-all', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -13,8 +13,12 @@
     <%= csrf_meta_tags %>
 
     <!-- select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+    <!-- Plotly -->
+    <script nonce="<%= request.content_security_policy_nonce %>" src="https://cdn.plot.ly/plotly-4.0.0.min.js" charset="utf-8"></script>
+
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>
 

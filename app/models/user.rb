@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   # --- Associations --- #
   has_many :logs
+  has_many :project_logs, through: :logs
   has_many :password_recoveries, dependent: :destroy
   has_many :partner_project_links
   has_many :partner_projects, through: :partner_project_links, source: :project
