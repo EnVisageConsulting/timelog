@@ -69,71 +69,6 @@ class Dashboard
             ticks:
               beginAtZero: true
 
-  generateProjectsChart: ->
-    container = document.getElementById("projects-chart")
-
-    dataX = container.dataset.xValues.split("|").map (v) -> parseFloat(v)
-    dataY = container.dataset.yValues.split("|")
-
-    data = [{
-      type: "bar",
-      x: dataX,
-      y: dataY,
-      orientation: "h",
-      marker: {
-        color: "#0EB1FF",
-        line: {
-          color: "#2199E8"
-          width: 1
-        }
-      },
-      name: "",
-      hovertemplate: "%{y}:<br>%{x} Hours",
-      hoverlabel: {
-        bgcolor: "black",
-        font: {
-          color: "white",
-        },
-      },
-    }]
-
-    maxVal = Math.max(dataX...)
-
-    layout = {
-      title: {text: "Number of Hours by Project"},
-      showlegend: false,
-      xaxis: {
-        ticks: "outside",
-        tickcolor: "#bbb",
-        ticklen: 10,
-
-        showline: true,
-        linecolor: "#bbb",
-
-        zerolinecolor: "#bbb",
-
-        autorange: "false",
-        range: [0, maxVal * 1.01],
-        fixedrange: "true",
-      }
-      yaxis: {
-        ticks: "outside",
-        tickcolor: "#bbb",
-        ticklen: 10,
-
-        showgrid: true,
-        fixedrange: "true",
-      },
-      dragmode: false,
-    }
-
-    config = {
-      displayModeBar: false,
-      responsive: true,
-    }
-    
-    Plotly.newPlot(container, data, layout, config)
-
   generateChartjsProjectsChart: ->
     container = document.getElementById("projects-chart")
 
@@ -208,8 +143,7 @@ class Dashboard
 ready= ->
   dashboard = new Dashboard
   dashboard.generateHoursChart()
-  # dashboard.generateProjectsChart()
-  dashboard.generateChartjsProjectsChart()
+  dashboard.generateProjectsChart()
   dashboard.hoursCounter("day_hours_count")
   dashboard.hoursCounter("week_hours_count")
   dashboard.hoursCounter("chart_total_hours")
