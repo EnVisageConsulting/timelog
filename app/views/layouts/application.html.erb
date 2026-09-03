@@ -8,7 +8,6 @@
 
     <%= stylesheet_link_tag    'application-all', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag    'application-print', media: 'print', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= csrf_meta_tags %>
 
@@ -18,6 +17,10 @@
 
     <!-- Plotly -->
     <script nonce="<%= request.content_security_policy_nonce %>" src="https://cdn.plot.ly/plotly-4.0.0.min.js" charset="utf-8"></script>
+
+    <!-- Chart.js -->
+    <script nonce="<%= request.content_security_policy_nonce %>" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 
     <%= Sentry.get_trace_propagation_meta.html_safe %>
   </head>

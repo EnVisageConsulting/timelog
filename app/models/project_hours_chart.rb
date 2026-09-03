@@ -8,11 +8,11 @@ class ProjectHoursChart
   end
 
   def labels
-    @labels ||= grouped_logs.sort_by { |k, v| v.map(&:hours).sum }.to_h.keys.map(&:name).join("|")
+    @labels ||= grouped_logs.sort_by { |k, v| v.map(&:hours).sum }.reverse.to_h.keys.map(&:name).join("|")
   end
 
   def values
-    @values ||= grouped_logs.sort_by{ |k, v| v.map(&:hours).sum }.to_h.values.map { |v| v.map(&:hours).sum }.join("|")
+    @values ||= grouped_logs.sort_by{ |k, v| v.map(&:hours).sum }.reverse.to_h.values.map { |v| v.map(&:hours).sum }.join("|")
   end
 
   private

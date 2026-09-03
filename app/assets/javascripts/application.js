@@ -65,6 +65,14 @@ function enableMultiselect(selectOptions){
   $(selector).select2(options);
 };
 
+function truncateString(string, length = 10) {
+  if (string.length() > length) {
+    return `${string.slice(0, length)}...`
+  } else {
+    return string
+  }
+}
+
 $(document).bind('turbolinks:load', function(){
   initializePage();
 });

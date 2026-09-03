@@ -58,16 +58,16 @@ class Dashboard
           borderWidth: 1
         }]
       options:
-        title:
-          display: true,
-          text: title
-        legend:
-          display: false
+        plugins:
+          title:
+            display: true,
+            text: title
+          legend:
+            display: false
         scales:
-          yAxes: [{
+          y:
             ticks:
               beginAtZero: true
-          }]
 
   generateProjectsChart: ->
     container = document.getElementById("projects-chart")
@@ -88,7 +88,13 @@ class Dashboard
         }
       },
       name: "",
-      hovertemplate: "%{y}:<br>%{x} Hours"
+      hovertemplate: "%{y}:<br>%{x} Hours",
+      hoverlabel: {
+        bgcolor: "black",
+        font: {
+          color: "white",
+        },
+      },
     }]
 
     maxVal = Math.max(dataX...)
@@ -128,6 +134,53 @@ class Dashboard
     
     Plotly.newPlot(container, data, layout, config)
 
+  generateChartjsProjectsChart: ->
+    container = document.getElementById("projects-chart")
+
+    dataX = container.dataset.xValues.split("|").map (v) -> parseFloat(v)
+    dataY = container.dataset.yValues.split("|")
+
+    console.log(dataX)
+    console.log(dataY)
+
+    window.projectsChart = new Chart(
+      container,
+      type: "bar"
+      data: {
+        labels: dataY,
+        datasets: [{
+          data: dataX,
+          backgroundColor: '#0EB1FF',
+          borderColor: '#2199e8',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Hours by Project"
+          },
+          legend: {
+            display: false
+          },
+        },
+        indexAxis: "y",
+        scales: {
+          y: {
+            ticks: {
+              callback: (v, idx, vs) ->
+                label = this.chart.data.labels[idx]
+                if label.length > 10
+                  return label.substring(0, 10) + "..."
+                else
+                  label
+            }
+          }
+        }
+      }
+    )
+
   disable_necessary_fields: (numerical_fields_shown) ->
     $('#unit_amount').attr('disabled',  !numerical_fields_shown)
     $('#unit_amount_null').attr('disabled', numerical_fields_shown)
@@ -155,7 +208,8 @@ class Dashboard
 ready= ->
   dashboard = new Dashboard
   dashboard.generateHoursChart()
-  dashboard.generateProjectsChart()
+  # dashboard.generateProjectsChart()
+  dashboard.generateChartjsProjectsChart()
   dashboard.hoursCounter("day_hours_count")
   dashboard.hoursCounter("week_hours_count")
   dashboard.hoursCounter("chart_total_hours")
