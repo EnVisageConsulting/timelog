@@ -69,14 +69,11 @@ class Dashboard
             ticks:
               beginAtZero: true
 
-  generateChartjsProjectsChart: ->
+  generateProjectsChart: ->
     container = document.getElementById("projects-chart")
 
     dataX = container.dataset.xValues.split("|").map (v) -> parseFloat(v)
     dataY = container.dataset.yValues.split("|")
-
-    console.log(dataX)
-    console.log(dataY)
 
     window.projectsChart = new Chart(
       container,
