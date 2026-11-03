@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_141934) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_19_022339) do
+  create_schema "heroku_ext"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -106,6 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_141934) do
     t.string "unit_type", default: "Days"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.datetime "project_chart_start_date"
+    t.datetime "project_chart_end_date"
   end
 
   add_foreign_key "partner_project_links", "projects"

@@ -28,12 +28,45 @@
 </div>
 
 <div class="row show-for-medium">
-  <%= render "hours_chart", dashboard: @dashboard %>
+  <h3>Charts</h3>
+  <% 
+    show_hours_over_time =  @display_chart == "hours_over_time" ||
+      @display_chart == nil
+  %>
+
+  <ul class="tabs" data-tabs id="dashboard-chart-tabs">
+    <li class="tabs-title <%= "is-active" if show_hours_over_time %>">
+      <a href="#hours-over-time-panel" aria-selected="true">
+        <h6 class="no-margin"><b>Hours Over Time</b></h6>
+      </a>
+    </li>
+
+    <li class="tabs-title <%= "is-active" if !show_hours_over_time %>">
+      <a href="#hours-by-project-panel" 
+         data-tabs-target="hours-by-project-panel">
+        <h6 class="no-margin"><b>Hours by Project</b></h6>
+      </a>
+    </li>
+  </ul>
+
+  <div class="tabs-content" data-tabs-content="dashboard-chart-tabs">
+    <div class="tabs-panel <%= "is-active" if show_hours_over_time %>" 
+         id="hours-over-time-panel">
+      <div class="row">
+        <%= render "hours_chart", dashboard: @dashboard %>
+      </div>
+    </div>
+
+    <div class="tabs-panel <%= "is-active" if !show_hours_over_time %>"
+         id="hours-by-project-panel">
+      <div class="row">
+        <%= render "projects_chart", dashboard: @dashboard %>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="row show-for-medium">
-  <%= render "projects_chart", dashboard: @dashboard %>
-</div>
+<br>
 
 <div class="row">
   <div class="columns">

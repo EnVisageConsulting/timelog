@@ -7,7 +7,6 @@ EXAMPLE_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 TIMEZONE  = "Central Time (US & Canada)".freeze
 
-
 TIME_STRFTIME     = "%I:%M %p".freeze
 DATE_STRFTIME     = "%m/%d/%Y".freeze
 DATETIME_STRFTIME = "#{DATE_STRFTIME} #{TIME_STRFTIME}".freeze
