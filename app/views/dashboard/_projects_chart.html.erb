@@ -28,6 +28,9 @@
 
     <div class="columns small-3 float-right">
       <br>
+
+      <strong><p>Date Range Filter</p></strong>
+
       <%= form_with model: current_user, url: root_path, method: :post, remote: true do |f| %>
         <%= f.label :project_chart_start_date, "Start Date" %>
         <%= f.date_field :project_chart_start_date, value: sdate %>
