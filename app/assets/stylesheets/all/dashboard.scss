@@ -1,7 +1,36 @@
-.dashboard-hours-div { width: 80%; margin: auto; height: 70px; }
-.dashboard-today-count { float:left; margin-left: 5px;}
-.dashboard-this-week-count { float:left; margin-left: 80px; }
-.dashboard-chart-total-hours { float: right; margin-right: 5px; }
+.dashboard-hours-div { 
+  width: 80%;
+
+  &.fit-width {
+    width: fit-content;
+  }
+
+  margin: auto;
+  height: 70px;
+  display: flex;
+
+  div {
+    flex-grow: 1;
+    width: 100%/3;
+
+    h5 {
+      &::before {
+        flex-grow: 1;
+        content: "";
+      }
+
+      display: flex;
+      column-gap: 0.5rem;
+      align-items: center;
+      margin: 0;
+
+      &::after {
+        flex-grow: 1;
+        content: "";
+      }
+    }
+  }
+}
 
 .table-tabs {
   padding: 0;

@@ -3,16 +3,31 @@
     Date.today.beginning_of_month
   edate     = current_user.project_chart_end_date ||
     Date.today.end_of_month
-  chartData = ProjectHoursChart.new(current_user, sdate, edate)
+  chart_data = ProjectHoursChart.new(current_user, sdate, edate)
 %>
+
+<div class="columns graph-tab-body">
+  <div class="row show-for-medium">
+    <div class="columns text-center" style="margin-top: 1.5rem; display: flex; justify-content: center;">
+      <div class="callout primary dashboard-hours-div">
+        <div id="project_chart_total_hours">
+          <h5>
+            Chart Hours: 
+            <strong class="stat monospaced primary-text" data-hours="<%= chart_data.total_hours %>"></strong>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div class="columns">
   <div class="row show-for-medium">
     <div class="columns small-9">
-      <canvas id="projects-chart" data-x-values="<%= chartData.values %>" data-y-values="<%= chartData.labels %>"></canvas>
+      <canvas id="projects-chart" data-x-values="<%= chart_data.values %>" data-y-values="<%= chart_data.labels %>"></canvas>
     </div>
 
     <div class="columns small-3 float-right">
+      <br>
       <%= form_with model: current_user, url: root_path, method: :post, remote: true do |f| %>
         <%= f.label :project_chart_start_date, "Start Date" %>
         <%= f.date_field :project_chart_start_date, value: sdate %>

@@ -15,6 +15,10 @@ class ProjectHoursChart
     @values ||= grouped_logs.sort_by{ |k, v| v.map(&:hours).sum }.reverse.to_h.values.map { |v| v.map(&:hours).sum }.join("|")
   end
 
+  def total_hours
+    project_logs.sum(:hours)
+  end
+
   private
 
     def project_logs

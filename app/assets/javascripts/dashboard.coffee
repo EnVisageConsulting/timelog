@@ -144,6 +144,7 @@ ready= ->
   dashboard.hoursCounter("day_hours_count")
   dashboard.hoursCounter("week_hours_count")
   dashboard.hoursCounter("chart_total_hours")
+  dashboard.hoursCounter("project_chart_total_hours")
 
   if $('#numerical-filter').is(':visible')
     $('#date-range-filter-arrow').removeClass('fa-caret-down').addClass 'fa-caret-right'
